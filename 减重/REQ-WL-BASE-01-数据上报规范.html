@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>REQ-WL-BASE-01 · 数据上报规范 · 需求单</title>
+<style>
+:root{
+  --ink:#1B2733; --ink-2:#48596A; --ink-3:#7A8A99; --line:#E4E9EE; --line-2:#EFF3F6;
+  --bg:#F6F8FA; --card:#FFFFFF; --brand:#0F7C86; --brand-2:#E7F4F5; --warn:#C2761C; --warn-bg:#FDF3E4;
+  --danger:#B4453C; --danger-bg:#FBEDEB;
+  --radius:14px; --shadow:0 1px 2px rgba(16,32,48,.05),0 8px 24px rgba(16,32,48,.05);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;}
+a{color:var(--brand);text-decoration:none}
+a:hover{text-decoration:underline}
+.topbar{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);}
+.topbar__in{max-width:1320px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.topbar__back{font-size:13px;color:var(--ink-2);border:1px solid var(--line);border-radius:999px;padding:4px 12px;background:#fff;white-space:nowrap}
+.topbar__back:hover{text-decoration:none;border-color:var(--brand);color:var(--brand)}
+.badge{font-size:12px;line-height:1;padding:5px 10px;border-radius:999px;background:var(--brand-2);color:var(--brand);font-weight:600;white-space:nowrap}
+.badge--warn{background:var(--warn-bg);color:var(--warn)}
+.badge--p0{background:var(--danger-bg);color:var(--danger)}
+.topbar__title{font-size:14px;font-weight:600;color:var(--ink)}
+.wrap{max-width:1320px;margin:0 auto;padding:26px 24px 80px;display:grid;grid-template-columns:258px minmax(0,1fr);gap:34px;align-items:start}
+.toc{position:sticky;top:70px;max-height:calc(100vh - 96px);overflow:auto;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 14px;box-shadow:var(--shadow)}
+.toc__h{font-size:11px;letter-spacing:.12em;color:var(--ink-3);text-transform:uppercase;margin:0 0 10px}
+.toc ol{list-style:none;margin:0;padding:0}
+.toc li{margin:2px 0}
+.toc a{display:block;padding:5px 8px;border-radius:8px;font-size:13px;color:var(--ink-2);line-height:1.45}
+.toc a:hover{background:var(--line-2);text-decoration:none;color:var(--brand)}
+.toc .lv3 a{padding-left:20px;font-size:12.5px;color:var(--ink-3)}
+.doc{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:34px 40px 46px;box-shadow:var(--shadow);min-width:0}
+.doc h1{font-size:26px;line-height:1.35;margin:0 0 6px;letter-spacing:-.01em}
+.doc .subtitle{color:var(--ink-3);font-size:13px;margin:0 0 22px}
+.doc h2{font-size:19px;margin:44px 0 14px;padding-bottom:10px;border-bottom:1px solid var(--line);scroll-margin-top:78px}
+.doc h3{font-size:15.5px;margin:26px 0 10px;scroll-margin-top:78px}
+.doc p{margin:10px 0;color:var(--ink-2)}
+.doc strong{color:var(--ink)}
+.doc ul,.doc ol{padding-left:1.35em;color:var(--ink-2)}
+.doc li{margin:5px 0}
+.doc li:has(> input[type=checkbox]){list-style:none;margin-left:-1.35em;display:flex;gap:9px;align-items:flex-start;color:var(--ink)}
+.doc input[type=checkbox]{flex:none;width:16px;height:16px;margin:5px 0 0;border-radius:4px;accent-color:var(--brand)}
+.doc code{background:#F1F5F8;border:1px solid var(--line-2);border-radius:5px;padding:1px 5px;font-size:12.5px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#20465A}
+.doc pre{background:#F7FAFB;border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow:auto}
+.doc pre code{background:none;border:0;padding:0;font-size:12.5px;color:var(--ink-2)}
+.doc blockquote{margin:14px 0;padding:10px 16px;background:#FFFBF0;border-left:3px solid #E9C683;border-radius:0 10px 10px 0}
+.doc blockquote p{margin:4px 0;color:#7A5C1E}
+.doc hr{border:0;border-top:1px dashed var(--line);margin:26px 0}
+.doc table{width:100%;border-collapse:separate;border-spacing:0;margin:16px 0;font-size:13.5px;display:block;overflow-x:auto}
+.doc thead th{background:#F3F7F9;color:var(--ink);font-weight:600;text-align:left;white-space:nowrap}
+.doc th,.doc td{border-bottom:1px solid var(--line-2);padding:9px 12px;vertical-align:top;color:var(--ink-2)}
+.doc tbody tr:last-child td{border-bottom:0}
+.doc tbody tr:hover td{background:#FAFCFD}
+/* 关联需求单 chip */
+.doc a.xref{display:inline-block;padding:1px 8px;margin:1px 0;border-radius:7px;background:var(--brand-2);color:var(--brand);
+  font-weight:600;font-size:12.5px;border:1px solid #CFE7E9;white-space:nowrap}
+.doc a.xref:hover{background:#D6EDEF;text-decoration:none;border-color:var(--brand)}
+.doc .xref--self{display:inline-block;padding:1px 8px;border-radius:7px;background:#F1F5F8;color:var(--ink-3);
+  font-weight:600;font-size:12.5px;border:1px solid var(--line);white-space:nowrap}
+.figs{margin:22px 0 6px;display:grid;gap:18px}
+.figs__h{font-size:12px;letter-spacing:.1em;color:var(--ink-3);text-transform:uppercase;margin:0}
+.fig{margin:0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:#fff}
+.fig__shot{max-height:520px;overflow:auto;background:#F1F5F7}
+.fig__shot img{display:block;width:100%;height:auto;cursor:zoom-in}
+.fig figcaption{padding:10px 14px;font-size:12.5px;color:var(--ink-2);border-top:1px solid var(--line-2);background:#FBFDFE;display:flex;gap:10px;align-items:baseline}
+.fig figcaption b{color:var(--brand);font-weight:600;flex:none}
+.fig figcaption em{margin-left:auto;font-style:normal;color:var(--ink-3);font-size:11.5px;white-space:nowrap;flex:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:14px}
+.grid .fig__shot{max-height:none;overflow:visible}
+.grid figcaption{display:block;font-size:12px;padding:8px 11px}
+.grid figcaption em{display:none}
+.lb{position:fixed;inset:0;z-index:99;background:rgba(12,22,30,.92);display:flex;align-items:center;justify-content:center;padding:28px}
+.lb[hidden]{display:none}
+.lb img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,.5);background:#fff;cursor:zoom-out}
+.lb__x{position:absolute;top:16px;right:20px;width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.14);
+  color:#fff;font-size:22px;line-height:1;cursor:pointer}
+.lb__x:hover{background:rgba(255,255,255,.26)}
+.lb__tip{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);color:#CBD6DE;font-size:12px}
+/* 索引页 */
+.hero{max-width:1320px;margin:0 auto;padding:38px 24px 6px}
+.hero h1{margin:0 0 10px;font-size:30px;letter-spacing:-.02em}
+.hero p{margin:0 0 8px;color:var(--ink-2);max-width:900px}
+.stats{display:flex;gap:28px;margin:20px 0 0;flex-wrap:wrap}
+.stat b{display:block;font-size:24px;color:var(--brand);line-height:1.2}
+.stat span{font-size:12.5px;color:var(--ink-3)}
+.callout{max-width:1320px;margin:22px auto 0;padding:0 24px}
+.callout__in{background:linear-gradient(135deg,#FFF7EC,#FDF1E3);border:1px solid #F0D9B4;border-radius:var(--radius);padding:16px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.callout__in b{color:#8A5A15}
+.callout__in a{margin-left:auto;font-weight:600}
+.sec{max-width:1320px;margin:0 auto;padding:8px 24px}
+.sec__h{display:flex;align-items:baseline;gap:12px;margin:32px 0 16px}
+.sec__h h2{margin:0;font-size:19px}
+.sec__h span{font-size:12.5px;color:var(--ink-3)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:18px}
+.rcard{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden;box-shadow:var(--shadow);transition:transform .16s ease,box-shadow .16s ease}
+.rcard:hover{transform:translateY(-2px);box-shadow:0 2px 4px rgba(16,32,48,.06),0 14px 32px rgba(16,32,48,.09);text-decoration:none}
+.rcard__cover{height:132px;background:#EFF4F6;overflow:hidden;border-bottom:1px solid var(--line-2);position:relative}
+.rcard__cover img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+.rcard__cover--ph{display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#0F7C86,#14A0A8);color:#fff;font-weight:700;font-size:15px;letter-spacing:.04em}
+.rcard__b{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
+.rcard__t{font-size:14.5px;font-weight:600;color:var(--ink);line-height:1.45}
+.rcard__d{font-size:12.5px;color:var(--ink-3);line-height:1.6}
+.rcard__f{margin-top:auto;padding-top:10px;display:flex;gap:8px;align-items:center;font-size:11.5px;color:var(--ink-3)}
+.note{max-width:1320px;margin:32px auto 0;padding:0 24px 70px}
+.note__in{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px 22px;color:var(--ink-2);font-size:13px;box-shadow:var(--shadow)}
+.note__in b{color:var(--ink)}
+footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);font-size:12px}
+@media (max-width:1080px){
+  .wrap{grid-template-columns:1fr;gap:20px;padding-top:20px}
+  .toc{position:static;max-height:none}
+  .doc{padding:26px 20px 34px}
+  .fig__shot{max-height:400px}
+}
+@media print{
+  .topbar,.toc,.lb{display:none}
+  .wrap{display:block;padding:0;max-width:none}
+  .doc{border:0;box-shadow:none;padding:0}
+  .fig__shot{max-height:none;overflow:visible}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar__in">
+    <a class="topbar__back" href="../index.html">← 需求单索引</a>
+    <span class="badge">科学减重（WL）</span>
+    <span class="badge badge--p0">优先级 P0</span>
+    <span class="topbar__title">REQ-WL-BASE-01 · 数据上报规范</span>
+  </div>
+</header>
+<div class="wrap">
+  <nav class="toc">
+    <p class="toc__h">本单目录</p>
+    <ol><li class="lv2"><a href="#1-目的与范围">1. 目的与范围</a></li>
+<li class="lv2"><a href="#2-命名规范">2. 命名规范</a></li>
+<li class="lv2"><a href="#3-公共字段-所有事件必带">3. 公共字段（所有事件必带）</a></li>
+<li class="lv2"><a href="#4-事件登记表">4. 事件登记表</a></li>
+<li class="lv3"><a href="#4-1-服务状态与卡片-status">4.1 服务状态与卡片（STATUS）</a></li>
+<li class="lv3"><a href="#4-2-处方-购药-订单-rx">4.2 处方·购药·订单（RX）</a></li>
+<li class="lv3"><a href="#4-3-方案-评估-随访-plan">4.3 方案·评估·随访（PLAN）</a></li>
+<li class="lv3"><a href="#4-4-科普-内容-edu">4.4 科普·内容（EDU）</a></li>
+<li class="lv3"><a href="#4-5-ai-助理-ai">4.5 AI 助理（AI）</a></li>
+<li class="lv3"><a href="#4-6-通用技术事件">4.6 通用技术事件</a></li>
+<li class="lv2"><a href="#5-核心漏斗">5. 核心漏斗</a></li>
+<li class="lv2"><a href="#6-不报什么-红线">6. 不报什么（红线）</a></li>
+<li class="lv2"><a href="#7-变更流程">7. 变更流程</a></li>
+<li class="lv2"><a href="#8-待补充-后续同步">8. 待补充（后续同步）</a></li></ol>
+  </nav>
+  <main class="doc">
+    <h1>REQ-WL-BASE-01 · 数据上报规范</h1>
+    <p class="subtitle">需求单 · 科学减重（WL） · 交付目标：可上线面向用户使用（H5 + 微信小程序）</p>
+    <blockquote>
+<p>编号 <code>REQ-WL-BASE-01</code> ｜ 项目：科学减重（WL）｜ 模块：规范与基线 ｜ 状态：制定中
+本页是<strong>减重项目埋点的唯一登记表</strong>：所有需求单不再各写埋点章节，统一在此登记。</p>
+</blockquote>
+<hr>
+<h2 id="1-目的与范围">1. 目的与范围</h2>
+<p>一张表管住「要报什么」。需求单只写业务规则，<strong>不写埋点</strong>；埋点在本页按模块登记，开发按本页实现，数据侧按本页验收。</p>
+<ul>
+<li><strong>本期只定「要报什么」</strong>：事件名 / 触发时机 / 关键参数 / 用途。</li>
+<li><strong>上报协议后续同步</strong>：通道（H5 <code>sendBeacon</code> / 小程序 <code>wx.request</code>）、批量、重试、采样、平台选型、留存期限由数据侧在上线前补充，不阻塞开发。</li>
+</ul>
+<hr>
+<h2 id="2-命名规范">2. 命名规范</h2>
+<ul>
+<li>格式：<code>模块_对象_动作</code>，全小写 + 下划线，如 <code>wcard_cta_click</code>。</li>
+<li>动作收敛为：<code>view</code> 曝光、<code>click</code> 点击、<code>switch</code> 切换、<code>start</code>/<code>complete</code> 流程、<code>result</code> 结果、<code>fail</code> 失败。</li>
+<li><strong>事件名一经上线不得改名</strong>，语义变化只能新增事件，旧事件标注废弃但保留字段。</li>
+</ul>
+<hr>
+<h2 id="3-公共字段-所有事件必带">3. 公共字段（所有事件必带）</h2>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>event</code> / <code>ts</code></td>
+<td>事件名 / 时间戳（ms）</td>
+</tr>
+<tr>
+<td><code>uid</code> / <code>session_id</code></td>
+<td>用户标识（openid 或内部匿名 id）/ 会话</td>
+</tr>
+<tr>
+<td><code>page</code> / <code>platform</code></td>
+<td>页面标识 / <code>h5</code>·<code>wxapp</code></td>
+</tr>
+<tr>
+<td><code>app_version</code> / <code>channel</code></td>
+<td>版本 / 渠道来源</td>
+</tr>
+<tr>
+<td><code>net</code> / <code>device</code></td>
+<td>网络 / 机型（未授权时置 <code>unknown</code>）</td>
+</tr>
+<tr>
+<td><code>stage</code></td>
+<td>服务阶段（内部用，不上屏）</td>
+</tr>
+</tbody></table>
+<p><strong>字段口径以上线前协议为准。</strong></p>
+<hr>
+<h2 id="4-事件登记表">4. 事件登记表</h2>
+<h3 id="4-1-服务状态与卡片-status">4.1 服务状态与卡片（STATUS）</h3>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>触发时机</th>
+<th>关键参数</th>
+<th>用途</th>
+<th>来源单</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>service_record_sync</code></td>
+<td>渠道记录同步入库（服务端）</td>
+<td><code>channel</code>、<code>delay</code>、<code>matched</code></td>
+<td>渠道数据健康度</td>
+<td>STATUS-01</td>
+</tr>
+<tr>
+<td><code>wcard_pin_view</code></td>
+<td>健康订阅区置顶减重卡曝光</td>
+<td><code>source_channel</code>、<code>in_service</code>、<code>position</code></td>
+<td>置顶触达</td>
+<td>STATUS-01</td>
+</tr>
+<tr>
+<td><code>wcard_state_view</code></td>
+<td>卡片渲染「进行中」</td>
+<td><code>stage</code>、<code>month_index</code>、<code>source_channel</code></td>
+<td>状态一致性</td>
+<td>STATUS-01</td>
+</tr>
+<tr>
+<td><code>service_detect_fail</code></td>
+<td>判定失败或数据缺失</td>
+<td><code>reason</code>、<code>match_result</code></td>
+<td>异常监控</td>
+<td>STATUS-01</td>
+</tr>
+<tr>
+<td><code>wcard_cta_click</code></td>
+<td>卡片 CTA 点击</td>
+<td><code>stage</code>、<code>cta_id</code>、<code>source_channel</code></td>
+<td>转化</td>
+<td>STATUS-01</td>
+</tr>
+</tbody></table>
+<h3 id="4-2-处方-购药-订单-rx">4.2 处方·购药·订单（RX）</h3>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>触发时机</th>
+<th>关键参数</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>invoice_view</code></td>
+<td>进入确认购药页</td>
+<td><code>order_id</code>、<code>plan_id</code>、<code>amount</code></td>
+<td>转化漏斗节点</td>
+</tr>
+<tr>
+<td><code>consent_sign</code></td>
+<td>签署知情同意</td>
+<td><code>order_id</code>、<code>consent_version</code>、<code>success</code></td>
+<td>合规留痕 + 卡点</td>
+</tr>
+<tr>
+<td><code>addr_save</code></td>
+<td>保存收货地址</td>
+<td><code>order_id</code>、<code>has_region</code>、<code>success</code></td>
+<td>卡点分析</td>
+</tr>
+<tr>
+<td><code>pay_todo_block</code></td>
+<td>前置未完成时点支付</td>
+<td><code>order_id</code>、<code>missing(signed/addr)</code></td>
+<td>摩擦点定位</td>
+</tr>
+<tr>
+<td><code>pay_click</code></td>
+<td>点击支付</td>
+<td><code>order_id</code>、<code>amount</code>、<code>pay_channel</code></td>
+<td>支付转化</td>
+</tr>
+<tr>
+<td><code>pay_result</code></td>
+<td>支付结果</td>
+<td><code>order_id</code>、<code>amount</code>、<code>result</code>、<code>err_code</code></td>
+<td>收入与失败分析</td>
+</tr>
+</tbody></table>
+<h3 id="4-3-方案-评估-随访-plan">4.3 方案·评估·随访（PLAN）</h3>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>触发时机</th>
+<th>关键参数</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>assess_start</code></td>
+<td>进入评估</td>
+<td><code>assess_type</code>、<code>entry</code></td>
+<td>进入率</td>
+</tr>
+<tr>
+<td><code>assess_step</code></td>
+<td>完成一题</td>
+<td><code>assess_type</code>、<code>question_id</code>、<code>step</code>、<code>skipped</code></td>
+<td>题目流失</td>
+</tr>
+<tr>
+<td><code>assess_complete</code></td>
+<td>提交评估</td>
+<td><code>assess_type</code>、<code>duration</code>、<code>result_code</code></td>
+<td>完成率</td>
+</tr>
+<tr>
+<td><code>plan_view</code></td>
+<td>方案页曝光</td>
+<td><code>plan_id</code>、<code>weeks</code></td>
+<td>方案触达</td>
+</tr>
+<tr>
+<td><code>plan_buy_click</code></td>
+<td>方案页点击购药</td>
+<td><code>plan_id</code></td>
+<td>方案→购药转化</td>
+</tr>
+</tbody></table>
+<h3 id="4-4-科普-内容-edu">4.4 科普·内容（EDU）</h3>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>触发时机</th>
+<th>关键参数</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>edu_list_view</code></td>
+<td>科普列表曝光</td>
+<td><code>stage</code>、<code>entry</code></td>
+<td>内容入口</td>
+</tr>
+<tr>
+<td><code>article_read</code></td>
+<td>阅读文章</td>
+<td><code>article_id</code>、<code>duration</code>、<code>progress</code>、<code>finished</code></td>
+<td>内容质量</td>
+</tr>
+<tr>
+<td><code>article_cta</code></td>
+<td>文章内 CTA</td>
+<td><code>article_id</code>、<code>cta_id(agent/assess)</code></td>
+<td>内容转化</td>
+</tr>
+</tbody></table>
+<h3 id="4-5-ai-助理-ai">4.5 AI 助理（AI）</h3>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>触发时机</th>
+<th>关键参数</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>agent_open</code></td>
+<td>打开助理</td>
+<td><code>entry</code>、<code>plan_name</code>、<code>stage</code>、<code>week</code>、<code>remind_type</code></td>
+<td>入口分布</td>
+</tr>
+<tr>
+<td><code>agent_msg_send</code></td>
+<td>用户发送</td>
+<td><code>entry</code>、<code>msg_index</code>、<code>has_option</code></td>
+<td>会话深度</td>
+</tr>
+<tr>
+<td><code>agent_msg_recv</code></td>
+<td>收到回复</td>
+<td><code>entry</code>、<code>latency</code>、<code>success</code></td>
+<td>服务质量</td>
+</tr>
+<tr>
+<td><code>agent_summary_generate</code></td>
+<td>生成小结</td>
+<td><code>entry</code>、<code>turn_count</code></td>
+<td>价值达成</td>
+</tr>
+<tr>
+<td><code>agent_summary_cta</code></td>
+<td>小结后下一步</td>
+<td><code>entry</code>、<code>cta_id</code></td>
+<td>助理→主链路转化</td>
+</tr>
+</tbody></table>
+<h3 id="4-6-通用技术事件">4.6 通用技术事件</h3>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>track_drop</code></td>
+<td>队列超限丢弃</td>
+</tr>
+<tr>
+<td><code>net_error</code></td>
+<td>接口失败（带 <code>api</code>、<code>code</code>、<code>latency</code>）</td>
+</tr>
+<tr>
+<td><code>page_perf</code></td>
+<td>首屏与可交互耗时</td>
+</tr>
+<tr>
+<td><code>js_error</code></td>
+<td>前端异常（不含用户数据）</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="5-核心漏斗">5. 核心漏斗</h2>
+<table>
+<thead>
+<tr>
+<th>漏斗</th>
+<th>路径</th>
+<th>回答的问题</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>服务状态生效</strong></td>
+<td><code>service_record_sync</code>（成功）→ <code>wcard_pin_view</code> → <code>wcard_state_view</code>（进行中）→ <code>wcard_cta_click</code></td>
+<td>跨渠道用户是否被线上正确识别</td>
+</tr>
+<tr>
+<td><strong>减重成交</strong></td>
+<td><code>wcard_cta_click</code> → <code>assess_complete</code> → <code>plan_view</code> → <code>invoice_view</code> → <code>consent_sign</code> → <code>addr_save</code> → <code>pay_result</code>(success)</td>
+<td>从门户到成交，哪步流失最大</td>
+</tr>
+<tr>
+<td><strong>AI 助理价值</strong></td>
+<td><code>agent_open</code> → <code>agent_msg_send</code> → <code>agent_summary_generate</code> → <code>agent_summary_cta</code></td>
+<td>AI 是否真的推动下一步</td>
+</tr>
+<tr>
+<td><strong>内容影响</strong></td>
+<td><code>edu_list_view</code> → <code>article_read</code> → <code>article_cta</code></td>
+<td>科普对决策的影响</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="6-不报什么-红线">6. 不报什么（红线）</h2>
+<ul>
+<li>报告原文、指标数值、诊断结论</li>
+<li>姓名、手机号、身份证、地址</li>
+<li>聊天内容、处方图片</li>
+</ul>
+<p>用户标识只用 <code>openid</code> / 内部匿名 id。</p>
+<hr>
+<h2 id="7-变更流程">7. 变更流程</h2>
+<ol>
+<li>新需求单产生埋点 → 在本页对应模块<strong>追加行</strong>，注明「来源单」。</li>
+<li>事件名冻结后不得修改；语义变更新增事件并标注旧事件废弃。</li>
+<li>上线前由数据侧按本页核对实现；本页是验收依据。</li>
+</ol>
+<hr>
+<h2 id="8-待补充-后续同步">8. 待补充（后续同步）</h2>
+<ol>
+<li>埋点平台（自建 / 采购）与 SDK 形态</li>
+<li>上报网关域名与鉴权</li>
+<li>批量、重试、采样策略</li>
+<li>数据保存期限</li>
+<li>看板与北极星指标</li>
+</ol>
+
+  </main>
+</div>
+<div class="lb" id="lb" hidden><button class="lb__x" aria-label="关闭">×</button><img id="lbImg" alt=""><p class="lb__tip">原图 · 点击图片或按 Esc 关闭</p></div>
+<script>
+(function(){
+  var lb=document.getElementById('lb'),lbImg=document.getElementById('lbImg');
+  if(!lb) return;
+  function close(){lb.hidden=true;lbImg.src='';document.body.style.overflow='';}
+  document.addEventListener('click',function(e){
+    var img=e.target.closest && e.target.closest('.fig__shot img');
+    if(img){lbImg.src=img.src;lb.hidden=false;document.body.style.overflow='hidden';return;}
+    if(e.target===lb||e.target===lbImg||(e.target.classList&&e.target.classList.contains('lb__x'))) close();
+  });
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!lb.hidden) close();});
+})();
+</script>
+</body>
+</html>

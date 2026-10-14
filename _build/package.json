@@ -1,0 +1,16 @@
+{
+  "name": "req-doc-build",
+  "private": true,
+  "type": "commonjs",
+  "description": "需求单构建工具：md -> HTML（嵌入真实页面截图）",
+  "scripts": {
+    "install-hint": "npm install --registry=https://registry.npmmirror.com",
+    "build": "node build.js",
+    "capture": "node capture.js && node capture2.js && node capture3.js",
+    "verify": "node verify-all.js"
+  },
+  "dependencies": {
+    "marked": "^18.0.13",
+    "playwright-core": "^1.63.0"
+  }
+}
