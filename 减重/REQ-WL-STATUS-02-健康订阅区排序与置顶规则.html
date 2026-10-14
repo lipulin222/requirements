@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>REQ-WL-STATUS-02 · 健康订阅区排序与置顶规则 · 需求单</title>
+<style>
+:root{
+  --ink:#1B2733; --ink-2:#48596A; --ink-3:#7A8A99; --line:#E4E9EE; --line-2:#EFF3F6;
+  --bg:#F6F8FA; --card:#FFFFFF; --brand:#0F7C86; --brand-2:#E7F4F5; --warn:#C2761C; --warn-bg:#FDF3E4;
+  --danger:#B4453C; --danger-bg:#FBEDEB;
+  --radius:14px; --shadow:0 1px 2px rgba(16,32,48,.05),0 8px 24px rgba(16,32,48,.05);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;}
+a{color:var(--brand);text-decoration:none}
+a:hover{text-decoration:underline}
+.topbar{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);}
+.topbar__in{max-width:1320px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.topbar__back{font-size:13px;color:var(--ink-2);border:1px solid var(--line);border-radius:999px;padding:4px 12px;background:#fff;white-space:nowrap}
+.topbar__back:hover{text-decoration:none;border-color:var(--brand);color:var(--brand)}
+.badge{font-size:12px;line-height:1;padding:5px 10px;border-radius:999px;background:var(--brand-2);color:var(--brand);font-weight:600;white-space:nowrap}
+.badge--warn{background:var(--warn-bg);color:var(--warn)}
+.badge--p0{background:var(--danger-bg);color:var(--danger)}
+.topbar__title{font-size:14px;font-weight:600;color:var(--ink)}
+.wrap{max-width:1320px;margin:0 auto;padding:26px 24px 80px;display:grid;grid-template-columns:258px minmax(0,1fr);gap:34px;align-items:start}
+.toc{position:sticky;top:70px;max-height:calc(100vh - 96px);overflow:auto;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 14px;box-shadow:var(--shadow)}
+.toc__h{font-size:11px;letter-spacing:.12em;color:var(--ink-3);text-transform:uppercase;margin:0 0 10px}
+.toc ol{list-style:none;margin:0;padding:0}
+.toc li{margin:2px 0}
+.toc a{display:block;padding:5px 8px;border-radius:8px;font-size:13px;color:var(--ink-2);line-height:1.45}
+.toc a:hover{background:var(--line-2);text-decoration:none;color:var(--brand)}
+.toc .lv3 a{padding-left:20px;font-size:12.5px;color:var(--ink-3)}
+.doc{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:34px 40px 46px;box-shadow:var(--shadow);min-width:0}
+.doc h1{font-size:26px;line-height:1.35;margin:0 0 6px;letter-spacing:-.01em}
+.doc .subtitle{color:var(--ink-3);font-size:13px;margin:0 0 22px}
+.doc h2{font-size:19px;margin:44px 0 14px;padding-bottom:10px;border-bottom:1px solid var(--line);scroll-margin-top:78px}
+.doc h3{font-size:15.5px;margin:26px 0 10px;scroll-margin-top:78px}
+.doc p{margin:10px 0;color:var(--ink-2)}
+.doc strong{color:var(--ink)}
+.doc ul,.doc ol{padding-left:1.35em;color:var(--ink-2)}
+.doc li{margin:5px 0}
+.doc li:has(> input[type=checkbox]){list-style:none;margin-left:-1.35em;display:flex;gap:9px;align-items:flex-start;color:var(--ink)}
+.doc input[type=checkbox]{flex:none;width:16px;height:16px;margin:5px 0 0;border-radius:4px;accent-color:var(--brand)}
+.doc code{background:#F1F5F8;border:1px solid var(--line-2);border-radius:5px;padding:1px 5px;font-size:12.5px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#20465A}
+.doc pre{background:#F7FAFB;border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow:auto}
+.doc pre code{background:none;border:0;padding:0;font-size:12.5px;color:var(--ink-2)}
+.doc blockquote{margin:14px 0;padding:10px 16px;background:#FFFBF0;border-left:3px solid #E9C683;border-radius:0 10px 10px 0}
+.doc blockquote p{margin:4px 0;color:#7A5C1E}
+.doc hr{border:0;border-top:1px dashed var(--line);margin:26px 0}
+.doc table{width:100%;border-collapse:separate;border-spacing:0;margin:16px 0;font-size:13.5px;display:block;overflow-x:auto}
+.doc thead th{background:#F3F7F9;color:var(--ink);font-weight:600;text-align:left;white-space:nowrap}
+.doc th,.doc td{border-bottom:1px solid var(--line-2);padding:9px 12px;vertical-align:top;color:var(--ink-2)}
+.doc tbody tr:last-child td{border-bottom:0}
+.doc tbody tr:hover td{background:#FAFCFD}
+/* 关联需求单 chip */
+.doc a.xref{display:inline-block;padding:1px 8px;margin:1px 0;border-radius:7px;background:var(--brand-2);color:var(--brand);
+  font-weight:600;font-size:12.5px;border:1px solid #CFE7E9;white-space:nowrap}
+.doc a.xref:hover{background:#D6EDEF;text-decoration:none;border-color:var(--brand)}
+.doc .xref--self{display:inline-block;padding:1px 8px;border-radius:7px;background:#F1F5F8;color:var(--ink-3);
+  font-weight:600;font-size:12.5px;border:1px solid var(--line);white-space:nowrap}
+.figs{margin:22px 0 6px;display:grid;gap:18px}
+.figs__h{font-size:12px;letter-spacing:.1em;color:var(--ink-3);text-transform:uppercase;margin:0}
+.fig{margin:0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:#fff}
+.fig__shot{max-height:520px;overflow:auto;background:#F1F5F7}
+.fig__shot img{display:block;width:100%;height:auto;cursor:zoom-in}
+.fig figcaption{padding:10px 14px;font-size:12.5px;color:var(--ink-2);border-top:1px solid var(--line-2);background:#FBFDFE;display:flex;gap:10px;align-items:baseline}
+.fig figcaption b{color:var(--brand);font-weight:600;flex:none}
+.fig figcaption em{margin-left:auto;font-style:normal;color:var(--ink-3);font-size:11.5px;white-space:nowrap;flex:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:14px}
+.grid .fig__shot{max-height:none;overflow:visible}
+.grid figcaption{display:block;font-size:12px;padding:8px 11px}
+.grid figcaption em{display:none}
+.lb{position:fixed;inset:0;z-index:99;background:rgba(12,22,30,.92);display:flex;align-items:center;justify-content:center;padding:28px}
+.lb[hidden]{display:none}
+.lb img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,.5);background:#fff;cursor:zoom-out}
+.lb__x{position:absolute;top:16px;right:20px;width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.14);
+  color:#fff;font-size:22px;line-height:1;cursor:pointer}
+.lb__x:hover{background:rgba(255,255,255,.26)}
+.lb__tip{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);color:#CBD6DE;font-size:12px}
+/* 索引页 */
+.hero{max-width:1320px;margin:0 auto;padding:38px 24px 6px}
+.hero h1{margin:0 0 10px;font-size:30px;letter-spacing:-.02em}
+.hero p{margin:0 0 8px;color:var(--ink-2);max-width:900px}
+.stats{display:flex;gap:28px;margin:20px 0 0;flex-wrap:wrap}
+.stat b{display:block;font-size:24px;color:var(--brand);line-height:1.2}
+.stat span{font-size:12.5px;color:var(--ink-3)}
+.callout{max-width:1320px;margin:22px auto 0;padding:0 24px}
+.callout__in{background:linear-gradient(135deg,#FFF7EC,#FDF1E3);border:1px solid #F0D9B4;border-radius:var(--radius);padding:16px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.callout__in b{color:#8A5A15}
+.callout__in a{margin-left:auto;font-weight:600}
+.sec{max-width:1320px;margin:0 auto;padding:8px 24px}
+.sec__h{display:flex;align-items:baseline;gap:12px;margin:32px 0 16px}
+.sec__h h2{margin:0;font-size:19px}
+.sec__h span{font-size:12.5px;color:var(--ink-3)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:18px}
+.rcard{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden;box-shadow:var(--shadow);transition:transform .16s ease,box-shadow .16s ease}
+.rcard:hover{transform:translateY(-2px);box-shadow:0 2px 4px rgba(16,32,48,.06),0 14px 32px rgba(16,32,48,.09);text-decoration:none}
+.rcard__cover{height:132px;background:#EFF4F6;overflow:hidden;border-bottom:1px solid var(--line-2);position:relative}
+.rcard__cover img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+.rcard__cover--ph{display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#0F7C86,#14A0A8);color:#fff;font-weight:700;font-size:15px;letter-spacing:.04em}
+.rcard__b{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
+.rcard__t{font-size:14.5px;font-weight:600;color:var(--ink);line-height:1.45}
+.rcard__d{font-size:12.5px;color:var(--ink-3);line-height:1.6}
+.rcard__f{margin-top:auto;padding-top:10px;display:flex;gap:8px;align-items:center;font-size:11.5px;color:var(--ink-3)}
+.note{max-width:1320px;margin:32px auto 0;padding:0 24px 70px}
+.note__in{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px 22px;color:var(--ink-2);font-size:13px;box-shadow:var(--shadow)}
+.note__in b{color:var(--ink)}
+footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);font-size:12px}
+@media (max-width:1080px){
+  .wrap{grid-template-columns:1fr;gap:20px;padding-top:20px}
+  .toc{position:static;max-height:none}
+  .doc{padding:26px 20px 34px}
+  .fig__shot{max-height:400px}
+}
+@media print{
+  .topbar,.toc,.lb{display:none}
+  .wrap{display:block;padding:0;max-width:none}
+  .doc{border:0;box-shadow:none;padding:0}
+  .fig__shot{max-height:none;overflow:visible}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar__in">
+    <a class="topbar__back" href="../index.html">← 需求单索引</a>
+    <span class="badge">科学减重（WL）</span>
+    <span class="badge badge--p0">优先级 P0</span>
+    <span class="topbar__title">REQ-WL-STATUS-02 · 健康订阅区排序与置顶规则</span>
+  </div>
+</header>
+<div class="wrap">
+  <nav class="toc">
+    <p class="toc__h">本单目录</p>
+    <ol><li class="lv2"><a href="#1-背景与目标">1. 背景与目标</a></li>
+<li class="lv2"><a href="#2-规则">2. 规则</a></li>
+<li class="lv3"><a href="#2-1-排序优先级">2.1 排序优先级</a></li>
+<li class="lv3"><a href="#2-2-置顶的影响面">2.2 置顶的影响面</a></li>
+<li class="lv3"><a href="#2-3-默认顺序与空态">2.3 默认顺序与空态</a></li>
+<li class="lv3"><a href="#2-4-配置化">2.4 配置化</a></li>
+<li class="lv2"><a href="#3-字段与接口">3. 字段与接口</a></li>
+<li class="lv3"><a href="#接口">接口</a></li>
+<li class="lv3"><a href="#字段">字段</a></li>
+<li class="lv2"><a href="#4-验收与上线要求">4. 验收与上线要求</a></li>
+<li class="lv2"><a href="#5-依赖与风险">5. 依赖与风险</a></li>
+<li class="lv2"><a href="#6-待决策">6. 待决策</a></li></ol>
+  </nav>
+  <main class="doc">
+    <h1>REQ-WL-STATUS-02 · 健康订阅区排序与置顶规则</h1>
+    <p class="subtitle">需求单 · 科学减重（WL） · 交付目标：可上线面向用户使用（H5 + 微信小程序）</p>
+    <blockquote>
+<p>编号 <code>REQ-WL-STATUS-02</code> ｜ 项目：科学减重（WL）｜ 模块：服务状态与卡片 ｜ 优先级 P0 ｜ 状态：待评审
+相关 Demo：<a href="https://lipulin222.github.io/online-health-care/online-service.html">线上服务页</a>
+埋点：见 <code>REQ-WL-BASE-01 数据上报规范</code> ｜ 上线基线：见 <code>REQ-WL-BASE-02</code></p>
+</blockquote>
+<hr>
+<h2 id="1-背景与目标">1. 背景与目标</h2>
+<p><strong>问题</strong>：健康订阅区（原专项健康管理）里有减重、过敏、痤疮、心理等多张专项卡，目前顺序写死——减重卡即使在服务中也可能排在后面，未上线的专项也会占位。</p>
+<p><strong>目标</strong>：明确多张卡之间的排序规则——判定成立的减重卡置顶，其余卡按服务端下发顺序排，未上线专项不渲染，无服务中卡片时走默认顺序并给引导。</p>
+<blockquote>
+<p>本单只管<strong>卡与卡之间</strong>的顺序；「是否服务中」由 <code>STATUS-01</code> 判定，「单张卡内部渲染」由 <code>STATUS-03</code> 定义。</p>
+</blockquote>
+<hr>
+<h2 id="2-规则">2. 规则</h2>
+<h3 id="2-1-排序优先级">2.1 排序优先级</h3>
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td><strong><code>STATUS-01</code> 判定成立</strong>（进行中 / 维持期）的减重卡 → <strong>置顶</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td>其余专项卡按服务端下发的 <code>order</code> <strong>升序</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>order</code> 相同 → 按<strong>最近活跃时间倒序</strong></td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>未上线 / 未配置的专项不渲染</strong>，不占位置</td>
+</tr>
+</tbody></table>
+<ul>
+<li>同一时间<strong>最多一张置顶卡</strong>。</li>
+<li>若多张专项同时处于服务中：取「最近一次服务开始时间最晚」的置顶，其余按序排后。</li>
+</ul>
+<h3 id="2-2-置顶的影响面">2.2 置顶的影响面</h3>
+<ul>
+<li><strong>只改顺序</strong>：不改卡片结构，不影响其他卡可见性。</li>
+<li>其他专项卡<strong>仍然可见</strong>（滚动可及），不折叠、不隐藏。</li>
+<li>置顶必须在<strong>首屏渲染前</strong>确定（服务端预判定或骨架屏），<strong>禁止卡片位置跳动</strong>。</li>
+</ul>
+<h3 id="2-3-默认顺序与空态">2.3 默认顺序与空态</h3>
+<ul>
+<li>判定数据不可用（接口超时/失败）→ 按服务端<strong>默认顺序</strong>渲染，<strong>不置顶</strong>，并上报 <code>service_detect_fail</code>。</li>
+<li>无任何专项卡片 → 展示新客引导，<strong>不留白块</strong>。</li>
+</ul>
+<h3 id="2-4-配置化">2.4 配置化</h3>
+<ul>
+<li>专项列表、是否上线、<code>order</code> 全部由<strong>服务端配置下发</strong>，前端不写死。</li>
+<li>卡片数量上限与折叠策略由服务端配置控制。</li>
+</ul>
+<hr>
+<h2 id="3-字段与接口">3. 字段与接口</h2>
+<h3 id="接口">接口</h3>
+<p><code>GET /health/subscriptions</code></p>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>请求参数</td>
+<td><code>user_id</code>、<code>platform</code>（<code>h5</code> / <code>wxapp</code>）</td>
+</tr>
+<tr>
+<td>响应</td>
+<td><code>cards[]</code>、<code>pinned_card</code>、<code>default_order[]</code></td>
+</tr>
+<tr>
+<td>异常码</td>
+<td><code>401/403</code> 未授权 → 跳登录；<code>500</code> → 降级默认顺序；<code>timeout</code> → 降级默认顺序</td>
+</tr>
+<tr>
+<td>降级</td>
+<td>接口失败一律按 <code>default_order</code> 渲染且不置顶，不阻塞页面</td>
+</tr>
+</tbody></table>
+<h3 id="字段">字段</h3>
+<p><code>cards[]</code> 单项：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>type</code></td>
+<td>专项类型（<code>weight</code> / <code>allergy</code> / …）</td>
+</tr>
+<tr>
+<td><code>in_service</code></td>
+<td>是否服务中（来自 <code>STATUS-01</code> 判定）</td>
+</tr>
+<tr>
+<td><code>stage</code></td>
+<td><code>未开始 / 进行中 / 维持期 / 已结束</code></td>
+</tr>
+<tr>
+<td><code>pinned</code></td>
+<td>是否置顶（服务端算好的最终结果，前端直接用）</td>
+</tr>
+<tr>
+<td><code>order</code></td>
+<td>排序权重</td>
+</tr>
+<tr>
+<td><code>title</code> / <code>status_text</code></td>
+<td>卡标题 / 状态文案</td>
+</tr>
+<tr>
+<td><code>cta</code></td>
+<td>主行动（由 <code>STATUS-03</code> 定义内容）</td>
+</tr>
+</tbody></table>
+<p><code>pinned_card</code>：置顶卡类型，无则 <code>null</code>。</p>
+<hr>
+<h2 id="4-验收与上线要求">4. 验收与上线要求</h2>
+<p><strong>验收清单</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> 判定成立的减重卡排在第一位</li>
+<li><input disabled="" type="checkbox"> 其他专项卡仍可见，只是排序在后，未被隐藏</li>
+<li><input disabled="" type="checkbox"> 未上线专项不渲染</li>
+<li><input disabled="" type="checkbox"> 接口失败时按默认顺序渲染且不置顶，页面其余部分正常</li>
+<li><input disabled="" type="checkbox"> 无任何卡片时展示引导，无白块</li>
+<li><input disabled="" type="checkbox"> 专项列表与 <code>order</code> 来自服务端配置，前端无硬编码顺序</li>
+<li><input disabled="" type="checkbox"> 限速 Slow 3G 下打开页面，卡片从出现到稳定<strong>无位移</strong></li>
+<li><input disabled="" type="checkbox"> 多张卡同时服务中时，取「最近开始」的置顶</li>
+</ul>
+<p><strong>上线要求（本单特有）</strong></p>
+<ol>
+<li>排序结果由服务端计算并下发 <code>pinned</code>，前端不自行判断优先级。</li>
+<li>订阅区数据与首屏数据合并下发，避免二次请求导致跳动。</li>
+<li>小程序与 H5 两端顺序一致。</li>
+</ol>
+<hr>
+<h2 id="5-依赖与风险">5. 依赖与风险</h2>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>说明</th>
+<th>应对</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>依赖 <code>STATUS-01</code></td>
+<td>置顶前提是判定成立</td>
+<td>本单只消费 <code>in_service</code> / <code>pinned</code></td>
+</tr>
+<tr>
+<td>依赖 <code>STATUS-03</code></td>
+<td>卡片内容由该单定义</td>
+<td>本单只定顺序</td>
+</tr>
+<tr>
+<td>配置错误导致排序混乱</td>
+<td>服务端 <code>order</code> 配置错误会直接反映到首屏</td>
+<td>配置需可观测，异常可快速回滚</td>
+</tr>
+<tr>
+<td>未上线专项占位</td>
+<td>早期版本会渲染未上线专项</td>
+<td>服务端不下发即不渲染</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="6-待决策">6. 待决策</h2>
+<ol>
+<li>除减重外的其他专项（过敏/痤疮/心理）本期是否上线？不上线则订阅区只有减重卡，是否还需要排序规则？</li>
+<li>置顶卡数量上限是否固定为 1 张？未来若多个专项都要置顶怎么处理？</li>
+<li>卡片数量超过几张时是否折叠？折叠规则由运营配置还是产品定死？</li>
+<li>「最近活跃时间」的定义（最后点击时间 / 最后服务时间 / 创建时间）以哪个为准？</li>
+</ol>
+
+  </main>
+</div>
+<div class="lb" id="lb" hidden><button class="lb__x" aria-label="关闭">×</button><img id="lbImg" alt=""><p class="lb__tip">原图 · 点击图片或按 Esc 关闭</p></div>
+<script>
+(function(){
+  var lb=document.getElementById('lb'),lbImg=document.getElementById('lbImg');
+  if(!lb) return;
+  function close(){lb.hidden=true;lbImg.src='';document.body.style.overflow='';}
+  document.addEventListener('click',function(e){
+    var img=e.target.closest && e.target.closest('.fig__shot img');
+    if(img){lbImg.src=img.src;lb.hidden=false;document.body.style.overflow='hidden';return;}
+    if(e.target===lb||e.target===lbImg||(e.target.classList&&e.target.classList.contains('lb__x'))) close();
+  });
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!lb.hidden) close();});
+})();
+</script>
+</body>
+</html>

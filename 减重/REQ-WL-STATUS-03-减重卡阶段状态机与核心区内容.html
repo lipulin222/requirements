@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>REQ-WL-STATUS-03 · 减重卡阶段状态机与核心区内容 · 需求单</title>
+<style>
+:root{
+  --ink:#1B2733; --ink-2:#48596A; --ink-3:#7A8A99; --line:#E4E9EE; --line-2:#EFF3F6;
+  --bg:#F6F8FA; --card:#FFFFFF; --brand:#0F7C86; --brand-2:#E7F4F5; --warn:#C2761C; --warn-bg:#FDF3E4;
+  --danger:#B4453C; --danger-bg:#FBEDEB;
+  --radius:14px; --shadow:0 1px 2px rgba(16,32,48,.05),0 8px 24px rgba(16,32,48,.05);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;}
+a{color:var(--brand);text-decoration:none}
+a:hover{text-decoration:underline}
+.topbar{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);}
+.topbar__in{max-width:1320px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.topbar__back{font-size:13px;color:var(--ink-2);border:1px solid var(--line);border-radius:999px;padding:4px 12px;background:#fff;white-space:nowrap}
+.topbar__back:hover{text-decoration:none;border-color:var(--brand);color:var(--brand)}
+.badge{font-size:12px;line-height:1;padding:5px 10px;border-radius:999px;background:var(--brand-2);color:var(--brand);font-weight:600;white-space:nowrap}
+.badge--warn{background:var(--warn-bg);color:var(--warn)}
+.badge--p0{background:var(--danger-bg);color:var(--danger)}
+.topbar__title{font-size:14px;font-weight:600;color:var(--ink)}
+.wrap{max-width:1320px;margin:0 auto;padding:26px 24px 80px;display:grid;grid-template-columns:258px minmax(0,1fr);gap:34px;align-items:start}
+.toc{position:sticky;top:70px;max-height:calc(100vh - 96px);overflow:auto;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 14px;box-shadow:var(--shadow)}
+.toc__h{font-size:11px;letter-spacing:.12em;color:var(--ink-3);text-transform:uppercase;margin:0 0 10px}
+.toc ol{list-style:none;margin:0;padding:0}
+.toc li{margin:2px 0}
+.toc a{display:block;padding:5px 8px;border-radius:8px;font-size:13px;color:var(--ink-2);line-height:1.45}
+.toc a:hover{background:var(--line-2);text-decoration:none;color:var(--brand)}
+.toc .lv3 a{padding-left:20px;font-size:12.5px;color:var(--ink-3)}
+.doc{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:34px 40px 46px;box-shadow:var(--shadow);min-width:0}
+.doc h1{font-size:26px;line-height:1.35;margin:0 0 6px;letter-spacing:-.01em}
+.doc .subtitle{color:var(--ink-3);font-size:13px;margin:0 0 22px}
+.doc h2{font-size:19px;margin:44px 0 14px;padding-bottom:10px;border-bottom:1px solid var(--line);scroll-margin-top:78px}
+.doc h3{font-size:15.5px;margin:26px 0 10px;scroll-margin-top:78px}
+.doc p{margin:10px 0;color:var(--ink-2)}
+.doc strong{color:var(--ink)}
+.doc ul,.doc ol{padding-left:1.35em;color:var(--ink-2)}
+.doc li{margin:5px 0}
+.doc li:has(> input[type=checkbox]){list-style:none;margin-left:-1.35em;display:flex;gap:9px;align-items:flex-start;color:var(--ink)}
+.doc input[type=checkbox]{flex:none;width:16px;height:16px;margin:5px 0 0;border-radius:4px;accent-color:var(--brand)}
+.doc code{background:#F1F5F8;border:1px solid var(--line-2);border-radius:5px;padding:1px 5px;font-size:12.5px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#20465A}
+.doc pre{background:#F7FAFB;border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow:auto}
+.doc pre code{background:none;border:0;padding:0;font-size:12.5px;color:var(--ink-2)}
+.doc blockquote{margin:14px 0;padding:10px 16px;background:#FFFBF0;border-left:3px solid #E9C683;border-radius:0 10px 10px 0}
+.doc blockquote p{margin:4px 0;color:#7A5C1E}
+.doc hr{border:0;border-top:1px dashed var(--line);margin:26px 0}
+.doc table{width:100%;border-collapse:separate;border-spacing:0;margin:16px 0;font-size:13.5px;display:block;overflow-x:auto}
+.doc thead th{background:#F3F7F9;color:var(--ink);font-weight:600;text-align:left;white-space:nowrap}
+.doc th,.doc td{border-bottom:1px solid var(--line-2);padding:9px 12px;vertical-align:top;color:var(--ink-2)}
+.doc tbody tr:last-child td{border-bottom:0}
+.doc tbody tr:hover td{background:#FAFCFD}
+/* 关联需求单 chip */
+.doc a.xref{display:inline-block;padding:1px 8px;margin:1px 0;border-radius:7px;background:var(--brand-2);color:var(--brand);
+  font-weight:600;font-size:12.5px;border:1px solid #CFE7E9;white-space:nowrap}
+.doc a.xref:hover{background:#D6EDEF;text-decoration:none;border-color:var(--brand)}
+.doc .xref--self{display:inline-block;padding:1px 8px;border-radius:7px;background:#F1F5F8;color:var(--ink-3);
+  font-weight:600;font-size:12.5px;border:1px solid var(--line);white-space:nowrap}
+.figs{margin:22px 0 6px;display:grid;gap:18px}
+.figs__h{font-size:12px;letter-spacing:.1em;color:var(--ink-3);text-transform:uppercase;margin:0}
+.fig{margin:0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:#fff}
+.fig__shot{max-height:520px;overflow:auto;background:#F1F5F7}
+.fig__shot img{display:block;width:100%;height:auto;cursor:zoom-in}
+.fig figcaption{padding:10px 14px;font-size:12.5px;color:var(--ink-2);border-top:1px solid var(--line-2);background:#FBFDFE;display:flex;gap:10px;align-items:baseline}
+.fig figcaption b{color:var(--brand);font-weight:600;flex:none}
+.fig figcaption em{margin-left:auto;font-style:normal;color:var(--ink-3);font-size:11.5px;white-space:nowrap;flex:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:14px}
+.grid .fig__shot{max-height:none;overflow:visible}
+.grid figcaption{display:block;font-size:12px;padding:8px 11px}
+.grid figcaption em{display:none}
+.lb{position:fixed;inset:0;z-index:99;background:rgba(12,22,30,.92);display:flex;align-items:center;justify-content:center;padding:28px}
+.lb[hidden]{display:none}
+.lb img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,.5);background:#fff;cursor:zoom-out}
+.lb__x{position:absolute;top:16px;right:20px;width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.14);
+  color:#fff;font-size:22px;line-height:1;cursor:pointer}
+.lb__x:hover{background:rgba(255,255,255,.26)}
+.lb__tip{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);color:#CBD6DE;font-size:12px}
+/* 索引页 */
+.hero{max-width:1320px;margin:0 auto;padding:38px 24px 6px}
+.hero h1{margin:0 0 10px;font-size:30px;letter-spacing:-.02em}
+.hero p{margin:0 0 8px;color:var(--ink-2);max-width:900px}
+.stats{display:flex;gap:28px;margin:20px 0 0;flex-wrap:wrap}
+.stat b{display:block;font-size:24px;color:var(--brand);line-height:1.2}
+.stat span{font-size:12.5px;color:var(--ink-3)}
+.callout{max-width:1320px;margin:22px auto 0;padding:0 24px}
+.callout__in{background:linear-gradient(135deg,#FFF7EC,#FDF1E3);border:1px solid #F0D9B4;border-radius:var(--radius);padding:16px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.callout__in b{color:#8A5A15}
+.callout__in a{margin-left:auto;font-weight:600}
+.sec{max-width:1320px;margin:0 auto;padding:8px 24px}
+.sec__h{display:flex;align-items:baseline;gap:12px;margin:32px 0 16px}
+.sec__h h2{margin:0;font-size:19px}
+.sec__h span{font-size:12.5px;color:var(--ink-3)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:18px}
+.rcard{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden;box-shadow:var(--shadow);transition:transform .16s ease,box-shadow .16s ease}
+.rcard:hover{transform:translateY(-2px);box-shadow:0 2px 4px rgba(16,32,48,.06),0 14px 32px rgba(16,32,48,.09);text-decoration:none}
+.rcard__cover{height:132px;background:#EFF4F6;overflow:hidden;border-bottom:1px solid var(--line-2);position:relative}
+.rcard__cover img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+.rcard__cover--ph{display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#0F7C86,#14A0A8);color:#fff;font-weight:700;font-size:15px;letter-spacing:.04em}
+.rcard__b{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
+.rcard__t{font-size:14.5px;font-weight:600;color:var(--ink);line-height:1.45}
+.rcard__d{font-size:12.5px;color:var(--ink-3);line-height:1.6}
+.rcard__f{margin-top:auto;padding-top:10px;display:flex;gap:8px;align-items:center;font-size:11.5px;color:var(--ink-3)}
+.note{max-width:1320px;margin:32px auto 0;padding:0 24px 70px}
+.note__in{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px 22px;color:var(--ink-2);font-size:13px;box-shadow:var(--shadow)}
+.note__in b{color:var(--ink)}
+footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);font-size:12px}
+@media (max-width:1080px){
+  .wrap{grid-template-columns:1fr;gap:20px;padding-top:20px}
+  .toc{position:static;max-height:none}
+  .doc{padding:26px 20px 34px}
+  .fig__shot{max-height:400px}
+}
+@media print{
+  .topbar,.toc,.lb{display:none}
+  .wrap{display:block;padding:0;max-width:none}
+  .doc{border:0;box-shadow:none;padding:0}
+  .fig__shot{max-height:none;overflow:visible}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar__in">
+    <a class="topbar__back" href="../index.html">← 需求单索引</a>
+    <span class="badge">科学减重（WL）</span>
+    <span class="badge badge--p0">优先级 P0</span>
+    <span class="topbar__title">REQ-WL-STATUS-03 · 减重卡阶段状态机与核心区内容</span>
+  </div>
+</header>
+<div class="wrap">
+  <nav class="toc">
+    <p class="toc__h">本单目录</p>
+    <ol><li class="lv2"><a href="#1-背景与目标">1. 背景与目标</a></li>
+<li class="lv2"><a href="#2-规则">2. 规则</a></li>
+<li class="lv3"><a href="#2-1-阶段定义与流转">2.1 阶段定义与流转</a></li>
+<li class="lv3"><a href="#2-2-各阶段核心区内容">2.2 各阶段核心区内容</a></li>
+<li class="lv3"><a href="#2-3-cta-规则">2.3 CTA 规则</a></li>
+<li class="lv3"><a href="#2-4-数据缺失降级">2.4 数据缺失降级</a></li>
+<li class="lv3"><a href="#2-5-禁止项">2.5 禁止项</a></li>
+<li class="lv2"><a href="#3-字段与接口">3. 字段与接口</a></li>
+<li class="lv3"><a href="#接口">接口</a></li>
+<li class="lv3"><a href="#字段">字段</a></li>
+<li class="lv2"><a href="#4-验收与上线要求">4. 验收与上线要求</a></li>
+<li class="lv2"><a href="#5-依赖与风险">5. 依赖与风险</a></li>
+<li class="lv2"><a href="#6-待决策">6. 待决策</a></li></ol>
+  </nav>
+  <main class="doc">
+    <h1>REQ-WL-STATUS-03 · 减重卡阶段状态机与核心区内容</h1>
+    <p class="subtitle">需求单 · 科学减重（WL） · 交付目标：可上线面向用户使用（H5 + 微信小程序）</p>
+    <blockquote>
+<p>编号 <code>REQ-WL-STATUS-03</code> ｜ 项目：科学减重（WL）｜ 模块：服务状态与卡片 ｜ 优先级 P0 ｜ 状态：待评审
+相关 Demo：<a href="https://lipulin222.github.io/online-health-care/online-service.html">线上服务页</a> ｜ <a href="https://lipulin222.github.io/online-health-care/weight-management/Weight-loss-Assistant/index.html">AI 减重助理</a>
+埋点：见 <code>REQ-WL-BASE-01 数据上报规范</code> ｜ 上线基线：见 <code>REQ-WL-BASE-02</code></p>
+</blockquote>
+<hr>
+<h2 id="1-背景与目标">1. 背景与目标</h2>
+<p><strong>问题</strong>：减重卡在服务周期内会经历多个阶段，不同阶段应展示不同内容；目前卡片内容写死，且服务中用户可能看到与真实进度不符的内容。</p>
+<p><strong>目标</strong>：<strong>阶段由服务端计算</strong>，前端按阶段渲染核心区模块与 CTA；数据缺失时按规则降级，不编造、不留白。</p>
+<blockquote>
+<p>本单只管<strong>单张卡内部</strong>的渲染；「是否服务中」由 <code>STATUS-01</code> 判定，「卡与卡之间的顺序」由 <code>STATUS-02</code> 定义。</p>
+</blockquote>
+<hr>
+<h2 id="2-规则">2. 规则</h2>
+<h3 id="2-1-阶段定义与流转">2.1 阶段定义与流转</h3>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>进入条件</th>
+<th>状态标签</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>未开始</td>
+<td>无有效处方或支付（<code>STATUS-01</code> 判定不成立）</td>
+<td>未开始（灰）</td>
+</tr>
+<tr>
+<td><strong>进行中</strong></td>
+<td><code>STATUS-01</code> 判定成立</td>
+<td>进行中（teal）</td>
+</tr>
+<tr>
+<td>维持期</td>
+<td>服务期结束（按剂量周期，见 <code>STATUS-01</code>）</td>
+<td>维持期（绿）</td>
+</tr>
+<tr>
+<td>已结束</td>
+<td>维持期满 2 个月</td>
+<td>已结束（灰）</td>
+</tr>
+</tbody></table>
+<ul>
+<li>流转<strong>单向</strong>：未开始 → 进行中 → 维持期 → 已结束。</li>
+<li><strong>例外</strong>：退款 / 处方作废 → 回退到「未开始」。</li>
+<li>续费不重置阶段，只更新月序与剂量（见 <code>STATUS-01</code>）。</li>
+</ul>
+<h3 id="2-2-各阶段核心区内容">2.2 各阶段核心区内容</h3>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>核心区模块</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>未开始</td>
+<td>科普入口 + 用药适应性评估入口 + AI 助理</td>
+</tr>
+<tr>
+<td>进行中</td>
+<td>方案名 + 当前月序/剂量 + 体重变化（有数据才显示）+ 知识库入口 + 主 CTA</td>
+</tr>
+<tr>
+<td>维持期</td>
+<td>成果数据（体重/腰围变化）+ 维持建议 + 复查入口</td>
+</tr>
+<tr>
+<td>已结束</td>
+<td>回顾入口 + 再次购买入口（不置顶）</td>
+</tr>
+</tbody></table>
+<h3 id="2-3-cta-规则">2.3 CTA 规则</h3>
+<ul>
+<li><strong>一卡一行动</strong>：每阶段至多 <strong>1 个主 CTA</strong>，其余为次行动。</li>
+<li>CTA 由服务端下发，前端不写死文案与目标。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>建议主 CTA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>未开始</td>
+<td>用药适应性评估</td>
+</tr>
+<tr>
+<td>进行中</td>
+<td>AI 减重助理 / 记录数据（按阶段进度由服务端给）</td>
+</tr>
+<tr>
+<td>维持期</td>
+<td>复查预约</td>
+</tr>
+<tr>
+<td>已结束</td>
+<td>再次购买</td>
+</tr>
+</tbody></table>
+<h3 id="2-4-数据缺失降级">2.4 数据缺失降级</h3>
+<ul>
+<li>月序/剂量能算则显示，<strong>算不出就隐藏该模块</strong>，不显示占位数字。</li>
+<li>体重变化<strong>无数据则隐藏</strong>，<strong>不得编造</strong>、不留白块。</li>
+<li>接口失败 → 保留卡片骨架 + 重试入口，<strong>卡片不消失</strong>，页面其余部分正常。</li>
+</ul>
+<h3 id="2-5-禁止项">2.5 禁止项</h3>
+<ul>
+<li>不向用户展示<strong>阶段编号、进度条</strong>等内部信息。</li>
+<li>判定成立时<strong>不得显示「未开始」</strong>。</li>
+<li>不出现红点、倒计时、限时等施压元素。</li>
+<li>不承诺具体减重斤数。</li>
+</ul>
+<hr>
+<h2 id="3-字段与接口">3. 字段与接口</h2>
+<h3 id="接口">接口</h3>
+<p><code>GET /weight/card</code></p>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>请求参数</td>
+<td><code>user_id</code>、<code>platform</code></td>
+</tr>
+<tr>
+<td>响应</td>
+<td><code>stage</code>、<code>plan_id</code>、<code>month_index</code>、<code>dose_mg</code>、<code>weight_delta</code>、<code>kb_items[]</code>、<code>ctas[]</code>、<code>pinned</code></td>
+</tr>
+<tr>
+<td>异常码</td>
+<td><code>401/403</code> → 跳登录；<code>404</code> 无卡片 → 不渲染；<code>500/timeout</code> → 骨架 + 重试</td>
+</tr>
+<tr>
+<td>降级</td>
+<td>接口失败保留骨架与重试，不隐藏卡片</td>
+</tr>
+</tbody></table>
+<h3 id="字段">字段</h3>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>stage</code></td>
+<td><code>未开始 / 进行中 / 维持期 / 已结束</code></td>
+</tr>
+<tr>
+<td><code>plan_id</code></td>
+<td>方案标识</td>
+</tr>
+<tr>
+<td><code>month_index</code></td>
+<td>当前月序（按剂量爬坡推算，见 <code>STATUS-01</code>）</td>
+</tr>
+<tr>
+<td><code>dose_mg</code></td>
+<td>当前剂量（mg/周）</td>
+</tr>
+<tr>
+<td><code>weight_delta</code></td>
+<td>体重变化（无数据为 <code>null</code>）</td>
+</tr>
+<tr>
+<td><code>kb_items[]</code></td>
+<td>知识库入口条目（文章 id + 标题）</td>
+</tr>
+<tr>
+<td><code>ctas[]</code></td>
+<td>行动按钮（<code>id</code>、<code>text</code>、<code>target</code>、<code>is_primary</code>）</td>
+</tr>
+<tr>
+<td><code>pinned</code></td>
+<td>是否置顶（由 <code>STATUS-02</code> 消费）</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="4-验收与上线要求">4. 验收与上线要求</h2>
+<p><strong>验收清单</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> 阶段由服务端返回，前端无阶段判断逻辑</li>
+<li><input disabled="" type="checkbox"> 四个阶段的核心区模块按 2.2 渲染，CTA 按 2.3 且只有一个主行动</li>
+<li><input disabled="" type="checkbox"> 判定成立时不出现「未开始」</li>
+<li><input disabled="" type="checkbox"> 月序/剂量缺失时隐藏该模块，不显示占位数字</li>
+<li><input disabled="" type="checkbox"> 体重无数据时隐藏，不编造</li>
+<li><input disabled="" type="checkbox"> 接口失败保留骨架 + 重试，卡片不消失</li>
+<li><input disabled="" type="checkbox"> 退款/作废后阶段回退到「未开始」</li>
+<li><input disabled="" type="checkbox"> 续费不重置阶段，只更新月序与剂量</li>
+<li><input disabled="" type="checkbox"> UI 无阶段编号、进度条、红点、倒计时</li>
+<li><input disabled="" type="checkbox"> 小程序与 H5 两端渲染一致</li>
+</ul>
+<p><strong>上线要求（本单特有）</strong></p>
+<ol>
+<li>阶段与核心区内容<strong>全部服务端下发</strong>，前端不内置阶段文案与模板。</li>
+<li>卡片数据与首屏数据合并下发，避免二次请求导致跳动。</li>
+<li>知识库条目 id 必须能被科普页正确打开（无死链）。</li>
+<li>内容文案需医学/合规审核留痕。</li>
+</ol>
+<hr>
+<h2 id="5-依赖与风险">5. 依赖与风险</h2>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>说明</th>
+<th>应对</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>依赖 <code>STATUS-01</code></td>
+<td>阶段进入条件由判定结果驱动</td>
+<td>本单只消费 <code>stage</code></td>
+</tr>
+<tr>
+<td>依赖 <code>STATUS-02</code></td>
+<td>是否置顶由该单定义</td>
+<td>本单下发 <code>pinned</code> 供其消费</td>
+</tr>
+<tr>
+<td>依赖 <code>EDU-01</code></td>
+<td>知识库条目跳转科普页</td>
+<td>文章 id 需稳定，上线前校验无死链</td>
+</tr>
+<tr>
+<td>依赖 <code>AI-01</code></td>
+<td>CTA 跳转 AI 助理</td>
+<td>需带上下文，避免重复采集</td>
+</tr>
+<tr>
+<td>阶段计算错误</td>
+<td>阶段算错会导致整张卡内容错</td>
+<td>服务端可观测 + 可人工修正</td>
+</tr>
+<tr>
+<td>内容合规</td>
+<td>卡片文案涉医疗表述</td>
+<td>需审核留痕，禁止疗效承诺</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="6-待决策">6. 待决策</h2>
+<ol>
+<li>「已结束」阶段是否仍展示卡片？还是直接从订阅区移除？</li>
+<li>知识库入口在本期是否要做成轮播（跑马灯）？还是静态列表？</li>
+<li>CTA 的「记录数据」是否等 <code>RECORD-01</code> 上线后才显示，本期先隐藏？</li>
+<li>体重变化数据来自用户自录（<code>RECORD-01</code>）还是服务端？本期若无来源是否直接隐藏该模块？</li>
+</ol>
+
+  </main>
+</div>
+<div class="lb" id="lb" hidden><button class="lb__x" aria-label="关闭">×</button><img id="lbImg" alt=""><p class="lb__tip">原图 · 点击图片或按 Esc 关闭</p></div>
+<script>
+(function(){
+  var lb=document.getElementById('lb'),lbImg=document.getElementById('lbImg');
+  if(!lb) return;
+  function close(){lb.hidden=true;lbImg.src='';document.body.style.overflow='';}
+  document.addEventListener('click',function(e){
+    var img=e.target.closest && e.target.closest('.fig__shot img');
+    if(img){lbImg.src=img.src;lb.hidden=false;document.body.style.overflow='hidden';return;}
+    if(e.target===lb||e.target===lbImg||(e.target.classList&&e.target.classList.contains('lb__x'))) close();
+  });
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!lb.hidden) close();});
+})();
+</script>
+</body>
+</html>

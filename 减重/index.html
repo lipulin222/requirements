@@ -164,13 +164,25 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </div>
 <div class="wlnav">
   <a href="#STATUS">服务状态与卡片</a><a href="#RX">处方·购药·订单</a><a href="#PLAN">方案·评估·随访</a>
-  <a href="#EDU">科普·内容</a><a href="#AI">AI 助理</a><a href="#BASE">规范与基线</a>
+  <a href="#EDU">科普·内容</a><a href="#AI">AI 助理</a><a href="#RECORD">数据记录</a><a href="#BASE">规范与基线</a>
 </div>
 <section class="wlsec"><div class="wlsec__h"><h2>服务状态与卡片</h2><span>STATUS</span></div><div class="wlcards"><a class="wlcard" href="REQ-WL-STATUS-01-%E5%87%8F%E9%87%8D%E5%8D%A1%E8%BF%9B%E8%A1%8C%E4%B8%AD%E7%8A%B6%E6%80%81%E4%B8%8E%E8%B7%A8%E6%B8%A0%E9%81%93%E8%B4%AD%E8%8D%AF%E5%88%A4%E5%AE%9A.html">
   <div class="wlcard__hd"><span class="wlcard__id">REQ-WL-STATUS-01</span><span class="wlcard__st">待评审 · P0</span></div>
   <div class="wlcard__t">REQ-WL-STATUS-01 · 减重卡「进行中」状态：跨渠道处方与购药判定</div>
   <div class="wlcard__d">三渠道（线上/客服/线下）处方 + 支付判定 → 健康订阅区置顶减重卡并进入「进行中」</div>
   <div class="wl__demos"><a class="wl__demo" href="https://lipulin222.github.io/online-health-care/online-service.html" target="_blank" rel="noopener">线上服务页 ↗</a><a class="wl__demo" href="https://lipulin222.github.io/online-health-care/Invoice-Review-Page/index.html" target="_blank" rel="noopener">确认购药页 ↗</a><a class="wl__demo" href="https://lipulin222.github.io/online-health-care/weight-management/Weight-loss-Assistant/index.html" target="_blank" rel="noopener">AI 减重助理 ↗</a></div>
+</a>
+<a class="wlcard" href="REQ-WL-STATUS-02-%E5%81%A5%E5%BA%B7%E8%AE%A2%E9%98%85%E5%8C%BA%E6%8E%92%E5%BA%8F%E4%B8%8E%E7%BD%AE%E9%A1%B6%E8%A7%84%E5%88%99.html">
+  <div class="wlcard__hd"><span class="wlcard__id">REQ-WL-STATUS-02</span><span class="wlcard__st">待评审 · P0</span></div>
+  <div class="wlcard__t">REQ-WL-STATUS-02 · 健康订阅区排序与置顶规则</div>
+  <div class="wlcard__d">多张卡之间谁在前：置顶优先级、其余卡排序、未上线专项不渲染、空态引导</div>
+  <div class="wl__demos"><a class="wl__demo" href="https://lipulin222.github.io/online-health-care/online-service.html" target="_blank" rel="noopener">线上服务页 ↗</a></div>
+</a>
+<a class="wlcard" href="REQ-WL-STATUS-03-%E5%87%8F%E9%87%8D%E5%8D%A1%E9%98%B6%E6%AE%B5%E7%8A%B6%E6%80%81%E6%9C%BA%E4%B8%8E%E6%A0%B8%E5%BF%83%E5%8C%BA%E5%86%85%E5%AE%B9.html">
+  <div class="wlcard__hd"><span class="wlcard__id">REQ-WL-STATUS-03</span><span class="wlcard__st">待评审 · P0</span></div>
+  <div class="wlcard__t">REQ-WL-STATUS-03 · 减重卡阶段状态机与核心区内容</div>
+  <div class="wlcard__d">单张卡内部：阶段状态机、各阶段核心区模块与 CTA、数据缺失降级</div>
+  <div class="wl__demos"><a class="wl__demo" href="https://lipulin222.github.io/online-health-care/online-service.html" target="_blank" rel="noopener">线上服务页 ↗</a><a class="wl__demo" href="https://lipulin222.github.io/online-health-care/weight-management/Weight-loss-Assistant/index.html" target="_blank" rel="noopener">AI 减重助理 ↗</a></div>
 </a></div></section>
 <section class="wlsec"><div class="wlsec__h"><h2>规范与基线</h2><span>BASE</span></div><div class="wlcards"><a class="wlcard" href="REQ-WL-BASE-01-%E6%95%B0%E6%8D%AE%E4%B8%8A%E6%8A%A5%E8%A7%84%E8%8C%83.html">
   <div class="wlcard__hd"><span class="wlcard__id">REQ-WL-BASE-01</span><span class="wlcard__st">制定中 · P0</span></div>
@@ -186,7 +198,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </a></div></section>
 <div class="wlnote">
   <div class="wlnote__in">
-    <p style="margin:0 0 8px"><b>命名规范：</b><code>REQ-WL-{模块}-{序号}-{中文短名}</code>。模块：<code>STATUS</code> 服务状态与卡片 / <code>RX</code> 处方·购药·订单 / <code>PLAN</code> 方案·评估·随访 / <code>EDU</code> 科普·内容 / <code>AI</code> AI 助理 / <code>BASE</code> 规范与基线。序号在模块内从 <code>01</code> 递增，<b>不复用、不重排</b>；废弃单保留编号并标注「已作废」。</p>
+    <p style="margin:0 0 8px"><b>命名规范：</b><code>REQ-WL-{模块}-{序号}-{中文短名}</code>。模块：<code>STATUS</code> 服务状态与卡片 / <code>RX</code> 处方·购药·订单 / <code>PLAN</code> 方案·评估·随访 / <code>EDU</code> 科普·内容 / <code>AI</code> AI 助理 / <code>RECORD</code> 数据记录 / <code>BASE</code> 规范与基线。序号在模块内从 <code>01</code> 递增，<b>不复用、不重排</b>；废弃单保留编号并标注「已作废」。</p>
     <p style="margin:0 0 8px"><b>文档结构（6 节）：</b>1 背景与目标 · 2 规则 · 3 字段 · 4 验收与上线要求 · 5 依赖与风险 · 6 待决策。<b>埋点不写在单子里</b>，统一登记在 <code>REQ-WL-BASE-01 数据上报规范</code>；通用上线要求引用 <code>REQ-WL-BASE-02 上线基线</code>。</p>
     <p style="margin:0"><b>页面不放截图</b>，只保留相关 Demo 链接（在卡片下方）。改内容请改 <code>.md</code> 后 <code>cd _build &amp;&amp; npm run build</code>。</p>
   </div>

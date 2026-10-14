@@ -295,6 +295,21 @@ const WL_DOCS = [
     ],
   },
   {
+    md: '减重/REQ-WL-STATUS-02-健康订阅区排序与置顶规则.md',
+    module: 'STATUS', code: 'REQ-WL-STATUS-02', pri: 'P0', status: '待评审',
+    desc: '多张卡之间谁在前：置顶优先级、其余卡排序、未上线专项不渲染、空态引导',
+    demos: [['线上服务页', 'https://lipulin222.github.io/online-health-care/online-service.html']],
+  },
+  {
+    md: '减重/REQ-WL-STATUS-03-减重卡阶段状态机与核心区内容.md',
+    module: 'STATUS', code: 'REQ-WL-STATUS-03', pri: 'P0', status: '待评审',
+    desc: '单张卡内部：阶段状态机、各阶段核心区模块与 CTA、数据缺失降级',
+    demos: [
+      ['线上服务页', 'https://lipulin222.github.io/online-health-care/online-service.html'],
+      ['AI 减重助理', 'https://lipulin222.github.io/online-health-care/weight-management/Weight-loss-Assistant/index.html'],
+    ],
+  },
+  {
     md: '减重/REQ-WL-BASE-01-数据上报规范.md',
     module: 'BASE', code: 'REQ-WL-BASE-01', pri: 'P0', status: '制定中',
     desc: '埋点唯一登记表：命名规范、公共字段、事件表、漏斗、脱敏红线、变更流程',
@@ -666,9 +681,9 @@ const counts = {
 counts.total = counts.Q + counts.A + counts.B + counts.C + counts.D;
 
 let n = 0;
-const ALL = DOCS.concat(WL_DOCS.map((d) => Object.assign({ project: '科学减重（WL）' }, d)));
+const ALL = DOCS.concat(WL_DOCS.map((d) => Object.assign({ project: '科学减重（WL）' }, d)))
+  .filter((c) => fs.existsSync(path.join(ROOT, c.md)));
 for (const cfg of ALL) {
-  if (!fs.existsSync(path.join(ROOT, cfg.md))) { console.log('  跳过（源文件已删除）' + cfg.md); continue; }
   const out = path.join(ROOT, cfg.md.replace(/\.md$/, '.html'));
   fs.mkdirSync(path.dirname(out), { recursive: true });
   fs.writeFileSync(out, renderDoc(cfg), 'utf8');
@@ -677,7 +692,7 @@ for (const cfg of ALL) {
 /* ---------- 减重项目独立索引（无截图，按模块分组） ---------- */
 const WL_MODULES = {
   STATUS: '服务状态与卡片', RX: '处方·购药·订单', PLAN: '方案·评估·随访',
-  EDU: '科普·内容', AI: 'AI 助理', BASE: '规范与基线',
+  EDU: '科普·内容', AI: 'AI 助理', RECORD: '数据记录', BASE: '规范与基线',
 };
 const WL_STYLE = `
 .wlhero{max-width:1180px;margin:0 auto;padding:38px 24px 10px}
@@ -743,12 +758,12 @@ function renderWLIndex() {
 </div>
 <div class="wlnav">
   <a href="#STATUS">服务状态与卡片</a><a href="#RX">处方·购药·订单</a><a href="#PLAN">方案·评估·随访</a>
-  <a href="#EDU">科普·内容</a><a href="#AI">AI 助理</a><a href="#BASE">规范与基线</a>
+  <a href="#EDU">科普·内容</a><a href="#AI">AI 助理</a><a href="#RECORD">数据记录</a><a href="#BASE">规范与基线</a>
 </div>
 ${secs}
 <div class="wlnote">
   <div class="wlnote__in">
-    <p style="margin:0 0 8px"><b>命名规范：</b><code>REQ-WL-{模块}-{序号}-{中文短名}</code>。模块：<code>STATUS</code> 服务状态与卡片 / <code>RX</code> 处方·购药·订单 / <code>PLAN</code> 方案·评估·随访 / <code>EDU</code> 科普·内容 / <code>AI</code> AI 助理 / <code>BASE</code> 规范与基线。序号在模块内从 <code>01</code> 递增，<b>不复用、不重排</b>；废弃单保留编号并标注「已作废」。</p>
+    <p style="margin:0 0 8px"><b>命名规范：</b><code>REQ-WL-{模块}-{序号}-{中文短名}</code>。模块：<code>STATUS</code> 服务状态与卡片 / <code>RX</code> 处方·购药·订单 / <code>PLAN</code> 方案·评估·随访 / <code>EDU</code> 科普·内容 / <code>AI</code> AI 助理 / <code>RECORD</code> 数据记录 / <code>BASE</code> 规范与基线。序号在模块内从 <code>01</code> 递增，<b>不复用、不重排</b>；废弃单保留编号并标注「已作废」。</p>
     <p style="margin:0 0 8px"><b>文档结构（6 节）：</b>1 背景与目标 · 2 规则 · 3 字段 · 4 验收与上线要求 · 5 依赖与风险 · 6 待决策。<b>埋点不写在单子里</b>，统一登记在 <code>REQ-WL-BASE-01 数据上报规范</code>；通用上线要求引用 <code>REQ-WL-BASE-02 上线基线</code>。</p>
     <p style="margin:0"><b>页面不放截图</b>，只保留相关 Demo 链接（在卡片下方）。改内容请改 <code>.md</code> 后 <code>cd _build &amp;&amp; npm run build</code>。</p>
   </div>
