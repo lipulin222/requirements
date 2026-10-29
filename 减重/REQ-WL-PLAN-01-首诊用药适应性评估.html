@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>首诊用药适应性评估 · 需求单</title>
+<style>
+:root{
+  --ink:#1B2733; --ink-2:#48596A; --ink-3:#7A8A99; --line:#E4E9EE; --line-2:#EFF3F6;
+  --bg:#F6F8FA; --card:#FFFFFF; --brand:#0F7C86; --brand-2:#E7F4F5; --warn:#C2761C; --warn-bg:#FDF3E4;
+  --danger:#B4453C; --danger-bg:#FBEDEB;
+  --radius:14px; --shadow:0 1px 2px rgba(16,32,48,.05),0 8px 24px rgba(16,32,48,.05);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;}
+a{color:var(--brand);text-decoration:none}
+a:hover{text-decoration:underline}
+.topbar{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);}
+.topbar__in{max-width:1320px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.topbar__back{font-size:13px;color:var(--ink-2);border:1px solid var(--line);border-radius:999px;padding:4px 12px;background:#fff;white-space:nowrap}
+.topbar__back:hover{text-decoration:none;border-color:var(--brand);color:var(--brand)}
+.badge{font-size:12px;line-height:1;padding:5px 10px;border-radius:999px;background:var(--brand-2);color:var(--brand);font-weight:600;white-space:nowrap}
+.badge--warn{background:var(--warn-bg);color:var(--warn)}
+.badge--p0{background:var(--danger-bg);color:var(--danger)}
+.topbar__title{font-size:14px;font-weight:600;color:var(--ink)}
+.wrap{max-width:1320px;margin:0 auto;padding:26px 24px 80px;display:grid;grid-template-columns:258px minmax(0,1fr);gap:34px;align-items:start}
+.toc{position:sticky;top:70px;max-height:calc(100vh - 96px);overflow:auto;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 14px;box-shadow:var(--shadow)}
+.toc__h{font-size:11px;letter-spacing:.12em;color:var(--ink-3);text-transform:uppercase;margin:0 0 10px}
+.toc ol{list-style:none;margin:0;padding:0}
+.toc li{margin:2px 0}
+.toc a{display:block;padding:5px 8px;border-radius:8px;font-size:13px;color:var(--ink-2);line-height:1.45}
+.toc a:hover{background:var(--line-2);text-decoration:none;color:var(--brand)}
+.toc .lv3 a{padding-left:20px;font-size:12.5px;color:var(--ink-3)}
+.doc{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:34px 40px 46px;box-shadow:var(--shadow);min-width:0}
+.doc h1{font-size:26px;line-height:1.35;margin:0 0 6px;letter-spacing:-.01em}
+.doc .subtitle{color:var(--ink-3);font-size:13px;margin:0 0 22px}
+.doc h2{font-size:19px;margin:44px 0 14px;padding-bottom:10px;border-bottom:1px solid var(--line);scroll-margin-top:78px}
+.doc h3{font-size:15.5px;margin:26px 0 10px;scroll-margin-top:78px}
+.doc p{margin:10px 0;color:var(--ink-2)}
+.doc strong{color:var(--ink)}
+.doc ul,.doc ol{padding-left:1.35em;color:var(--ink-2)}
+.doc li{margin:5px 0}
+.doc li:has(> input[type=checkbox]){list-style:none;margin-left:-1.35em;display:flex;gap:9px;align-items:flex-start;color:var(--ink)}
+.doc input[type=checkbox]{flex:none;width:16px;height:16px;margin:5px 0 0;border-radius:4px;accent-color:var(--brand)}
+.doc code{background:#F1F5F8;border:1px solid var(--line-2);border-radius:5px;padding:1px 5px;font-size:12.5px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#20465A}
+.doc pre{background:#F7FAFB;border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow:auto}
+.doc pre code{background:none;border:0;padding:0;font-size:12.5px;color:var(--ink-2)}
+.doc blockquote{margin:14px 0;padding:10px 16px;background:#FFFBF0;border-left:3px solid #E9C683;border-radius:0 10px 10px 0}
+.doc blockquote p{margin:4px 0;color:#7A5C1E}
+.doc hr{border:0;border-top:1px dashed var(--line);margin:26px 0}
+.doc table{width:100%;border-collapse:separate;border-spacing:0;margin:16px 0;font-size:13.5px;display:block;overflow-x:auto}
+.doc thead th{background:#F3F7F9;color:var(--ink);font-weight:600;text-align:left;white-space:nowrap}
+.doc th,.doc td{border-bottom:1px solid var(--line-2);padding:9px 12px;vertical-align:top;color:var(--ink-2)}
+.doc tbody tr:last-child td{border-bottom:0}
+.doc tbody tr:hover td{background:#FAFCFD}
+/* 关联需求单 chip */
+.doc a.xref{display:inline-block;padding:1px 8px;margin:1px 0;border-radius:7px;background:var(--brand-2);color:var(--brand);
+  font-weight:600;font-size:12.5px;border:1px solid #CFE7E9;white-space:nowrap}
+.doc a.xref:hover{background:#D6EDEF;text-decoration:none;border-color:var(--brand)}
+.doc .xref--self{display:inline-block;padding:1px 8px;border-radius:7px;background:#F1F5F8;color:var(--ink-3);
+  font-weight:600;font-size:12.5px;border:1px solid var(--line);white-space:nowrap}
+.figs{margin:22px 0 6px;display:grid;gap:18px}
+.figs__h{font-size:12px;letter-spacing:.1em;color:var(--ink-3);text-transform:uppercase;margin:0}
+.fig{margin:0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:#fff}
+.fig__shot{max-height:520px;overflow:auto;background:#F1F5F7}
+.fig__shot img{display:block;width:100%;height:auto;cursor:zoom-in}
+.fig figcaption{padding:10px 14px;font-size:12.5px;color:var(--ink-2);border-top:1px solid var(--line-2);background:#FBFDFE;display:flex;gap:10px;align-items:baseline}
+.fig figcaption b{color:var(--brand);font-weight:600;flex:none}
+.fig figcaption em{margin-left:auto;font-style:normal;color:var(--ink-3);font-size:11.5px;white-space:nowrap;flex:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:14px}
+.grid .fig__shot{max-height:none;overflow:visible}
+.grid figcaption{display:block;font-size:12px;padding:8px 11px}
+.grid figcaption em{display:none}
+.lb{position:fixed;inset:0;z-index:99;background:rgba(12,22,30,.92);display:flex;align-items:center;justify-content:center;padding:28px}
+.lb[hidden]{display:none}
+.lb img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,.5);background:#fff;cursor:zoom-out}
+.lb__x{position:absolute;top:16px;right:20px;width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.14);
+  color:#fff;font-size:22px;line-height:1;cursor:pointer}
+.lb__x:hover{background:rgba(255,255,255,.26)}
+.lb__tip{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);color:#CBD6DE;font-size:12px}
+/* 索引页 */
+.hero{max-width:1320px;margin:0 auto;padding:38px 24px 6px}
+.hero h1{margin:0 0 10px;font-size:30px;letter-spacing:-.02em}
+.hero p{margin:0 0 8px;color:var(--ink-2);max-width:900px}
+.stats{display:flex;gap:28px;margin:20px 0 0;flex-wrap:wrap}
+.stat b{display:block;font-size:24px;color:var(--brand);line-height:1.2}
+.stat span{font-size:12.5px;color:var(--ink-3)}
+.callout{max-width:1320px;margin:22px auto 0;padding:0 24px}
+.callout__in{background:linear-gradient(135deg,#FFF7EC,#FDF1E3);border:1px solid #F0D9B4;border-radius:var(--radius);padding:16px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.callout__in b{color:#8A5A15}
+.callout__in a{margin-left:auto;font-weight:600}
+.sec{max-width:1320px;margin:0 auto;padding:8px 24px}
+.sec__h{display:flex;align-items:baseline;gap:12px;margin:32px 0 16px}
+.sec__h h2{margin:0;font-size:19px}
+.sec__h span{font-size:12.5px;color:var(--ink-3)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:18px}
+.rcard{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden;box-shadow:var(--shadow);transition:transform .16s ease,box-shadow .16s ease}
+.rcard:hover{transform:translateY(-2px);box-shadow:0 2px 4px rgba(16,32,48,.06),0 14px 32px rgba(16,32,48,.09);text-decoration:none}
+.rcard__cover{height:132px;background:#EFF4F6;overflow:hidden;border-bottom:1px solid var(--line-2);position:relative}
+.rcard__cover img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+.rcard__cover--ph{display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#0F7C86,#14A0A8);color:#fff;font-weight:700;font-size:15px;letter-spacing:.04em}
+.rcard__b{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
+.rcard__t{font-size:14.5px;font-weight:600;color:var(--ink);line-height:1.45}
+.rcard__d{font-size:12.5px;color:var(--ink-3);line-height:1.6}
+.rcard__f{margin-top:auto;padding-top:10px;display:flex;gap:8px;align-items:center;font-size:11.5px;color:var(--ink-3)}
+.note{max-width:1320px;margin:32px auto 0;padding:0 24px 70px}
+.note__in{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px 22px;color:var(--ink-2);font-size:13px;box-shadow:var(--shadow)}
+.note__in b{color:var(--ink)}
+footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);font-size:12px}
+@media (max-width:1080px){
+  .wrap{grid-template-columns:1fr;gap:20px;padding-top:20px}
+  .toc{position:static;max-height:none}
+  .doc{padding:26px 20px 34px}
+  .fig__shot{max-height:400px}
+}
+@media print{
+  .topbar,.toc,.lb{display:none}
+  .wrap{display:block;padding:0;max-width:none}
+  .doc{border:0;box-shadow:none;padding:0}
+  .fig__shot{max-height:none;overflow:visible}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar__in">
+    <a class="topbar__back" href="../index.html">← 需求单索引</a>
+    <span class="badge">科学减重（WL）</span>
+    <span class="badge badge--p0">优先级 P0</span>
+    <span class="topbar__title">首诊用药适应性评估</span>
+  </div>
+</header>
+<div class="wrap">
+  <nav class="toc">
+    <p class="toc__h">本单目录</p>
+    <ol><li class="lv2"><a href="#1-规则">1. 规则</a></li>
+<li class="lv3"><a href="#1-1-路径">1.1 路径</a></li>
+<li class="lv3"><a href="#1-2-题目-10-题-一屏一题-顺序固定">1.2 题目（10 题，一屏一题，顺序固定）</a></li>
+<li class="lv3"><a href="#1-3-答题交互">1.3 答题交互</a></li>
+<li class="lv3"><a href="#1-4-安全题终止">1.4 安全题终止</a></li>
+<li class="lv3"><a href="#1-5-汇总与中转">1.5 汇总与中转</a></li>
+<li class="lv2"><a href="#2-验收">2. 验收</a></li></ol>
+  </nav>
+  <main class="doc">
+    <h1>首诊用药适应性评估</h1>
+    <p class="subtitle">需求单 · 科学减重（WL） · 交付目标：可上线面向用户使用（H5 + 微信小程序）</p>
+    <blockquote>
+<p>编号 <code>REQ-WL-PLAN-01</code> ｜ 项目：科学减重（WL）｜ 模块：方案·评估·随访 ｜ 优先级 P0 ｜ 状态：待评审
+Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion-ui/weight-management/Medication-eligibility-assessment/index.html">评估问卷</a> ｜ 埋点：<code>REQ-WL-BASE-01</code></p>
+</blockquote>
+<hr>
+<h2 id="1-规则">1. 规则</h2>
+<h3 id="1-1-路径">1.1 路径</h3>
+<ul>
+<li>入口：Portal 减重卡〔快速评估〕，仅接受新客态；缺省或老客态重定向随访问卷（PLAN-04）。</li>
+<li>出口：提交确认 → 中转页 → 评估报告（PLAN-02）。</li>
+<li>只做用药适应性判断，不下诊断。</li>
+<li>页面 UI 直接用现有的问卷组件实现，不做额外 UI 开发。</li>
+</ul>
+<h3 id="1-2-题目-10-题-一屏一题-顺序固定">1.2 题目（10 题，一屏一题，顺序固定）</h3>
+<p>题目内容取自医疗团队文档《首诊问卷demo》（@望时 提供）：</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>问的内容</th>
+<th>患者看到的问法与选项</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>性别</td>
+<td>男 / 女</td>
+</tr>
+<tr>
+<td>2</td>
+<td>年龄</td>
+<td>周岁（数字填写）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>身高、体重</td>
+<td>身高 <code>____</code> cm、体重 <code>____</code> kg；BMI 自动计算，不可改</td>
+</tr>
+<tr>
+<td>4</td>
+<td>体重变化原因</td>
+<td>您认为导致您体重增加的主要原因有哪些？（多选）饮食习惯（如爱吃甜食、夜宵、外卖多）/ 缺乏运动、久坐 / 工作压力大、情绪性进食 / 睡眠不足 / 生病或手术后 / 服用某些药物，如激素类、情绪类药物（精神科药物）/ 怀孕、产后、更年期 / 遗传、家族因素 / 其他 <code>____</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>已确诊的疾病</td>
+<td>您目前是否确诊过以下疾病？（可多选）高血压 / 糖尿病、血糖偏高 / 高血脂 / 脂肪肝 / 痛风、高尿酸血症 / 冠心病、心脏病、中风 / 睡眠呼吸暂停综合征（睡觉憋气）/ 关节炎、膝盖疼 / 多囊卵巢综合征、月经不调、妊娠期糖尿病（仅女性显示）/ 胃食管反流（烧心）/ 抑郁症、焦虑症 / 以上都没有</td>
+</tr>
+<tr>
+<td>6</td>
+<td>指标偏高</td>
+<td>最近的体检是否提示以下指标偏高，但医生还没有确诊？（可多选）血压偏高 / 血糖偏高 / 血脂偏高 / 尿酸偏高 / 体检提示脂肪肝 / 以上都没有</td>
+</tr>
+<tr>
+<td>7</td>
+<td>禁忌症</td>
+<td>是否有甲状腺髓样癌或 2 型多发性内分泌腺瘤病（本人或直系亲属）？有 / 没有 / 不确定</td>
+</tr>
+<tr>
+<td>8</td>
+<td>其他现在或曾经有过的病</td>
+<td>胰腺炎 / 胆结石或胆囊炎 / 严重胃肠疾病 / 糖尿病视网膜病变 / 严重肾脏疾病 / 进食障碍 / 以上都没有</td>
+</tr>
+<tr>
+<td>9</td>
+<td>是否在备孕、怀孕或哺乳</td>
+<td>是 / 否 / 不确定</td>
+</tr>
+<tr>
+<td>10</td>
+<td>除体重数字外的治疗目标</td>
+<td>改善指标 / 减轻关节疼痛 / 改善睡眠精力 / 穿进特定衣服 / 能够停药 / 其他</td>
+</tr>
+</tbody></table>
+<ul>
+<li>分流逻辑：不同选择如何影响报告分支与结论，待 @望时 确认（分支判定见 <code>REQ-WL-PLAN-02</code>）。</li>
+</ul>
+<h3 id="1-3-答题交互">1.3 答题交互</h3>
+<ul>
+<li>单选点中 180ms 自动跳下一题；多选每次点击重置 800ms 计时，停顿后自动跳。</li>
+<li>选项题未答时「下一题」置灰，点击 toast <code>先选一项，再继续</code>；数字题与开放题不强制。</li>
+<li>答题中无题目间回退；改答案走汇总页 <code>修改</code>。</li>
+<li>汇总页单题修改：主按钮 <code>保存并返回</code>，答完回汇总，不显示进度条。</li>
+</ul>
+<h3 id="1-4-安全题终止">1.4 安全题终止</h3>
+<ul>
+<li>第 7 题（禁忌症）、第 8 题（其他病史）、第 9 题（备孕 / 怀孕 / 哺乳）是安全筛查题；哪些选项算命中待 @望时 确认，命中即终止，不进汇总与报告。</li>
+<li>终止页：标题 <code>需要医生先确认</code>；正文 <code>你填写的「&lt;原因&gt;」，线上问卷无法判断用药安全性。建议预约医生面诊，由医生结合你的具体情况评估——这不代表不能减重，只是要换一条更稳妥的路。</code>（<code>&lt;原因&gt;</code> 为触发选项原文）。</li>
+<li>按钮：<code>返回修改</code>（回触发题）/ <code>预约医生面诊</code>（回 Portal）。不进入汇总与报告。</li>
+</ul>
+<h3 id="1-5-汇总与中转">1.5 汇总与中转</h3>
+<ul>
+<li>提交前出汇总页 <code>确认你提交的内容</code>：逐题答案 + BMI 行（标 <code>自动计算</code>，不可改），未填显示 <code>未填写</code>，每行 <code>修改</code>。</li>
+<li>确认提交 → 中转页三步：<code>已收到你的问卷</code> → <code>正在核对用药安全</code> → <code>正在生成你的评估报告</code>，步进 800ms，末步停 600ms 进报告页。</li>
+<li>页面固定声明：<code>本页内容基于你填写的问卷与已关联的健康数据生成，为初步评估建议，不构成诊断和处方。</code></li>
+</ul>
+<h2 id="2-验收">2. 验收</h2>
+<ul>
+<li><input disabled="" type="checkbox"> 缺省/老客态不到达本页</li>
+<li><input disabled="" type="checkbox"> 单选点中即跳；多选可继续勾选；未答选项题被拦截且 toast 原文一致</li>
+<li><input disabled="" type="checkbox"> 安全题命中即终止，无继续答题路径</li>
+<li><input disabled="" type="checkbox"> 汇总页每行可修改回跳；BMI 行不可改</li>
+<li><input disabled="" type="checkbox"> 中转页无操作入口，必达报告页</li>
+</ul>
+
+  </main>
+</div>
+<div class="lb" id="lb" hidden><button class="lb__x" aria-label="关闭">×</button><img id="lbImg" alt=""><p class="lb__tip">原图 · 点击图片或按 Esc 关闭</p></div>
+<script>
+(function(){
+  var lb=document.getElementById('lb'),lbImg=document.getElementById('lbImg');
+  if(!lb) return;
+  function close(){lb.hidden=true;lbImg.src='';document.body.style.overflow='';}
+  document.addEventListener('click',function(e){
+    var img=e.target.closest && e.target.closest('.fig__shot img');
+    if(img){lbImg.src=img.src;lb.hidden=false;document.body.style.overflow='hidden';return;}
+    if(e.target===lb||e.target===lbImg||(e.target.classList&&e.target.classList.contains('lb__x'))) close();
+  });
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!lb.hidden) close();});
+})();
+</script>
+</body>
+</html>

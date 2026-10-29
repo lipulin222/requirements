@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>REQ-WL-BASE-01 · 数据上报规范 · 需求单</title>
+<title>数据上报规范 · 需求单</title>
 <style>
 :root{
   --ink:#1B2733; --ink-2:#48596A; --ink-3:#7A8A99; --line:#E4E9EE; --line-2:#EFF3F6;
@@ -135,50 +135,40 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
     <a class="topbar__back" href="../index.html">← 需求单索引</a>
     <span class="badge">科学减重（WL）</span>
     <span class="badge badge--p0">优先级 P0</span>
-    <span class="topbar__title">REQ-WL-BASE-01 · 数据上报规范</span>
+    <span class="topbar__title">数据上报规范</span>
   </div>
 </header>
 <div class="wrap">
   <nav class="toc">
     <p class="toc__h">本单目录</p>
-    <ol><li class="lv2"><a href="#1-目的与范围">1. 目的与范围</a></li>
-<li class="lv2"><a href="#2-命名规范">2. 命名规范</a></li>
-<li class="lv2"><a href="#3-公共字段-所有事件必带">3. 公共字段（所有事件必带）</a></li>
-<li class="lv2"><a href="#4-事件登记表">4. 事件登记表</a></li>
-<li class="lv3"><a href="#4-1-服务状态与卡片-status">4.1 服务状态与卡片（STATUS）</a></li>
-<li class="lv3"><a href="#4-2-处方-购药-订单-rx">4.2 处方·购药·订单（RX）</a></li>
-<li class="lv3"><a href="#4-3-方案-评估-随访-plan">4.3 方案·评估·随访（PLAN）</a></li>
-<li class="lv3"><a href="#4-4-科普-内容-edu">4.4 科普·内容（EDU）</a></li>
-<li class="lv3"><a href="#4-5-ai-助理-ai">4.5 AI 助理（AI）</a></li>
-<li class="lv3"><a href="#4-6-通用技术事件">4.6 通用技术事件</a></li>
-<li class="lv2"><a href="#5-核心漏斗">5. 核心漏斗</a></li>
-<li class="lv2"><a href="#6-不报什么-红线">6. 不报什么（红线）</a></li>
-<li class="lv2"><a href="#7-变更流程">7. 变更流程</a></li>
-<li class="lv2"><a href="#8-待补充-后续同步">8. 待补充（后续同步）</a></li></ol>
+    <ol><li class="lv2"><a href="#1-命名规范">1. 命名规范</a></li>
+<li class="lv2"><a href="#2-公共字段-所有事件必带">2. 公共字段（所有事件必带）</a></li>
+<li class="lv2"><a href="#3-事件登记表">3. 事件登记表</a></li>
+<li class="lv3"><a href="#3-1-服务状态与卡片-status">3.1 服务状态与卡片（STATUS）</a></li>
+<li class="lv3"><a href="#3-2-处方-健康订阅-订单-rx">3.2 处方·健康订阅·订单（RX）</a></li>
+<li class="lv3"><a href="#3-3-方案-评估-随访-plan">3.3 方案·评估·随访（PLAN）</a></li>
+<li class="lv3"><a href="#3-4-科普-内容-edu">3.4 科普·内容（EDU）</a></li>
+<li class="lv3"><a href="#3-5-ai-助理-ai">3.5 AI 助理（AI）</a></li>
+<li class="lv3"><a href="#3-6-通用技术事件">3.6 通用技术事件</a></li>
+<li class="lv2"><a href="#4-核心漏斗">4. 核心漏斗</a></li>
+<li class="lv2"><a href="#5-不报什么-红线">5. 不报什么（红线）</a></li></ol>
   </nav>
   <main class="doc">
-    <h1>REQ-WL-BASE-01 · 数据上报规范</h1>
+    <h1>数据上报规范</h1>
     <p class="subtitle">需求单 · 科学减重（WL） · 交付目标：可上线面向用户使用（H5 + 微信小程序）</p>
     <blockquote>
 <p>编号 <code>REQ-WL-BASE-01</code> ｜ 项目：科学减重（WL）｜ 模块：规范与基线 ｜ 状态：制定中
-本页是<strong>减重项目埋点的唯一登记表</strong>：所有需求单不再各写埋点章节，统一在此登记。</p>
+本页是<strong>减重项目埋点的唯一登记表</strong>：需求单只写业务规则，不写埋点章节。</p>
 </blockquote>
 <hr>
-<h2 id="1-目的与范围">1. 目的与范围</h2>
-<p>一张表管住「要报什么」。需求单只写业务规则，<strong>不写埋点</strong>；埋点在本页按模块登记，开发按本页实现，数据侧按本页验收。</p>
-<ul>
-<li><strong>本期只定「要报什么」</strong>：事件名 / 触发时机 / 关键参数 / 用途。</li>
-<li><strong>上报协议后续同步</strong>：通道（H5 <code>sendBeacon</code> / 小程序 <code>wx.request</code>）、批量、重试、采样、平台选型、留存期限由数据侧在上线前补充，不阻塞开发。</li>
-</ul>
-<hr>
-<h2 id="2-命名规范">2. 命名规范</h2>
+<h2 id="1-命名规范">1. 命名规范</h2>
 <ul>
 <li>格式：<code>模块_对象_动作</code>，全小写 + 下划线，如 <code>wcard_cta_click</code>。</li>
 <li>动作收敛为：<code>view</code> 曝光、<code>click</code> 点击、<code>switch</code> 切换、<code>start</code>/<code>complete</code> 流程、<code>result</code> 结果、<code>fail</code> 失败。</li>
 <li><strong>事件名一经上线不得改名</strong>，语义变化只能新增事件，旧事件标注废弃但保留字段。</li>
 </ul>
 <hr>
-<h2 id="3-公共字段-所有事件必带">3. 公共字段（所有事件必带）</h2>
+<h2 id="2-公共字段-所有事件必带">2. 公共字段（所有事件必带）</h2>
 <table>
 <thead>
 <tr>
@@ -196,7 +186,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </tr>
 <tr>
 <td><code>page</code> / <code>platform</code></td>
-<td>页面标识 / <code>h5</code>·<code>wxapp</code></td>
+<td>页面标识 / <code>app</code>·<code>wxapp</code></td>
 </tr>
 <tr>
 <td><code>app_version</code> / <code>channel</code></td>
@@ -211,10 +201,9 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <td>服务阶段（内部用，不上屏）</td>
 </tr>
 </tbody></table>
-<p><strong>字段口径以上线前协议为准。</strong></p>
 <hr>
-<h2 id="4-事件登记表">4. 事件登记表</h2>
-<h3 id="4-1-服务状态与卡片-status">4.1 服务状态与卡片（STATUS）</h3>
+<h2 id="3-事件登记表">3. 事件登记表</h2>
+<h3 id="3-1-服务状态与卡片-status">3.1 服务状态与卡片（STATUS）</h3>
 <table>
 <thead>
 <tr>
@@ -226,42 +215,28 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </tr>
 </thead>
 <tbody><tr>
-<td><code>service_record_sync</code></td>
-<td>渠道记录同步入库（服务端）</td>
-<td><code>channel</code>、<code>delay</code>、<code>matched</code></td>
-<td>渠道数据健康度</td>
-<td>STATUS-01</td>
-</tr>
-<tr>
 <td><code>wcard_pin_view</code></td>
 <td>健康订阅区置顶减重卡曝光</td>
-<td><code>source_channel</code>、<code>in_service</code>、<code>position</code></td>
+<td><code>position</code></td>
 <td>置顶触达</td>
 <td>STATUS-01</td>
 </tr>
 <tr>
 <td><code>wcard_state_view</code></td>
 <td>卡片渲染「进行中」</td>
-<td><code>stage</code>、<code>month_index</code>、<code>source_channel</code></td>
+<td><code>stage</code>、<code>month_index</code></td>
 <td>状态一致性</td>
-<td>STATUS-01</td>
-</tr>
-<tr>
-<td><code>service_detect_fail</code></td>
-<td>判定失败或数据缺失</td>
-<td><code>reason</code>、<code>match_result</code></td>
-<td>异常监控</td>
 <td>STATUS-01</td>
 </tr>
 <tr>
 <td><code>wcard_cta_click</code></td>
 <td>卡片 CTA 点击</td>
-<td><code>stage</code>、<code>cta_id</code>、<code>source_channel</code></td>
+<td><code>stage</code>、<code>cta_id</code></td>
 <td>转化</td>
 <td>STATUS-01</td>
 </tr>
 </tbody></table>
-<h3 id="4-2-处方-购药-订单-rx">4.2 处方·购药·订单（RX）</h3>
+<h3 id="3-2-处方-健康订阅-订单-rx">3.2 处方·健康订阅·订单（RX）</h3>
 <table>
 <thead>
 <tr>
@@ -273,7 +248,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </thead>
 <tbody><tr>
 <td><code>invoice_view</code></td>
-<td>进入确认购药页</td>
+<td>进入首诊套餐页</td>
 <td><code>order_id</code>、<code>plan_id</code>、<code>amount</code></td>
 <td>转化漏斗节点</td>
 </tr>
@@ -308,7 +283,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <td>收入与失败分析</td>
 </tr>
 </tbody></table>
-<h3 id="4-3-方案-评估-随访-plan">4.3 方案·评估·随访（PLAN）</h3>
+<h3 id="3-3-方案-评估-随访-plan">3.3 方案·评估·随访（PLAN）</h3>
 <table>
 <thead>
 <tr>
@@ -344,12 +319,12 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </tr>
 <tr>
 <td><code>plan_buy_click</code></td>
-<td>方案页点击购药</td>
+<td>方案页点击订阅</td>
 <td><code>plan_id</code></td>
-<td>方案→购药转化</td>
+<td>方案→订阅转化</td>
 </tr>
 </tbody></table>
-<h3 id="4-4-科普-内容-edu">4.4 科普·内容（EDU）</h3>
+<h3 id="3-4-科普-内容-edu">3.4 科普·内容（EDU）</h3>
 <table>
 <thead>
 <tr>
@@ -378,7 +353,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <td>内容转化</td>
 </tr>
 </tbody></table>
-<h3 id="4-5-ai-助理-ai">4.5 AI 助理（AI）</h3>
+<h3 id="3-5-ai-助理-ai">3.5 AI 助理（AI）</h3>
 <table>
 <thead>
 <tr>
@@ -419,7 +394,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <td>助理→主链路转化</td>
 </tr>
 </tbody></table>
-<h3 id="4-6-通用技术事件">4.6 通用技术事件</h3>
+<h3 id="3-6-通用技术事件">3.6 通用技术事件</h3>
 <table>
 <thead>
 <tr>
@@ -445,7 +420,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </tr>
 </tbody></table>
 <hr>
-<h2 id="5-核心漏斗">5. 核心漏斗</h2>
+<h2 id="4-核心漏斗">4. 核心漏斗</h2>
 <table>
 <thead>
 <tr>
@@ -456,8 +431,8 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </thead>
 <tbody><tr>
 <td><strong>服务状态生效</strong></td>
-<td><code>service_record_sync</code>（成功）→ <code>wcard_pin_view</code> → <code>wcard_state_view</code>（进行中）→ <code>wcard_cta_click</code></td>
-<td>跨渠道用户是否被线上正确识别</td>
+<td><code>wcard_pin_view</code> → <code>wcard_state_view</code>（进行中）→ <code>wcard_cta_click</code></td>
+<td>置顶卡是否被看到并点击</td>
 </tr>
 <tr>
 <td><strong>减重成交</strong></td>
@@ -476,29 +451,13 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </tr>
 </tbody></table>
 <hr>
-<h2 id="6-不报什么-红线">6. 不报什么（红线）</h2>
+<h2 id="5-不报什么-红线">5. 不报什么（红线）</h2>
 <ul>
 <li>报告原文、指标数值、诊断结论</li>
 <li>姓名、手机号、身份证、地址</li>
 <li>聊天内容、处方图片</li>
 </ul>
 <p>用户标识只用 <code>openid</code> / 内部匿名 id。</p>
-<hr>
-<h2 id="7-变更流程">7. 变更流程</h2>
-<ol>
-<li>新需求单产生埋点 → 在本页对应模块<strong>追加行</strong>，注明「来源单」。</li>
-<li>事件名冻结后不得修改；语义变更新增事件并标注旧事件废弃。</li>
-<li>上线前由数据侧按本页核对实现；本页是验收依据。</li>
-</ol>
-<hr>
-<h2 id="8-待补充-后续同步">8. 待补充（后续同步）</h2>
-<ol>
-<li>埋点平台（自建 / 采购）与 SDK 形态</li>
-<li>上报网关域名与鉴权</li>
-<li>批量、重试、采样策略</li>
-<li>数据保存期限</li>
-<li>看板与北极星指标</li>
-</ol>
 
   </main>
 </div>

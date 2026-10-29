@@ -285,7 +285,7 @@ const DOCS = [
 /* ===== 减重项目专用需求单（新命名：REQ-WL-{模块}-{序号}） ===== */
 const WL_DOCS = [
   {
-    md: '减重/REQ-WL-STATUS-01-减重卡进行中状态与跨渠道购药判定.md',
+    md: '减重/REQ-WL-STATUS-01-减重卡展示与阶段.md',
     module: 'STATUS', code: 'REQ-WL-STATUS-01', pri: 'P0', status: '待评审',
     desc: '三渠道（线上/客服/线下）处方 + 支付判定 → 健康订阅区置顶减重卡并进入「进行中」',
     demos: [
@@ -295,24 +295,160 @@ const WL_DOCS = [
     ],
   },
   {
-    md: '减重/REQ-WL-STATUS-02-健康订阅区排序与置顶规则.md',
+    md: '减重/REQ-WL-STATUS-02-健康订阅区结构与排序规则.md',
     module: 'STATUS', code: 'REQ-WL-STATUS-02', pri: 'P0', status: '待评审',
-    desc: '多张卡之间谁在前：置顶优先级、其余卡排序、未上线专项不渲染、空态引导',
+    desc: '健康订阅区共用结构（头图区 + 专项标签行）+ 减重卡固定排第一位',
     demos: [['线上服务页', 'https://lipulin222.github.io/online-health-care/online-service.html']],
   },
   {
-    md: '减重/REQ-WL-STATUS-03-减重卡阶段状态机与核心区内容.md',
-    module: 'STATUS', code: 'REQ-WL-STATUS-03', pri: 'P0', status: '待评审',
-    desc: '单张卡内部：阶段状态机、各阶段核心区模块与 CTA、数据缺失降级',
-    demos: [
-      ['线上服务页', 'https://lipulin222.github.io/online-health-care/online-service.html'],
-      ['AI 减重助理', 'https://lipulin222.github.io/online-health-care/weight-management/Weight-loss-Assistant/index.html'],
-    ],
+    md: '减重/REQ-WL-STATUS-04-减重卡科普状态.md',
+    module: 'STATUS', code: 'REQ-WL-STATUS-04', pri: 'P0', status: '待评审',
+    desc: '科普状态卡：问题轮播 5 条 + 四个分类入口 + 快速评估 / AI 助理，兜底状态',
+    demos: [['线上服务页 · 科普状态', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/online-service.html?stage=1']],
+  },
+  {
+    md: '减重/REQ-WL-STATUS-05-减重卡评估完成状态.md',
+    module: 'STATUS', code: 'REQ-WL-STATUS-05', pri: 'P0', status: '待评审',
+    desc: '评估完成状态卡：结论句 + 三档刻度条（无需减重 / 需要减重管理 / 立即减重）+ 查看评估报告 / AI 助理',
+    demos: [['线上服务页 · 评估完成', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/online-service.html?stage=2']],
+  },
+  {
+    md: '减重/REQ-WL-STATUS-06-减重卡进行中状态.md',
+    module: 'STATUS', code: 'REQ-WL-STATUS-06', pri: 'P0', status: '待评审',
+    desc: '进行中状态卡（用药陪跑）：体重数据块（笔形按钮记录）+ 查看更多 / AI 助理',
+    demos: [['线上服务页 · 进行中', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/online-service.html?stage=3']],
+  },
+  {
+    md: '减重/REQ-WL-STATUS-07-减重卡提醒状态.md',
+    module: 'STATUS', code: 'REQ-WL-STATUS-07', pri: 'P0', status: '待评审',
+    desc: '提醒状态卡：浅橙提醒卡（触发逻辑 / 文案 / 次数后台可配）+ 体重数据块 + 查看更多',
+    demos: [['线上服务页 · 提醒', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/online-service.html?stage=4']],
+  },
+  {
+    md: '减重/REQ-WL-STATUS-08-减重卡维持期状态.md',
+    module: 'STATUS', code: 'REQ-WL-STATUS-08', pri: 'P0', status: '待评审',
+    desc: '维持期状态卡：成果区（减重 8.6kg + 打卡/腰围/复查）+ 打开回顾，卡头右侧更多入口，置顶 1 个月',
+    demos: [['线上服务页 · 维持期', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/online-service.html?stage=5']],
   },
   {
     md: '减重/REQ-WL-BASE-01-数据上报规范.md',
     module: 'BASE', code: 'REQ-WL-BASE-01', pri: 'P0', status: '制定中',
     desc: '埋点唯一登记表：命名规范、公共字段、事件表、漏斗、脱敏红线、变更流程',
+    demos: [],
+  },
+  {
+    md: '减重/REQ-WL-PLAN-05-选择就诊人.md',
+    module: 'PLAN', code: 'REQ-WL-PLAN-05', pri: 'P2', status: '暂缓',
+    desc: '首诊评估前置：现网半屏浮层选就诊人（单选 + 详情只读），未选中不可进评估',
+    demos: [
+      ['选择就诊人', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/weight-management/Patient-select/index.html'],
+      ['首诊评估问卷', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/weight-management/Medication-eligibility-assessment/index.html'],
+    ],
+  },
+  {
+    md: '减重/REQ-WL-PLAN-01-首诊用药适应性评估.md',
+    module: 'PLAN', code: 'REQ-WL-PLAN-01', pri: 'P0', status: '待评审',
+    desc: '新客购前问卷（题目待 @望时 确认）：安全题命中即终止、汇总确认、中转页 → 评估报告',
+    demos: [
+      ['首诊评估问卷', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/weight-management/Medication-eligibility-assessment/index.html'],
+      ['线上服务页', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/online-service.html'],
+    ],
+  },
+  {
+    md: '减重/REQ-WL-PLAN-02-评估报告框架与判定.md',
+    module: 'PLAN', code: 'REQ-WL-PLAN-02', pri: 'P0', status: '待评审',
+    desc: '问卷结果 → adapt/chronic/mild/normal 四分支判定、结论头三档刻度、吸底分流',
+    demos: [
+      ['减重评估报告', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/weight-management/Assessment-report/index.html'],
+      ['首诊评估问卷', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/weight-management/Medication-eligibility-assessment/index.html'],
+    ],
+  },
+  {
+    md: '减重/REQ-WL-PLAN-03-评估报告正文与文案.md',
+    module: 'PLAN', code: 'REQ-WL-PLAN-03', pri: 'P0', status: '待评审',
+    desc: '评估报告页面结构、模块排序与正文接口调用（文案待打磨，接口契约 @冠成 @张林 对齐）',
+    demos: [
+      ['减重评估报告', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/weight-management/Assessment-report/index.html'],
+    ],
+  },
+  {
+    md: '减重/REQ-WL-PLAN-04-疗程随访评估.md',
+    module: 'PLAN', code: 'REQ-WL-PLAN-04', pri: 'P1', status: '待评审',
+    desc: '老客回访问卷：入口与重定向、一屏一题框架；结果页 hold 不在本单',
+    demos: [
+      ['疗程随访评估', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/weight-management/Follow-up-assessment/index.html'],
+      ['首诊评估问卷', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/weight-management/Medication-eligibility-assessment/index.html'],
+    ],
+  },
+  {
+    md: '减重/REQ-WL-RX-06-查看更多聚合页.md',
+    module: 'RECORD', code: 'REQ-WL-RX-06', pri: 'P1', status: '待评审',
+    desc: '「查看更多」聚合：评估报告 / 减重月报 / 相关订单三个入口与各自列表',
+    demos: [
+      ['查看更多入口页', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/weight-management/More/index.html'],
+      ['订单列表', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/weight-management/More/index.html?type=orders'],
+      ['评估报告列表', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/weight-management/More/index.html?type=report'],
+    ],
+  },
+  {
+    md: '减重/REQ-WL-RECORD-01-减重月报.md',
+    module: 'RECORD', code: 'REQ-WL-RECORD-01', pri: 'P0', status: '待评审',
+    desc: '快问快答（选填8题）+ 月报详情（数据分析/下月建议）；返回回 Portal 不放出月报',
+    demos: [
+      ['减重月报', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/Monthly-Report/index.html'],
+      ['月报列表', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/weight-management/More/index.html?type=monthly'],
+    ],
+  },
+  {
+    md: '减重/REQ-WL-RECORD-02-旅程回顾.md',
+    module: 'RECORD', code: 'REQ-WL-RECORD-02', pri: 'P1', status: '待评审',
+    desc: '结营回顾长页：封面数字滚动 + 体重曲线/成分/指标 + 七型减重人格判定 + 开启健康管理',
+    demos: [
+      ['结营回顾', 'https://lipulin222.github.io/online-health-care/Journey-Recap/index.html'],
+    ],
+  },
+  {
+    md: '减重/REQ-WL-RX-01-首诊套餐页与协议.md',
+    module: 'RX', code: 'REQ-WL-RX-01', pri: 'P0', status: '待评审',
+    desc: '¥790 套餐商品页：优势高亮、支付后流程五步、知情同意勾选门禁',
+    demos: [
+      ['体重管理首诊套餐', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/weight-management/Treatment-package/index.html'],
+      ['评估报告', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/weight-management/Assessment-report/index.html'],
+    ],
+  },
+  {
+    md: '减重/REQ-WL-RX-02-收银台与支付结果.md',
+    module: 'RX', code: 'REQ-WL-RX-02', pri: 'P0', status: '待评审',
+    desc: '支付页 ¥790 提交支付；成功页 5 秒倒计时跳完善收货信息',
+    demos: [
+      ['支付页', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/Payment-Page/index.html'],
+      ['支付成功页', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/Payment-Success/index.html'],
+      ['首诊套餐页', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/weight-management/Treatment-package/index.html'],
+    ],
+  },
+  {
+    md: '减重/REQ-WL-RX-03-订单详情与收货进度.md',
+    module: 'RX', code: 'REQ-WL-RX-03', pri: 'P0', status: '待评审',
+    desc: '减重套餐流程页：五步进度按订单状态单向推进，医生评估提示 / 填写物流两卡 / 发货与完成含单号复制',
+    demos: [
+      ['完善收货信息展示页', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/Delivery-Info/index.html'],
+      ['支付成功页', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/Payment-Success/index.html'],
+      ['收货信息填写页', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/Delivery-Info/fill.html'],
+    ],
+  },
+  {
+    md: '减重/REQ-WL-EDU-01-科普知识库首页.md',
+    module: 'EDU', code: 'REQ-WL-EDU-01', pri: 'P1', status: '待评审',
+    desc: '极简首页：入门卡 + 按用药阶段取「你可能想看」+ 主题入口占位 + 吸底评估',
+    demos: [
+      ['科普知识库', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/patient-education/index.html'],
+      ['线上服务页', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/online-service.html'],
+    ],
+  },
+  {
+    md: '减重/REQ-WL-EDU-02-科普文详情页.md',
+    module: 'EDU', code: 'REQ-WL-EDU-02', pri: 'P1', status: '待评审',
+    desc: '一篇文章一页：版头（眉标+标题+导语）+ 编号章节卡 + 审核三件套 + 吸底问 AI；样式对齐知识库样张',
     demos: [],
   },
   {
@@ -690,9 +826,10 @@ for (const cfg of ALL) {
   n++;
 }
 /* ---------- 减重项目独立索引（无截图，按模块分组） ---------- */
+/* 顺序即索引页的分组顺序：状态卡片 → 评估及报告 → 处方与订单 → 记录沉淀 → 科普相关 → 规范与基线 */
 const WL_MODULES = {
-  STATUS: '服务状态与卡片', RX: '处方·购药·订单', PLAN: '方案·评估·随访',
-  EDU: '科普·内容', AI: 'AI 助理', RECORD: '数据记录', BASE: '规范与基线',
+  STATUS: '服务状态与卡片', PLAN: '评估及报告', RX: '处方与订单',
+  RECORD: '记录沉淀', EDU: '科普相关', AI: 'AI 助理', BASE: '规范与基线',
 };
 const WL_STYLE = `
 .wlhero{max-width:1180px;margin:0 auto;padding:38px 24px 10px}
@@ -706,16 +843,19 @@ const WL_STYLE = `
 .wlsec__h h2{margin:0;font-size:17px}
 .wlsec__h span{font-size:11px;letter-spacing:.08em;color:var(--ink-3)}
 .wlcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
-.wlcard{display:flex;flex-direction:column;gap:7px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+.wlcard{position:relative;display:flex;flex-direction:column;gap:7px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);
   padding:16px 18px;box-shadow:var(--shadow);transition:transform .16s ease,box-shadow .16s ease}
-.wlcard:hover{transform:translateY(-2px);box-shadow:0 2px 4px rgba(16,32,48,.06),0 14px 32px rgba(16,32,48,.09);text-decoration:none}
+.wlcard:hover{transform:translateY(-2px);box-shadow:0 2px 4px rgba(16,32,48,.06),0 14px 32px rgba(16,32,48,.09)}
+/* 整卡可点：用覆盖式链接，避免 <a> 套 <a>（浏览器会拆开，留下空白小方块） */
+.wlcard__link{position:absolute;inset:0;z-index:1;border-radius:inherit}
+.wlcard__link:hover{text-decoration:none}
 .wlcard__hd{display:flex;gap:8px;align-items:center}
 .wlcard__id{font-size:11.5px;font-weight:700;letter-spacing:.04em;color:var(--brand);background:var(--brand-2);
   padding:3px 8px;border-radius:6px}
 .wlcard__st{font-size:11.5px;color:var(--ink-3)}
 .wlcard__t{font-size:14.5px;font-weight:600;color:var(--ink);line-height:1.45}
 .wlcard__d{font-size:12.5px;color:var(--ink-3);line-height:1.6}
-.wl__demos{display:flex;gap:8px;flex-wrap:wrap;margin-top:2px}
+.wl__demos{position:relative;z-index:2;display:flex;gap:8px;flex-wrap:wrap;margin-top:2px}
 .wl__demo{font-size:11.5px;padding:3px 9px;border-radius:6px;background:#F3F7F9;color:var(--ink-2);border:1px solid var(--line-2)}
 .wl__demo:hover{text-decoration:none;background:var(--brand-2);color:var(--brand);border-color:#CFE7E9}
 .wlnote{max-width:1180px;margin:28px auto 0;padding:0 24px 70px}
@@ -733,14 +873,15 @@ function renderWLIndex() {
         ? `<div class="wl__demos">${d.demos.map(([n2, u]) => `<a class="wl__demo" href="${esc(u)}" target="_blank" rel="noopener">${esc(n2)} ↗</a>`).join('')}</div>`
         : '';
       const out = path.basename(d.md).replace(/\.md$/, '.html');
-      return `<a class="wlcard" href="${esc(encodeURI(out))}">
+      return `<div class="wlcard">
+  <a class="wlcard__link" href="${esc(encodeURI(out))}" aria-label="${esc(t)}"></a>
   <div class="wlcard__hd"><span class="wlcard__id">${esc(id)}</span><span class="wlcard__st">${esc(d.status)} · ${esc(d.pri)}</span></div>
   <div class="wlcard__t">${esc(t)}</div>
   <div class="wlcard__d">${esc(d.desc)}</div>
   ${demos}
-</a>`;
+</div>`;
     }).join('\n');
-    return `<section class="wlsec"><div class="wlsec__h"><h2>${esc(WL_MODULES[m])}</h2><span>${esc(m)}</span></div><div class="wlcards">${rows}</div></section>`;
+    return `<section class="wlsec" id="${esc(m)}"><div class="wlsec__h"><h2>${esc(WL_MODULES[m])}</h2><span>${esc(m)}</span></div><div class="wlcards">${rows}</div></section>`;
   }).join('\n');
 
   return `<!DOCTYPE html>
@@ -757,13 +898,13 @@ function renderWLIndex() {
   <p>本页是<b>科学减重（WL）项目</b>的需求单唯一入口，与体检报告解读、线上健康 Portal 的旧索引完全分离。编号规范：<code>REQ-WL-{模块}-{序号}-{中文短名}</code>。</p>
 </div>
 <div class="wlnav">
-  <a href="#STATUS">服务状态与卡片</a><a href="#RX">处方·购药·订单</a><a href="#PLAN">方案·评估·随访</a>
-  <a href="#EDU">科普·内容</a><a href="#AI">AI 助理</a><a href="#RECORD">数据记录</a><a href="#BASE">规范与基线</a>
+  <a href="#STATUS">服务状态与卡片</a><a href="#PLAN">评估及报告</a><a href="#RX">处方与订单</a>
+  <a href="#RECORD">记录沉淀</a><a href="#EDU">科普相关</a><a href="#BASE">规范与基线</a>
 </div>
 ${secs}
 <div class="wlnote">
   <div class="wlnote__in">
-    <p style="margin:0 0 8px"><b>命名规范：</b><code>REQ-WL-{模块}-{序号}-{中文短名}</code>。模块：<code>STATUS</code> 服务状态与卡片 / <code>RX</code> 处方·购药·订单 / <code>PLAN</code> 方案·评估·随访 / <code>EDU</code> 科普·内容 / <code>AI</code> AI 助理 / <code>RECORD</code> 数据记录 / <code>BASE</code> 规范与基线。序号在模块内从 <code>01</code> 递增，<b>不复用、不重排</b>；废弃单保留编号并标注「已作废」。</p>
+    <p style="margin:0 0 8px"><b>命名规范：</b><code>REQ-WL-{模块}-{序号}-{中文短名}</code>。模块：<code>STATUS</code> 服务状态与卡片 / <code>PLAN</code> 评估及报告 / <code>RX</code> 处方与订单 / <code>RECORD</code> 记录沉淀 / <code>EDU</code> 科普相关 / <code>BASE</code> 规范与基线。序号在模块内从 <code>01</code> 递增，<b>不复用、不重排</b>；废弃单保留编号并标注「已作废」。</p>
     <p style="margin:0 0 8px"><b>文档结构（6 节）：</b>1 背景与目标 · 2 规则 · 3 字段 · 4 验收与上线要求 · 5 依赖与风险 · 6 待决策。<b>埋点不写在单子里</b>，统一登记在 <code>REQ-WL-BASE-01 数据上报规范</code>；通用上线要求引用 <code>REQ-WL-BASE-02 上线基线</code>。</p>
     <p style="margin:0"><b>页面不放截图</b>，只保留相关 Demo 链接（在卡片下方）。改内容请改 <code>.md</code> 后 <code>cd _build &amp;&amp; npm run build</code>。</p>
   </div>
@@ -775,7 +916,8 @@ ${secs}
 
 fs.mkdirSync(path.join(ROOT, '减重'), { recursive: true });
 fs.writeFileSync(path.join(ROOT, '减重', 'index.html'), renderWLIndex(), 'utf8');
-const hasOld = DOCS.some((d) => fs.existsSync(path.join(ROOT, d.md)));
+/* 根索引形态判断：只看真正的老项目单；「待确认问题清单」是评审对单文件，不算老单、不触发老索引 */
+const hasOld = DOCS.some((d) => d.md !== '待确认问题清单.md' && fs.existsSync(path.join(ROOT, d.md)));
 if (hasOld) {
   fs.writeFileSync(path.join(ROOT, 'index.html'), renderIndex(counts), 'utf8');
 } else {

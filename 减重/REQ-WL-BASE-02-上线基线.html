@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>REQ-WL-BASE-02 · 上线基线（生产级 · 微信小程序） · 需求单</title>
+<title>上线基线（生产级 · App + 微信小程序） · 需求单</title>
 <style>
 :root{
   --ink:#1B2733; --ink-2:#48596A; --ink-3:#7A8A99; --line:#E4E9EE; --line-2:#EFF3F6;
@@ -135,7 +135,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
     <a class="topbar__back" href="../index.html">← 需求单索引</a>
     <span class="badge">科学减重（WL）</span>
     <span class="badge badge--p0">优先级 P0</span>
-    <span class="topbar__title">REQ-WL-BASE-02 · 上线基线（生产级 · 微信小程序）</span>
+    <span class="topbar__title">上线基线（生产级 · App + 微信小程序）</span>
   </div>
 </header>
 <div class="wrap">
@@ -144,11 +144,10 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
     <ol><li class="lv2"><a href="#1-交付定位">1. 交付定位</a></li>
 <li class="lv2"><a href="#2-通用基线-每单默认适用">2. 通用基线（每单默认适用）</a></li>
 <li class="lv2"><a href="#3-上线放行清单-每单上线前逐条确认">3. 上线放行清单（每单上线前逐条确认）</a></li>
-<li class="lv2"><a href="#4-小程序适配要点">4. 小程序适配要点</a></li>
-<li class="lv2"><a href="#5-待补充">5. 待补充</a></li></ol>
+<li class="lv2"><a href="#4-小程序适配要点">4. 小程序适配要点</a></li></ol>
   </nav>
   <main class="doc">
-    <h1>REQ-WL-BASE-02 · 上线基线（生产级 · 微信小程序）</h1>
+    <h1>上线基线（生产级 · App + 微信小程序）</h1>
     <p class="subtitle">需求单 · 科学减重（WL） · 交付目标：可上线面向用户使用（H5 + 微信小程序）</p>
     <blockquote>
 <p>编号 <code>REQ-WL-BASE-02</code> ｜ 项目：科学减重（WL）｜ 模块：规范与基线 ｜ 状态：制定中
@@ -156,7 +155,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </blockquote>
 <hr>
 <h2 id="1-交付定位">1. 交付定位</h2>
-<p><strong>可上线面向用户使用的产品能力，不是演示原型。</strong> 载体：<strong>H5（移动端 + 微信内置浏览器）+ 微信小程序</strong>。</p>
+<p><strong>可上线面向用户使用的产品能力，不是演示原型。</strong> 载体：<strong>App + 微信小程序</strong>。</p>
 <hr>
 <h2 id="2-通用基线-每单默认适用">2. 通用基线（每单默认适用）</h2>
 <table>
@@ -168,7 +167,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </thead>
 <tbody><tr>
 <td>载体</td>
-<td>H5 与小程序业务逻辑一致，差异只在壳层 API</td>
+<td>App 与小程序业务逻辑一致，差异只在壳层 API</td>
 </tr>
 <tr>
 <td>接口</td>
@@ -176,7 +175,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </tr>
 <tr>
 <td>登录态</td>
-<td>小程序静默授权（openid/unionid）+ 手机号授权（敏感操作前）；H5 走网页授权；token 无感续期</td>
+<td>小程序静默授权（openid/unionid）+ 手机号授权（敏感操作前）；App 走自身登录态；token 无感续期</td>
 </tr>
 <tr>
 <td>异常兜底</td>
@@ -211,7 +210,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <h2 id="3-上线放行清单-每单上线前逐条确认">3. 上线放行清单（每单上线前逐条确认）</h2>
 <ul>
 <li><input disabled="" type="checkbox"> 业务数据全部来自接口，代码中无业务硬编码与占位符</li>
-<li><input disabled="" type="checkbox"> 小程序与 H5 两端表现一致，真机回归通过</li>
+<li><input disabled="" type="checkbox"> App 与小程序两端表现一致，真机回归通过</li>
 <li><input disabled="" type="checkbox"> 空态 / 加载态 / 失败态 / 弱网态均有设计并验证</li>
 <li><input disabled="" type="checkbox"> 无 toast 占位入口；未上线能力一律不渲染</li>
 <li><input disabled="" type="checkbox"> 性能达标，首屏无布局跳动</li>
@@ -224,15 +223,10 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <ol>
 <li><strong>web-view 内嵌</strong>页面：需配置业务域名白名单；支付、授权、订阅消息不能直接调用，需 <code>wx.miniProgram</code> 桥接。</li>
 <li><strong>原生页面</strong>：支付用 <code>wx.requestPayment</code>，提醒用订阅消息。</li>
-<li>两端跳转路径不同（H5 相对路径 / 小程序绝对路径白名单），<code>BASE</code> 必须环境化，禁止硬编码域名。</li>
+<li>两端跳转路径不同（App 路由 / 小程序绝对路径白名单），<code>BASE</code> 必须环境化，禁止硬编码域名。</li>
 <li>分享：小程序用 <code>onShareAppMessage</code> + canvas 生成海报；分享内容必须脱敏。</li>
 </ol>
 <hr>
-<h2 id="5-待补充">5. 待补充</h2>
-<ol>
-<li>小程序承载形态定稿（web-view / 原生 / 混合）—— 见待确认清单 Q-01</li>
-<li>后端接口归属与契约冻结时间 —— 见待确认清单 Q-04</li>
-</ol>
 
   </main>
 </div>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>科普文详情页 · 需求单</title>
+<style>
+:root{
+  --ink:#1B2733; --ink-2:#48596A; --ink-3:#7A8A99; --line:#E4E9EE; --line-2:#EFF3F6;
+  --bg:#F6F8FA; --card:#FFFFFF; --brand:#0F7C86; --brand-2:#E7F4F5; --warn:#C2761C; --warn-bg:#FDF3E4;
+  --danger:#B4453C; --danger-bg:#FBEDEB;
+  --radius:14px; --shadow:0 1px 2px rgba(16,32,48,.05),0 8px 24px rgba(16,32,48,.05);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;}
+a{color:var(--brand);text-decoration:none}
+a:hover{text-decoration:underline}
+.topbar{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);}
+.topbar__in{max-width:1320px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.topbar__back{font-size:13px;color:var(--ink-2);border:1px solid var(--line);border-radius:999px;padding:4px 12px;background:#fff;white-space:nowrap}
+.topbar__back:hover{text-decoration:none;border-color:var(--brand);color:var(--brand)}
+.badge{font-size:12px;line-height:1;padding:5px 10px;border-radius:999px;background:var(--brand-2);color:var(--brand);font-weight:600;white-space:nowrap}
+.badge--warn{background:var(--warn-bg);color:var(--warn)}
+.badge--p0{background:var(--danger-bg);color:var(--danger)}
+.topbar__title{font-size:14px;font-weight:600;color:var(--ink)}
+.wrap{max-width:1320px;margin:0 auto;padding:26px 24px 80px;display:grid;grid-template-columns:258px minmax(0,1fr);gap:34px;align-items:start}
+.toc{position:sticky;top:70px;max-height:calc(100vh - 96px);overflow:auto;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 14px;box-shadow:var(--shadow)}
+.toc__h{font-size:11px;letter-spacing:.12em;color:var(--ink-3);text-transform:uppercase;margin:0 0 10px}
+.toc ol{list-style:none;margin:0;padding:0}
+.toc li{margin:2px 0}
+.toc a{display:block;padding:5px 8px;border-radius:8px;font-size:13px;color:var(--ink-2);line-height:1.45}
+.toc a:hover{background:var(--line-2);text-decoration:none;color:var(--brand)}
+.toc .lv3 a{padding-left:20px;font-size:12.5px;color:var(--ink-3)}
+.doc{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:34px 40px 46px;box-shadow:var(--shadow);min-width:0}
+.doc h1{font-size:26px;line-height:1.35;margin:0 0 6px;letter-spacing:-.01em}
+.doc .subtitle{color:var(--ink-3);font-size:13px;margin:0 0 22px}
+.doc h2{font-size:19px;margin:44px 0 14px;padding-bottom:10px;border-bottom:1px solid var(--line);scroll-margin-top:78px}
+.doc h3{font-size:15.5px;margin:26px 0 10px;scroll-margin-top:78px}
+.doc p{margin:10px 0;color:var(--ink-2)}
+.doc strong{color:var(--ink)}
+.doc ul,.doc ol{padding-left:1.35em;color:var(--ink-2)}
+.doc li{margin:5px 0}
+.doc li:has(> input[type=checkbox]){list-style:none;margin-left:-1.35em;display:flex;gap:9px;align-items:flex-start;color:var(--ink)}
+.doc input[type=checkbox]{flex:none;width:16px;height:16px;margin:5px 0 0;border-radius:4px;accent-color:var(--brand)}
+.doc code{background:#F1F5F8;border:1px solid var(--line-2);border-radius:5px;padding:1px 5px;font-size:12.5px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#20465A}
+.doc pre{background:#F7FAFB;border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow:auto}
+.doc pre code{background:none;border:0;padding:0;font-size:12.5px;color:var(--ink-2)}
+.doc blockquote{margin:14px 0;padding:10px 16px;background:#FFFBF0;border-left:3px solid #E9C683;border-radius:0 10px 10px 0}
+.doc blockquote p{margin:4px 0;color:#7A5C1E}
+.doc hr{border:0;border-top:1px dashed var(--line);margin:26px 0}
+.doc table{width:100%;border-collapse:separate;border-spacing:0;margin:16px 0;font-size:13.5px;display:block;overflow-x:auto}
+.doc thead th{background:#F3F7F9;color:var(--ink);font-weight:600;text-align:left;white-space:nowrap}
+.doc th,.doc td{border-bottom:1px solid var(--line-2);padding:9px 12px;vertical-align:top;color:var(--ink-2)}
+.doc tbody tr:last-child td{border-bottom:0}
+.doc tbody tr:hover td{background:#FAFCFD}
+/* 关联需求单 chip */
+.doc a.xref{display:inline-block;padding:1px 8px;margin:1px 0;border-radius:7px;background:var(--brand-2);color:var(--brand);
+  font-weight:600;font-size:12.5px;border:1px solid #CFE7E9;white-space:nowrap}
+.doc a.xref:hover{background:#D6EDEF;text-decoration:none;border-color:var(--brand)}
+.doc .xref--self{display:inline-block;padding:1px 8px;border-radius:7px;background:#F1F5F8;color:var(--ink-3);
+  font-weight:600;font-size:12.5px;border:1px solid var(--line);white-space:nowrap}
+.figs{margin:22px 0 6px;display:grid;gap:18px}
+.figs__h{font-size:12px;letter-spacing:.1em;color:var(--ink-3);text-transform:uppercase;margin:0}
+.fig{margin:0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:#fff}
+.fig__shot{max-height:520px;overflow:auto;background:#F1F5F7}
+.fig__shot img{display:block;width:100%;height:auto;cursor:zoom-in}
+.fig figcaption{padding:10px 14px;font-size:12.5px;color:var(--ink-2);border-top:1px solid var(--line-2);background:#FBFDFE;display:flex;gap:10px;align-items:baseline}
+.fig figcaption b{color:var(--brand);font-weight:600;flex:none}
+.fig figcaption em{margin-left:auto;font-style:normal;color:var(--ink-3);font-size:11.5px;white-space:nowrap;flex:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:14px}
+.grid .fig__shot{max-height:none;overflow:visible}
+.grid figcaption{display:block;font-size:12px;padding:8px 11px}
+.grid figcaption em{display:none}
+.lb{position:fixed;inset:0;z-index:99;background:rgba(12,22,30,.92);display:flex;align-items:center;justify-content:center;padding:28px}
+.lb[hidden]{display:none}
+.lb img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,.5);background:#fff;cursor:zoom-out}
+.lb__x{position:absolute;top:16px;right:20px;width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.14);
+  color:#fff;font-size:22px;line-height:1;cursor:pointer}
+.lb__x:hover{background:rgba(255,255,255,.26)}
+.lb__tip{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);color:#CBD6DE;font-size:12px}
+/* 索引页 */
+.hero{max-width:1320px;margin:0 auto;padding:38px 24px 6px}
+.hero h1{margin:0 0 10px;font-size:30px;letter-spacing:-.02em}
+.hero p{margin:0 0 8px;color:var(--ink-2);max-width:900px}
+.stats{display:flex;gap:28px;margin:20px 0 0;flex-wrap:wrap}
+.stat b{display:block;font-size:24px;color:var(--brand);line-height:1.2}
+.stat span{font-size:12.5px;color:var(--ink-3)}
+.callout{max-width:1320px;margin:22px auto 0;padding:0 24px}
+.callout__in{background:linear-gradient(135deg,#FFF7EC,#FDF1E3);border:1px solid #F0D9B4;border-radius:var(--radius);padding:16px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.callout__in b{color:#8A5A15}
+.callout__in a{margin-left:auto;font-weight:600}
+.sec{max-width:1320px;margin:0 auto;padding:8px 24px}
+.sec__h{display:flex;align-items:baseline;gap:12px;margin:32px 0 16px}
+.sec__h h2{margin:0;font-size:19px}
+.sec__h span{font-size:12.5px;color:var(--ink-3)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:18px}
+.rcard{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden;box-shadow:var(--shadow);transition:transform .16s ease,box-shadow .16s ease}
+.rcard:hover{transform:translateY(-2px);box-shadow:0 2px 4px rgba(16,32,48,.06),0 14px 32px rgba(16,32,48,.09);text-decoration:none}
+.rcard__cover{height:132px;background:#EFF4F6;overflow:hidden;border-bottom:1px solid var(--line-2);position:relative}
+.rcard__cover img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+.rcard__cover--ph{display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#0F7C86,#14A0A8);color:#fff;font-weight:700;font-size:15px;letter-spacing:.04em}
+.rcard__b{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
+.rcard__t{font-size:14.5px;font-weight:600;color:var(--ink);line-height:1.45}
+.rcard__d{font-size:12.5px;color:var(--ink-3);line-height:1.6}
+.rcard__f{margin-top:auto;padding-top:10px;display:flex;gap:8px;align-items:center;font-size:11.5px;color:var(--ink-3)}
+.note{max-width:1320px;margin:32px auto 0;padding:0 24px 70px}
+.note__in{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px 22px;color:var(--ink-2);font-size:13px;box-shadow:var(--shadow)}
+.note__in b{color:var(--ink)}
+footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);font-size:12px}
+@media (max-width:1080px){
+  .wrap{grid-template-columns:1fr;gap:20px;padding-top:20px}
+  .toc{position:static;max-height:none}
+  .doc{padding:26px 20px 34px}
+  .fig__shot{max-height:400px}
+}
+@media print{
+  .topbar,.toc,.lb{display:none}
+  .wrap{display:block;padding:0;max-width:none}
+  .doc{border:0;box-shadow:none;padding:0}
+  .fig__shot{max-height:none;overflow:visible}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar__in">
+    <a class="topbar__back" href="../index.html">← 需求单索引</a>
+    <span class="badge">科学减重（WL）</span>
+    <span class="badge badge--warn">优先级 P1</span>
+    <span class="topbar__title">科普文详情页</span>
+  </div>
+</header>
+<div class="wrap">
+  <nav class="toc">
+    <p class="toc__h">本单目录</p>
+    <ol><li class="lv2"><a href="#1-页面定位">1. 页面定位</a></li>
+<li class="lv2"><a href="#2-页面结构-自上而下">2. 页面结构（自上而下）</a></li>
+<li class="lv2"><a href="#3-正文卡片内的元素类型">3. 正文卡片内的元素类型</a></li>
+<li class="lv2"><a href="#4-文内引用跳转">4. 文内引用跳转</a></li>
+<li class="lv2"><a href="#5-关键值">5. 关键值</a></li>
+<li class="lv2"><a href="#6-验收">6. 验收</a></li></ol>
+  </nav>
+  <main class="doc">
+    <h1>科普文详情页</h1>
+    <p class="subtitle">需求单 · 科学减重（WL） · 交付目标：可上线面向用户使用（H5 + 微信小程序）</p>
+    <blockquote>
+<p>编号 <code>REQ-WL-EDU-02</code> ｜ 项目：科学减重（WL）｜ 模块：科普·内容 ｜ 优先级 P1 ｜ 状态：待评审
+样式参考样张：<code>D:\团队管理\知识库文件\减重服务-科普内容\06-购前\K01-GLP-1是怎么帮你减重的.html</code>（知识库内每篇文章一页，结构与样式一致）｜ 埋点：<code>REQ-WL-BASE-01</code></p>
+</blockquote>
+<hr>
+<h2 id="1-页面定位">1. 页面定位</h2>
+<ul>
+<li>一篇科普文章对应一个详情页，从科普知识库首页（EDU-01）等入口点进。</li>
+<li>页面内容由知识库统一维护，按固定内容模板渲染；运营改稿后页面随之更新，前台不需要逐页开发文案。</li>
+</ul>
+<h2 id="2-页面结构-自上而下">2. 页面结构（自上而下）</h2>
+<table>
+<thead>
+<tr>
+<th>区块</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>顶栏</td>
+<td>左侧返回按钮；右侧目录图标，点击回科普知识库首页；顶栏中间不显示标题文字</td>
+</tr>
+<tr>
+<td>版头</td>
+<td>眉标 <code>科学减重服务</code>（青色小字）+ 文章大标题（24px 深墨色）+ 导语（13px 灰字，≤30 字，不写阅读指引）+ 底部 1px 分隔细线</td>
+</tr>
+<tr>
+<td>正文</td>
+<td>每个章节一张白色圆角卡片，卡片间留缝；章节头为青色编号徽标（01 / 02 …）+ 青色章节标题，标题下有细分割线</td>
+</tr>
+<tr>
+<td>审核与说明卡</td>
+<td>独立一张卡：青色「审核」徽标 + 医生姓名 · 科室 · 职称 · 更新日期；下方一行免责声明 <code>本篇内容仅供参考，具体情况以你的处方、药品说明书和医生指导为准。</code></td>
+</tr>
+<tr>
+<td>吸底</td>
+<td>全宽青色渐变按钮 <code>问 AI 减重助理</code>，进入减重 AI 助理对话页</td>
+</tr>
+</tbody></table>
+<h2 id="3-正文卡片内的元素类型">3. 正文卡片内的元素类型</h2>
+<p>内容模板支持以下元素，按文章实际内容组合：</p>
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>清单条目</td>
+<td>青色小菱形点 + 条目文字；条目内引导词加粗、破折号后接说明</td>
+</tr>
+<tr>
+<td>名称 + 说明</td>
+<td>名称行加粗，下方灰字说明；多条之间虚线分隔</td>
+</tr>
+<tr>
+<td>步骤</td>
+<td>青色圆形序号 + 步骤标题 + 说明，步骤间细分割线</td>
+</tr>
+<tr>
+<td>浅蓝提示块</td>
+<td>圆角浅蓝底、青色小字的补充提示</td>
+</tr>
+<tr>
+<td>插图</td>
+<td>图上方左侧「示意图」小标注，图位 16:9，图下方图注（≤30 字，左对齐）；每篇文章最多 1 张，只给有空间关系、顺序、节奏形状的内容配图</td>
+</tr>
+<tr>
+<td>表格</td>
+<td>至少 3 行且不超过 3 列才使用；表头浅蓝底，手机上不横向滚动</td>
+</tr>
+</tbody></table>
+<h2 id="4-文内引用跳转">4. 文内引用跳转</h2>
+<ul>
+<li>正文里提到其他篇目时，写明篇目名（如「见《用药后的反应怎么应对》」），篇目名可点击，跳到对应详情页。</li>
+<li>被引用的篇目下架后，点击提示 <code>内容不存在或已下架</code>，不跳转。</li>
+</ul>
+<h2 id="5-关键值">5. 关键值</h2>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>手机外壳</td>
+<td>420px，页面底 #F6F6F6</td>
+</tr>
+<tr>
+<td>卡片</td>
+<td>白底、圆角 22px、边 1px #EBEBEB、阴影 0 4px 16px rgba(0,111,138,.06)</td>
+</tr>
+<tr>
+<td>主色 / 章节青色</td>
+<td>#006F8A / #009BBF</td>
+</tr>
+<tr>
+<td>正文</td>
+<td>14px，行高 1.85</td>
+</tr>
+<tr>
+<td>导语</td>
+<td>≤30 字，不写阅读指引</td>
+</tr>
+<tr>
+<td>吸底按钮</td>
+<td>圆角 14px，青色渐变，<code>问 AI 减重助理</code></td>
+</tr>
+</tbody></table>
+<h2 id="6-验收">6. 验收</h2>
+<ul>
+<li><input disabled="" type="checkbox"> 从首页入门卡 / 文章卡点进，标题、导语与列表一致</li>
+<li><input disabled="" type="checkbox"> 顶栏返回正常；目录图标回科普知识库首页</li>
+<li><input disabled="" type="checkbox"> 版头为眉标 + 大标题 + 导语 + 分隔线，无副标题、无阅读时长、无形态标签</li>
+<li><input disabled="" type="checkbox"> 章节卡片编号、标题、条目样式与样张一致；插图带「示意图」标注与图注</li>
+<li><input disabled="" type="checkbox"> 审核卡医生信息与更新日期正确，免责声明原文一致</li>
+<li><input disabled="" type="checkbox"> 吸底 <code>问 AI 减重助理</code> 可进 AI 助理页</li>
+<li><input disabled="" type="checkbox"> 文内篇目引用可跳转；引用已下架篇目时提示原文一致</li>
+</ul>
+
+  </main>
+</div>
+<div class="lb" id="lb" hidden><button class="lb__x" aria-label="关闭">×</button><img id="lbImg" alt=""><p class="lb__tip">原图 · 点击图片或按 Esc 关闭</p></div>
+<script>
+(function(){
+  var lb=document.getElementById('lb'),lbImg=document.getElementById('lbImg');
+  if(!lb) return;
+  function close(){lb.hidden=true;lbImg.src='';document.body.style.overflow='';}
+  document.addEventListener('click',function(e){
+    var img=e.target.closest && e.target.closest('.fig__shot img');
+    if(img){lbImg.src=img.src;lb.hidden=false;document.body.style.overflow='hidden';return;}
+    if(e.target===lb||e.target===lbImg||(e.target.classList&&e.target.classList.contains('lb__x'))) close();
+  });
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!lb.hidden) close();});
+})();
+</script>
+</body>
+</html>

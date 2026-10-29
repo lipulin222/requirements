@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>REQ-WL-STATUS-03 · 减重卡阶段状态机与核心区内容 · 需求单</title>
+<title>减重卡 · 提醒状态 · 需求单</title>
 <style>
 :root{
   --ink:#1B2733; --ink-2:#48596A; --ink-3:#7A8A99; --line:#E4E9EE; --line-2:#EFF3F6;
@@ -135,285 +135,108 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
     <a class="topbar__back" href="../index.html">← 需求单索引</a>
     <span class="badge">科学减重（WL）</span>
     <span class="badge badge--p0">优先级 P0</span>
-    <span class="topbar__title">REQ-WL-STATUS-03 · 减重卡阶段状态机与核心区内容</span>
+    <span class="topbar__title">减重卡 · 提醒状态</span>
   </div>
 </header>
 <div class="wrap">
   <nav class="toc">
     <p class="toc__h">本单目录</p>
-    <ol><li class="lv2"><a href="#1-背景与目标">1. 背景与目标</a></li>
-<li class="lv2"><a href="#2-规则">2. 规则</a></li>
-<li class="lv3"><a href="#2-1-阶段定义与流转">2.1 阶段定义与流转</a></li>
-<li class="lv3"><a href="#2-2-各阶段核心区内容">2.2 各阶段核心区内容</a></li>
-<li class="lv3"><a href="#2-3-cta-规则">2.3 CTA 规则</a></li>
-<li class="lv3"><a href="#2-4-数据缺失降级">2.4 数据缺失降级</a></li>
-<li class="lv3"><a href="#2-5-禁止项">2.5 禁止项</a></li>
-<li class="lv2"><a href="#3-字段与接口">3. 字段与接口</a></li>
-<li class="lv3"><a href="#接口">接口</a></li>
-<li class="lv3"><a href="#字段">字段</a></li>
-<li class="lv2"><a href="#4-验收与上线要求">4. 验收与上线要求</a></li>
-<li class="lv2"><a href="#5-依赖与风险">5. 依赖与风险</a></li>
-<li class="lv2"><a href="#6-待决策">6. 待决策</a></li></ol>
+    <ol><li class="lv2"><a href="#1-这张卡什么时候出现">1. 这张卡什么时候出现</a></li>
+<li class="lv2"><a href="#2-卡片上显示什么-自上而下">2. 卡片上显示什么（自上而下）</a></li>
+<li class="lv2"><a href="#3-后台可配置的三件事">3. 后台可配置的三件事</a></li>
+<li class="lv2"><a href="#4-点击与跳转">4. 点击与跳转</a></li>
+<li class="lv2"><a href="#5-验收">5. 验收</a></li></ol>
   </nav>
   <main class="doc">
-    <h1>REQ-WL-STATUS-03 · 减重卡阶段状态机与核心区内容</h1>
+    <h1>减重卡 · 提醒状态</h1>
     <p class="subtitle">需求单 · 科学减重（WL） · 交付目标：可上线面向用户使用（H5 + 微信小程序）</p>
     <blockquote>
-<p>编号 <code>REQ-WL-STATUS-03</code> ｜ 项目：科学减重（WL）｜ 模块：服务状态与卡片 ｜ 优先级 P0 ｜ 状态：待评审
-相关 Demo：<a href="https://lipulin222.github.io/online-health-care/online-service.html">线上服务页</a> ｜ <a href="https://lipulin222.github.io/online-health-care/weight-management/Weight-loss-Assistant/index.html">AI 减重助理</a>
-埋点：见 <code>REQ-WL-BASE-01 数据上报规范</code> ｜ 上线基线：见 <code>REQ-WL-BASE-02</code></p>
+<p>编号 <code>REQ-WL-STATUS-07</code> ｜ 项目：科学减重（WL）｜ 模块：服务状态与卡片 ｜ 优先级 P0 ｜ 状态：待评审
+Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion-ui/online-service.html?stage=4">线上服务页</a> ｜ 埋点：<code>REQ-WL-BASE-01</code></p>
 </blockquote>
 <hr>
-<h2 id="1-背景与目标">1. 背景与目标</h2>
-<p><strong>问题</strong>：减重卡在服务周期内会经历多个阶段，不同阶段应展示不同内容；目前卡片内容写死，且服务中用户可能看到与真实进度不符的内容。</p>
-<p><strong>目标</strong>：<strong>阶段由服务端计算</strong>，前端按阶段渲染核心区模块与 CTA；数据缺失时按规则降级，不编造、不留白。</p>
-<blockquote>
-<p>本单只管<strong>单张卡内部</strong>的渲染；「是否服务中」由 <code>STATUS-01</code> 判定，「卡与卡之间的顺序」由 <code>STATUS-02</code> 定义。</p>
-</blockquote>
-<hr>
-<h2 id="2-规则">2. 规则</h2>
-<h3 id="2-1-阶段定义与流转">2.1 阶段定义与流转</h3>
-<table>
-<thead>
-<tr>
-<th>阶段</th>
-<th>进入条件</th>
-<th>状态标签</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>未开始</td>
-<td>无有效处方或支付（<code>STATUS-01</code> 判定不成立）</td>
-<td>未开始（灰）</td>
-</tr>
-<tr>
-<td><strong>进行中</strong></td>
-<td><code>STATUS-01</code> 判定成立</td>
-<td>进行中（teal）</td>
-</tr>
-<tr>
-<td>维持期</td>
-<td>服务期结束（按剂量周期，见 <code>STATUS-01</code>）</td>
-<td>维持期（绿）</td>
-</tr>
-<tr>
-<td>已结束</td>
-<td>维持期满 2 个月</td>
-<td>已结束（灰）</td>
-</tr>
-</tbody></table>
-<ul>
-<li>流转<strong>单向</strong>：未开始 → 进行中 → 维持期 → 已结束。</li>
-<li><strong>例外</strong>：退款 / 处方作废 → 回退到「未开始」。</li>
-<li>续费不重置阶段，只更新月序与剂量（见 <code>STATUS-01</code>）。</li>
+<h2 id="1-这张卡什么时候出现">1. 这张卡什么时候出现</h2>
+<p>用户在用药中（条件同 <code>REQ-WL-STATUS-06</code>），并且后台配置的某条提醒命中了触发条件——卡片在卡头下方多出一张提醒卡，其余内容和进行中状态一致。</p>
+<p>提醒不只有续药，也可能是复查、饮食、运动、问卷等任何后台配置的提醒。</p>
+<h2 id="2-卡片上显示什么-自上而下">2. 卡片上显示什么（自上而下）</h2>
+<p>健康订阅区的头图区与专项标签行见 <code>REQ-WL-STATUS-02</code>。</p>
+<ol>
+<li><strong>卡头</strong>：与进行中状态一致（图标 + <code>体重管理</code> + <code>猜你想问 · 问题 ›</code>，问题轮播）。</li>
+<li><strong>提醒卡</strong>（浅橙色底、圆角块）：<ul>
+<li>第一行：橙色铃铛图标 + 橙色加粗标题（例：<code>续药提醒</code>）。</li>
+<li>第二行：橙色正文，一句话讲清「发生了什么 + 建议怎么做」。</li>
+<li>同一时间只显示一张提醒卡。</li>
 </ul>
-<h3 id="2-2-各阶段核心区内容">2.2 各阶段核心区内容</h3>
-<table>
-<thead>
-<tr>
-<th>阶段</th>
-<th>核心区模块</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>未开始</td>
-<td>科普入口 + 用药适应性评估入口 + AI 助理</td>
-</tr>
-<tr>
-<td>进行中</td>
-<td>方案名 + 当前月序/剂量 + 体重变化（有数据才显示）+ 知识库入口 + 主 CTA</td>
-</tr>
-<tr>
-<td>维持期</td>
-<td>成果数据（体重/腰围变化）+ 维持建议 + 复查入口</td>
-</tr>
-<tr>
-<td>已结束</td>
-<td>回顾入口 + 再次购买入口（不置顶）</td>
-</tr>
-</tbody></table>
-<h3 id="2-3-cta-规则">2.3 CTA 规则</h3>
-<ul>
-<li><strong>一卡一行动</strong>：每阶段至多 <strong>1 个主 CTA</strong>，其余为次行动。</li>
-<li>CTA 由服务端下发，前端不写死文案与目标。</li>
+</li>
+<li><strong>体重数据块</strong>：与进行中状态一致（大号已减重量 + 右侧圆形画笔按钮 + <code>已坚持 N 天 · 体重 X → Y</code>）。</li>
+<li><strong>底部两个按钮</strong>，并排等宽、大圆角：<ul>
+<li>左：<code>AI减重助理</code>（浅青底 + 青色描边 + 青色文字）</li>
+<li>右：<code>查看更多</code>（青色实底 + 白字）</li>
 </ul>
+</li>
+</ol>
+<h2 id="3-后台可配置的三件事">3. 后台可配置的三件事</h2>
+<p>提醒卡的内容不在端上写死，全部由后台配置：</p>
 <table>
 <thead>
 <tr>
-<th>阶段</th>
-<th>建议主 CTA</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>未开始</td>
-<td>用药适应性评估</td>
-</tr>
-<tr>
-<td>进行中</td>
-<td>AI 减重助理 / 记录数据（按阶段进度由服务端给）</td>
-</tr>
-<tr>
-<td>维持期</td>
-<td>复查预约</td>
-</tr>
-<tr>
-<td>已结束</td>
-<td>再次购买</td>
-</tr>
-</tbody></table>
-<h3 id="2-4-数据缺失降级">2.4 数据缺失降级</h3>
-<ul>
-<li>月序/剂量能算则显示，<strong>算不出就隐藏该模块</strong>，不显示占位数字。</li>
-<li>体重变化<strong>无数据则隐藏</strong>，<strong>不得编造</strong>、不留白块。</li>
-<li>接口失败 → 保留卡片骨架 + 重试入口，<strong>卡片不消失</strong>，页面其余部分正常。</li>
-</ul>
-<h3 id="2-5-禁止项">2.5 禁止项</h3>
-<ul>
-<li>不向用户展示<strong>阶段编号、进度条</strong>等内部信息。</li>
-<li>判定成立时<strong>不得显示「未开始」</strong>。</li>
-<li>不出现红点、倒计时、限时等施压元素。</li>
-<li>不承诺具体减重斤数。</li>
-</ul>
-<hr>
-<h2 id="3-字段与接口">3. 字段与接口</h2>
-<h3 id="接口">接口</h3>
-<p><code>GET /weight/card</code></p>
-<table>
-<thead>
-<tr>
-<th>项</th>
-<th>内容</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>请求参数</td>
-<td><code>user_id</code>、<code>platform</code></td>
-</tr>
-<tr>
-<td>响应</td>
-<td><code>stage</code>、<code>plan_id</code>、<code>month_index</code>、<code>dose_mg</code>、<code>weight_delta</code>、<code>kb_items[]</code>、<code>ctas[]</code>、<code>pinned</code></td>
-</tr>
-<tr>
-<td>异常码</td>
-<td><code>401/403</code> → 跳登录；<code>404</code> 无卡片 → 不渲染；<code>500/timeout</code> → 骨架 + 重试</td>
-</tr>
-<tr>
-<td>降级</td>
-<td>接口失败保留骨架与重试，不隐藏卡片</td>
-</tr>
-</tbody></table>
-<h3 id="字段">字段</h3>
-<table>
-<thead>
-<tr>
-<th>字段</th>
+<th>配置项</th>
 <th>说明</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><code>stage</code></td>
-<td><code>未开始 / 进行中 / 维持期 / 已结束</code></td>
+<td>触发逻辑</td>
+<td>什么条件命中就展示这条提醒（例：药品剩余量不足两周、距上次复查超过 N 周、距上次记录体重超过 N 天）</td>
 </tr>
 <tr>
-<td><code>plan_id</code></td>
-<td>方案标识</td>
+<td>文案</td>
+<td>提醒标题 + 正文一句话，运营可改</td>
 </tr>
 <tr>
-<td><code>month_index</code></td>
-<td>当前月序（按剂量爬坡推算，见 <code>STATUS-01</code>）</td>
-</tr>
-<tr>
-<td><code>dose_mg</code></td>
-<td>当前剂量（mg/周）</td>
-</tr>
-<tr>
-<td><code>weight_delta</code></td>
-<td>体重变化（无数据为 <code>null</code>）</td>
-</tr>
-<tr>
-<td><code>kb_items[]</code></td>
-<td>知识库入口条目（文章 id + 标题）</td>
-</tr>
-<tr>
-<td><code>ctas[]</code></td>
-<td>行动按钮（<code>id</code>、<code>text</code>、<code>target</code>、<code>is_primary</code>）</td>
-</tr>
-<tr>
-<td><code>pinned</code></td>
-<td>是否置顶（由 <code>STATUS-02</code> 消费）</td>
+<td>展示次数</td>
+<td>这条提醒最多展示几次；达到次数后不再展示</td>
 </tr>
 </tbody></table>
-<hr>
-<h2 id="4-验收与上线要求">4. 验收与上线要求</h2>
-<p><strong>验收清单</strong></p>
-<ul>
-<li><input disabled="" type="checkbox"> 阶段由服务端返回，前端无阶段判断逻辑</li>
-<li><input disabled="" type="checkbox"> 四个阶段的核心区模块按 2.2 渲染，CTA 按 2.3 且只有一个主行动</li>
-<li><input disabled="" type="checkbox"> 判定成立时不出现「未开始」</li>
-<li><input disabled="" type="checkbox"> 月序/剂量缺失时隐藏该模块，不显示占位数字</li>
-<li><input disabled="" type="checkbox"> 体重无数据时隐藏，不编造</li>
-<li><input disabled="" type="checkbox"> 接口失败保留骨架 + 重试，卡片不消失</li>
-<li><input disabled="" type="checkbox"> 退款/作废后阶段回退到「未开始」</li>
-<li><input disabled="" type="checkbox"> 续费不重置阶段，只更新月序与剂量</li>
-<li><input disabled="" type="checkbox"> UI 无阶段编号、进度条、红点、倒计时</li>
-<li><input disabled="" type="checkbox"> 小程序与 H5 两端渲染一致</li>
-</ul>
-<p><strong>上线要求（本单特有）</strong></p>
-<ol>
-<li>阶段与核心区内容<strong>全部服务端下发</strong>，前端不内置阶段文案与模板。</li>
-<li>卡片数据与首屏数据合并下发，避免二次请求导致跳动。</li>
-<li>知识库条目 id 必须能被科普页正确打开（无死链）。</li>
-<li>内容文案需医学/合规审核留痕。</li>
-</ol>
-<hr>
-<h2 id="5-依赖与风险">5. 依赖与风险</h2>
+<h2 id="4-点击与跳转">4. 点击与跳转</h2>
 <table>
 <thead>
 <tr>
-<th>项</th>
-<th>说明</th>
-<th>应对</th>
+<th>位置</th>
+<th>点击后去哪</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>依赖 <code>STATUS-01</code></td>
-<td>阶段进入条件由判定结果驱动</td>
-<td>本单只消费 <code>stage</code></td>
+<td>提醒卡</td>
+<td>该条提醒配置的目标页面（例：续药提醒进支付页）</td>
 </tr>
 <tr>
-<td>依赖 <code>STATUS-02</code></td>
-<td>是否置顶由该单定义</td>
-<td>本单下发 <code>pinned</code> 供其消费</td>
+<td>卡头第二行（<code>猜你想问 · 问题 ›</code>）</td>
+<td>科普知识库，定位到当前这条问题对应的文章</td>
 </tr>
 <tr>
-<td>依赖 <code>EDU-01</code></td>
-<td>知识库条目跳转科普页</td>
-<td>文章 id 需稳定，上线前校验无死链</td>
+<td>体重块右侧圆形画笔按钮</td>
+<td>跳到现有的录入体重页面</td>
 </tr>
 <tr>
-<td>依赖 <code>AI-01</code></td>
-<td>CTA 跳转 AI 助理</td>
-<td>需带上下文，避免重复采集</td>
+<td><code>AI减重助理</code></td>
+<td>AI 减重助理对话页，带用药中场景，并带上当前是第几周、整个疗程 24 周</td>
 </tr>
 <tr>
-<td>阶段计算错误</td>
-<td>阶段算错会导致整张卡内容错</td>
-<td>服务端可观测 + 可人工修正</td>
-</tr>
-<tr>
-<td>内容合规</td>
-<td>卡片文案涉医疗表述</td>
-<td>需审核留痕，禁止疗效承诺</td>
+<td><code>查看更多</code></td>
+<td>查看更多聚合页——里面有相关订单、评估报告、减重月报三个入口（见 <code>REQ-WL-RX-06</code>）</td>
 </tr>
 </tbody></table>
-<hr>
-<h2 id="6-待决策">6. 待决策</h2>
-<ol>
-<li>「已结束」阶段是否仍展示卡片？还是直接从订阅区移除？</li>
-<li>知识库入口在本期是否要做成轮播（跑马灯）？还是静态列表？</li>
-<li>CTA 的「记录数据」是否等 <code>RECORD-01</code> 上线后才显示，本期先隐藏？</li>
-<li>体重变化数据来自用户自录（<code>RECORD-01</code>）还是服务端？本期若无来源是否直接隐藏该模块？</li>
-</ol>
+<h2 id="5-验收">5. 验收</h2>
+<ul>
+<li><input disabled="" type="checkbox"> 命中后台配置的触发条件时，卡头下方出现提醒卡；未命中不出现</li>
+<li><input disabled="" type="checkbox"> 提醒卡为浅橙底，第一行铃铛图标 + 橙色标题，第二行橙色一句话正文</li>
+<li><input disabled="" type="checkbox"> 标题、正文、触发条件、展示次数均在后台可改，端上不写死</li>
+<li><input disabled="" type="checkbox"> 达到配置的展示次数后不再出现该提醒</li>
+<li><input disabled="" type="checkbox"> 同一时间只显示一张提醒卡</li>
+<li><input disabled="" type="checkbox"> 点击提醒卡跳到该条提醒配置的页面</li>
+<li><input disabled="" type="checkbox"> 体重数据块、两个按钮与进行中状态一致</li>
+<li><input disabled="" type="checkbox"> App 与小程序一致</li>
+</ul>
 
   </main>
 </div>
