@@ -1,9 +1,12 @@
 ﻿# 旅程回顾（结营回顾）
 
-> 编号 `REQ-WL-RECORD-02` ｜ 项目：科学减重（WL）｜ 模块：记录沉淀 ｜ 优先级 P1 ｜ 状态：待评审
+> 编号 `REQ-WL-RECORD-02` ｜ 项目：科学减重（WL）｜ 模块：记录沉淀 ｜ 优先级 P1 ｜ 状态：**二期 · 暂缓（一期不做）**
 > Demo：[结营回顾](https://lipulin222.github.io/online-health-care/Journey-Recap/index.html) ｜ 埋点：`REQ-WL-BASE-01`
 
 ---
+
+> **本需求一期不做**：一期来不及做结营回顾页，整体放二期；本单保留作为二期开发依据。
+
 
 ## 1. 页面定位与整体结构
 

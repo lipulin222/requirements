@@ -173,50 +173,50 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
   <a class="wlcard__link" href="REQ-WL-STATUS-01-%E5%87%8F%E9%87%8D%E5%8D%A1%E5%B1%95%E7%A4%BA%E4%B8%8E%E9%98%B6%E6%AE%B5.html" aria-label="# 减重卡展示与阶段"></a>
   <div class="wlcard__hd"><span class="wlcard__id">REQ-WL-STATUS-01</span><span class="wlcard__st">待评审 · P0</span></div>
   <div class="wlcard__t"># 减重卡展示与阶段</div>
-  <div class="wlcard__d">三渠道（线上/客服/线下）处方 + 支付判定 → 健康订阅区置顶减重卡并进入「进行中」</div>
-  <div class="wl__demos"><a class="wl__demo" href="https://lipulin222.github.io/online-health-care/online-service.html" target="_blank" rel="noopener">线上服务页 ↗</a><a class="wl__demo" href="https://lipulin222.github.io/online-health-care/Invoice-Review-Page/index.html" target="_blank" rel="noopener">确认购药页 ↗</a><a class="wl__demo" href="https://lipulin222.github.io/online-health-care/weight-management/Weight-loss-Assistant/index.html" target="_blank" rel="noopener">AI 减重助理 ↗</a></div>
+  <div class="wlcard__d">展示准入 + 五阶段状态机（①购前科普 ②评估完成 ③进行中 ④提醒续费 ⑤维持期；开启日二期），阶段由服务端判定下发</div>
+  <div class="wl__demos"><a class="wl__demo" href="https://lipulin222.github.io/health-subscription-demo/" target="_blank" rel="noopener">健康订阅区 Demo ↗</a></div>
 </div>
 <div class="wlcard">
   <a class="wlcard__link" href="REQ-WL-STATUS-02-%E5%81%A5%E5%BA%B7%E8%AE%A2%E9%98%85%E5%8C%BA%E7%BB%93%E6%9E%84%E4%B8%8E%E6%8E%92%E5%BA%8F%E8%A7%84%E5%88%99.html" aria-label="# 健康订阅区结构与排序规则"></a>
   <div class="wlcard__hd"><span class="wlcard__id">REQ-WL-STATUS-02</span><span class="wlcard__st">待评审 · P0</span></div>
   <div class="wlcard__t"># 健康订阅区结构与排序规则</div>
-  <div class="wlcard__d">健康订阅区共用结构（头图区 + 专项标签行）+ 减重卡固定排第一位</div>
-  <div class="wl__demos"><a class="wl__demo" href="https://lipulin222.github.io/online-health-care/online-service.html" target="_blank" rel="noopener">线上服务页 ↗</a></div>
+  <div class="wlcard__d">健康订阅区块：艺术字标题 + 五专项标签行 + 减重卡同属一张白卡；新客/老客两种状态</div>
+  <div class="wl__demos"><a class="wl__demo" href="https://lipulin222.github.io/health-subscription-demo/" target="_blank" rel="noopener">健康订阅区 Demo ↗</a></div>
 </div>
 <div class="wlcard">
-  <a class="wlcard__link" href="REQ-WL-STATUS-04-%E5%87%8F%E9%87%8D%E5%8D%A1%E7%A7%91%E6%99%AE%E7%8A%B6%E6%80%81.html" aria-label="# 减重卡 · 科普状态"></a>
+  <a class="wlcard__link" href="REQ-WL-STATUS-04-%E5%87%8F%E9%87%8D%E5%8D%A1%E7%A7%91%E6%99%AE%E7%8A%B6%E6%80%81.html" aria-label="# 减重卡 · 阶段① 购前科普"></a>
   <div class="wlcard__hd"><span class="wlcard__id">REQ-WL-STATUS-04</span><span class="wlcard__st">待评审 · P0</span></div>
-  <div class="wlcard__t"># 减重卡 · 科普状态</div>
-  <div class="wlcard__d">科普状态卡：问题轮播 5 条 + 四个分类入口 + 快速评估 / AI 助理，兜底状态</div>
-  <div class="wl__demos"><a class="wl__demo" href="https://lipulin222.github.io/online-health-care/weight-companion-ui/online-service.html?stage=1" target="_blank" rel="noopener">线上服务页 · 科普状态 ↗</a></div>
+  <div class="wlcard__t"># 减重卡 · 阶段① 购前科普</div>
+  <div class="wlcard__d">阶段①购前科普（兜底）：猜你想问（后台知识库对应分类随机拉取）+ 四分类入口 + 快速评估（新客态）/ AI 助理（购前场景）</div>
+  <div class="wl__demos"><a class="wl__demo" href="https://lipulin222.github.io/health-subscription-demo/online-service.html?stage=1" target="_blank" rel="noopener">Demo · 阶段① ↗</a></div>
 </div>
 <div class="wlcard">
-  <a class="wlcard__link" href="REQ-WL-STATUS-05-%E5%87%8F%E9%87%8D%E5%8D%A1%E8%AF%84%E4%BC%B0%E5%AE%8C%E6%88%90%E7%8A%B6%E6%80%81.html" aria-label="# 减重卡 · 评估完成状态"></a>
+  <a class="wlcard__link" href="REQ-WL-STATUS-05-%E5%87%8F%E9%87%8D%E5%8D%A1%E8%AF%84%E4%BC%B0%E5%AE%8C%E6%88%90%E7%8A%B6%E6%80%81.html" aria-label="# 减重卡 · 阶段② 评估完成（消费决策）"></a>
   <div class="wlcard__hd"><span class="wlcard__id">REQ-WL-STATUS-05</span><span class="wlcard__st">待评审 · P0</span></div>
-  <div class="wlcard__t"># 减重卡 · 评估完成状态</div>
-  <div class="wlcard__d">评估完成状态卡：结论句 + 三档刻度条（无需减重 / 需要减重管理 / 立即减重）+ 查看评估报告 / AI 助理</div>
-  <div class="wl__demos"><a class="wl__demo" href="https://lipulin222.github.io/online-health-care/weight-companion-ui/online-service.html?stage=2" target="_blank" rel="noopener">线上服务页 · 评估完成 ↗</a></div>
+  <div class="wlcard__t"># 减重卡 · 阶段② 评估完成（消费决策）</div>
+  <div class="wlcard__d">阶段②评估完成：固定结论句 + 三段刻度条（旗标指示档位）+ 查看评估报告 / AI 助理（购前场景）</div>
+  <div class="wl__demos"><a class="wl__demo" href="https://lipulin222.github.io/health-subscription-demo/online-service.html?stage=2" target="_blank" rel="noopener">Demo · 阶段② ↗</a></div>
 </div>
 <div class="wlcard">
-  <a class="wlcard__link" href="REQ-WL-STATUS-06-%E5%87%8F%E9%87%8D%E5%8D%A1%E8%BF%9B%E8%A1%8C%E4%B8%AD%E7%8A%B6%E6%80%81.html" aria-label="# 减重卡 · 进行中状态（用药陪跑）"></a>
+  <a class="wlcard__link" href="REQ-WL-STATUS-06-%E5%87%8F%E9%87%8D%E5%8D%A1%E8%BF%9B%E8%A1%8C%E4%B8%AD%E7%8A%B6%E6%80%81.html" aria-label="# 减重卡 · 阶段③ 进行中（用药陪跑）"></a>
   <div class="wlcard__hd"><span class="wlcard__id">REQ-WL-STATUS-06</span><span class="wlcard__st">待评审 · P0</span></div>
-  <div class="wlcard__t"># 减重卡 · 进行中状态（用药陪跑）</div>
-  <div class="wlcard__d">进行中状态卡（用药陪跑）：体重数据块（笔形按钮记录）+ 查看更多 / AI 助理</div>
-  <div class="wl__demos"><a class="wl__demo" href="https://lipulin222.github.io/online-health-care/weight-companion-ui/online-service.html?stage=3" target="_blank" rel="noopener">线上服务页 · 进行中 ↗</a></div>
+  <div class="wlcard__t"># 减重卡 · 阶段③ 进行中（用药陪跑）</div>
+  <div class="wlcard__d">阶段③进行中（用药陪跑）：体重数据块两态（有记录/初始态）+ 查看更多（可挂月报红点）/ AI 助理（用药中场景）</div>
+  <div class="wl__demos"><a class="wl__demo" href="https://lipulin222.github.io/health-subscription-demo/online-service.html?stage=3" target="_blank" rel="noopener">Demo · 阶段③ ↗</a></div>
 </div>
 <div class="wlcard">
-  <a class="wlcard__link" href="REQ-WL-STATUS-07-%E5%87%8F%E9%87%8D%E5%8D%A1%E6%8F%90%E9%86%92%E7%8A%B6%E6%80%81.html" aria-label="# 减重卡 · 提醒状态"></a>
+  <a class="wlcard__link" href="REQ-WL-STATUS-07-%E5%87%8F%E9%87%8D%E5%8D%A1%E6%8F%90%E9%86%92%E7%8A%B6%E6%80%81.html" aria-label="# 减重卡 · 阶段④ 提醒 / 续费"></a>
   <div class="wlcard__hd"><span class="wlcard__id">REQ-WL-STATUS-07</span><span class="wlcard__st">待评审 · P0</span></div>
-  <div class="wlcard__t"># 减重卡 · 提醒状态</div>
-  <div class="wlcard__d">提醒状态卡：浅橙提醒卡（触发逻辑 / 文案 / 次数后台可配）+ 体重数据块 + 查看更多</div>
-  <div class="wl__demos"><a class="wl__demo" href="https://lipulin222.github.io/online-health-care/weight-companion-ui/online-service.html?stage=4" target="_blank" rel="noopener">线上服务页 · 提醒 ↗</a></div>
+  <div class="wlcard__t"># 减重卡 · 阶段④ 提醒 / 续费</div>
+  <div class="wlcard__d">阶段④提醒/续费：浅橙提醒卡置顶（默认 8 条已定稿，触发/文案/次数后台可配）+ 体重数据块</div>
+  <div class="wl__demos"><a class="wl__demo" href="https://lipulin222.github.io/health-subscription-demo/online-service.html?stage=4" target="_blank" rel="noopener">Demo · 阶段④ ↗</a></div>
 </div>
 <div class="wlcard">
-  <a class="wlcard__link" href="REQ-WL-STATUS-08-%E5%87%8F%E9%87%8D%E5%8D%A1%E7%BB%B4%E6%8C%81%E6%9C%9F%E7%8A%B6%E6%80%81.html" aria-label="# 减重卡 · 维持期状态（一个疗程结束）"></a>
-  <div class="wlcard__hd"><span class="wlcard__id">REQ-WL-STATUS-08</span><span class="wlcard__st">待评审 · P0</span></div>
-  <div class="wlcard__t"># 减重卡 · 维持期状态（一个疗程结束）</div>
-  <div class="wlcard__d">维持期状态卡：成果区（减重 8.6kg + 打卡/腰围/复查）+ 打开回顾，卡头右侧更多入口，置顶 1 个月</div>
-  <div class="wl__demos"><a class="wl__demo" href="https://lipulin222.github.io/online-health-care/weight-companion-ui/online-service.html?stage=5" target="_blank" rel="noopener">线上服务页 · 维持期 ↗</a></div>
+  <a class="wlcard__link" href="REQ-WL-STATUS-08-%E5%87%8F%E9%87%8D%E5%8D%A1%E7%BB%B4%E6%8C%81%E6%9C%9F%E7%8A%B6%E6%80%81.html" aria-label="# 减重卡 · 阶段⑤ 维持期（一个疗程结束）"></a>
+  <div class="wlcard__hd"><span class="wlcard__id">REQ-WL-STATUS-08</span><span class="wlcard__st">二期（暂缓） · P0</span></div>
+  <div class="wlcard__t"># 减重卡 · 阶段⑤ 维持期（一个疗程结束）</div>
+  <div class="wlcard__d">阶段⑤维持期：插画 + 恭喜减重成功！+ 通栏「打开回顾」进结营回顾页，置顶 1 个月</div>
+  <div class="wl__demos"><a class="wl__demo" href="https://lipulin222.github.io/health-subscription-demo/online-service.html?stage=5" target="_blank" rel="noopener">Demo · 阶段⑤ ↗</a></div>
 </div></div></section>
 <section class="wlsec" id="PLAN"><div class="wlsec__h"><h2>评估及报告</h2><span>PLAN</span></div><div class="wlcards"><div class="wlcard">
   <a class="wlcard__link" href="REQ-WL-PLAN-05-%E9%80%89%E6%8B%A9%E5%B0%B1%E8%AF%8A%E4%BA%BA.html" aria-label="# 选择就诊人"></a>
@@ -290,7 +290,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </div>
 <div class="wlcard">
   <a class="wlcard__link" href="REQ-WL-RECORD-02-%E6%97%85%E7%A8%8B%E5%9B%9E%E9%A1%BE.html" aria-label="# 旅程回顾（结营回顾）"></a>
-  <div class="wlcard__hd"><span class="wlcard__id">REQ-WL-RECORD-02</span><span class="wlcard__st">待评审 · P1</span></div>
+  <div class="wlcard__hd"><span class="wlcard__id">REQ-WL-RECORD-02</span><span class="wlcard__st">二期（暂缓） · P1</span></div>
   <div class="wlcard__t"># 旅程回顾（结营回顾）</div>
   <div class="wlcard__d">结营回顾长页：封面数字滚动 + 体重曲线/成分/指标 + 七型减重人格判定 + 开启健康管理</div>
   <div class="wl__demos"><a class="wl__demo" href="https://lipulin222.github.io/online-health-care/Journey-Recap/index.html" target="_blank" rel="noopener">结营回顾 ↗</a></div>
@@ -328,6 +328,26 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
     <p style="margin:0 0 8px"><b>命名规范：</b><code>REQ-WL-{模块}-{序号}-{中文短名}</code>。模块：<code>STATUS</code> 服务状态与卡片 / <code>PLAN</code> 评估及报告 / <code>RX</code> 处方与订单 / <code>RECORD</code> 记录沉淀 / <code>EDU</code> 科普相关 / <code>BASE</code> 规范与基线。序号在模块内从 <code>01</code> 递增，<b>不复用、不重排</b>；废弃单保留编号并标注「已作废」。</p>
     <p style="margin:0 0 8px"><b>文档结构（6 节）：</b>1 背景与目标 · 2 规则 · 3 字段 · 4 验收与上线要求 · 5 依赖与风险 · 6 待决策。<b>埋点不写在单子里</b>，统一登记在 <code>REQ-WL-BASE-01 数据上报规范</code>；通用上线要求引用 <code>REQ-WL-BASE-02 上线基线</code>。</p>
     <p style="margin:0"><b>页面不放截图</b>，只保留相关 Demo 链接（在卡片下方）。改内容请改 <code>.md</code> 后 <code>cd _build &amp;&amp; npm run build</code>。</p>
+  </div>
+</div>
+<div class="wlnote">
+  <div class="wlnote__in">
+    <p style="margin:0 0 10px"><b>待办清单</b>（补齐后回填对应需求单并删除本行）</p>
+    <table style="width:100%;border-collapse:collapse;font-size:13.5px">
+      <tr style="text-align:left;color:#5A6B76">
+        <th style="padding:6px 10px 6px 0;border-bottom:1px solid #E3E9EE;width:44px">#</th>
+        <th style="padding:6px 10px;border-bottom:1px solid #E3E9EE;width:150px">负责人</th>
+        <th style="padding:6px 10px;border-bottom:1px solid #E3E9EE">补什么</th>
+        <th style="padding:6px 0 6px 10px;border-bottom:1px solid #E3E9EE;width:150px">时间点</th>
+      </tr>
+      <tr><td style="padding:7px 10px 7px 0;border-bottom:1px solid #EEF2F5">1</td><td style="padding:7px 10px;border-bottom:1px solid #EEF2F5"><b>@望时</b></td><td style="padding:7px 10px;border-bottom:1px solid #EEF2F5">减重卡展示准入的「指定区域」范围，回填 STATUS-01</td><td style="padding:7px 0 7px 10px;border-bottom:1px solid #EEF2F5">一期评审前</td></tr>
+      <tr><td style="padding:7px 10px 7px 0;border-bottom:1px solid #EEF2F5">2</td><td style="padding:7px 10px;border-bottom:1px solid #EEF2F5"><b>@望时</b></td><td style="padding:7px 10px;border-bottom:1px solid #EEF2F5">《减重管理服务知情同意书》协议内容与链接，回填 RX-01</td><td style="padding:7px 0 7px 10px;border-bottom:1px solid #EEF2F5">一期上线前</td></tr>
+      <tr><td style="padding:7px 10px 7px 0;border-bottom:1px solid #EEF2F5">3</td><td style="padding:7px 10px;border-bottom:1px solid #EEF2F5"><b>@望时</b></td><td style="padding:7px 10px;border-bottom:1px solid #EEF2F5">下单 8 分钟未支付的微信公众号催办消息文案，回填 RX-02</td><td style="padding:7px 0 7px 10px;border-bottom:1px solid #EEF2F5">一期上线前</td></tr>
+      <tr><td style="padding:7px 10px 7px 0;border-bottom:1px solid #EEF2F5">4</td><td style="padding:7px 10px;border-bottom:1px solid #EEF2F5"><b>@望时 @罗兑 @冠成 @张林</b></td><td style="padding:7px 10px;border-bottom:1px solid #EEF2F5">知识库文章结构与分类清单（C-04），对齐拉取接口与字段，回填 EDU-01 / EDU-02</td><td style="padding:7px 0 7px 10px;border-bottom:1px solid #EEF2F5">一期开发启动前</td></tr>
+      <tr><td style="padding:7px 10px 7px 0;border-bottom:1px solid #EEF2F5">5</td><td style="padding:7px 10px;border-bottom:1px solid #EEF2F5"><b>@罗兑 @冠成 @张林</b></td><td style="padding:7px 10px;border-bottom:1px solid #EEF2F5">评估报告接口契约（路径、入参、出参、错误码），回填 PLAN-03</td><td style="padding:7px 0 7px 10px;border-bottom:1px solid #EEF2F5">一期开发启动前</td></tr>
+      <tr><td style="padding:7px 10px 7px 0;border-bottom:1px solid #EEF2F5">6</td><td style="padding:7px 10px;border-bottom:1px solid #EEF2F5"><b>@罗兑 @冠成 @张林</b></td><td style="padding:7px 10px;border-bottom:1px solid #EEF2F5">减重月报内容来源定论（服务端下发 or 客户端拼装，C-01），回填 RECORD-01</td><td style="padding:7px 0 7px 10px;border-bottom:1px solid #EEF2F5">一期开发启动前</td></tr>
+      <tr><td style="padding:7px 10px 7px 0;border-bottom:1px solid #EEF2F5">7</td><td style="padding:7px 10px;border-bottom:1px solid #EEF2F5"><b>@罗兑 @冠成 @张林</b></td><td style="padding:7px 10px;border-bottom:1px solid #EEF2F5">DMS 后台新增字段并**与门诊等其他团队对齐**：处方药程、发货时间、发货地点（药程支撑减重卡阶段判定，发货时间/地点支撑订单流程页），回填 STATUS-01 / RX-03</td><td style="padding:7px 0 7px 10px;border-bottom:1px solid #EEF2F5">一期开发启动前</td></tr>
+    </table>
   </div>
 </div>
 <script>

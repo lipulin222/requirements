@@ -148,8 +148,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <li class="lv3"><a href="#3-2-处方-健康订阅-订单-rx">3.2 处方·健康订阅·订单（RX）</a></li>
 <li class="lv3"><a href="#3-3-方案-评估-随访-plan">3.3 方案·评估·随访（PLAN）</a></li>
 <li class="lv3"><a href="#3-4-科普-内容-edu">3.4 科普·内容（EDU）</a></li>
-<li class="lv3"><a href="#3-5-ai-助理-ai">3.5 AI 助理（AI）</a></li>
-<li class="lv3"><a href="#3-6-通用技术事件">3.6 通用技术事件</a></li>
+<li class="lv3"><a href="#3-5-通用技术事件">3.5 通用技术事件</a></li>
 <li class="lv2"><a href="#4-核心漏斗">4. 核心漏斗</a></li>
 <li class="lv2"><a href="#5-不报什么-红线">5. 不报什么（红线）</a></li></ol>
   </nav>
@@ -349,52 +348,11 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <tr>
 <td><code>article_cta</code></td>
 <td>文章内 CTA</td>
-<td><code>article_id</code>、<code>cta_id(agent/assess)</code></td>
+<td><code>article_id</code>、<code>cta_id(assess)</code></td>
 <td>内容转化</td>
 </tr>
 </tbody></table>
-<h3 id="3-5-ai-助理-ai">3.5 AI 助理（AI）</h3>
-<table>
-<thead>
-<tr>
-<th>事件</th>
-<th>触发时机</th>
-<th>关键参数</th>
-<th>用途</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>agent_open</code></td>
-<td>打开助理</td>
-<td><code>entry</code>、<code>plan_name</code>、<code>stage</code>、<code>week</code>、<code>remind_type</code></td>
-<td>入口分布</td>
-</tr>
-<tr>
-<td><code>agent_msg_send</code></td>
-<td>用户发送</td>
-<td><code>entry</code>、<code>msg_index</code>、<code>has_option</code></td>
-<td>会话深度</td>
-</tr>
-<tr>
-<td><code>agent_msg_recv</code></td>
-<td>收到回复</td>
-<td><code>entry</code>、<code>latency</code>、<code>success</code></td>
-<td>服务质量</td>
-</tr>
-<tr>
-<td><code>agent_summary_generate</code></td>
-<td>生成小结</td>
-<td><code>entry</code>、<code>turn_count</code></td>
-<td>价值达成</td>
-</tr>
-<tr>
-<td><code>agent_summary_cta</code></td>
-<td>小结后下一步</td>
-<td><code>entry</code>、<code>cta_id</code></td>
-<td>助理→主链路转化</td>
-</tr>
-</tbody></table>
-<h3 id="3-6-通用技术事件">3.6 通用技术事件</h3>
+<h3 id="3-5-通用技术事件">3.5 通用技术事件</h3>
 <table>
 <thead>
 <tr>
@@ -438,11 +396,6 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <td><strong>减重成交</strong></td>
 <td><code>wcard_cta_click</code> → <code>assess_complete</code> → <code>plan_view</code> → <code>invoice_view</code> → <code>consent_sign</code> → <code>addr_save</code> → <code>pay_result</code>(success)</td>
 <td>从门户到成交，哪步流失最大</td>
-</tr>
-<tr>
-<td><strong>AI 助理价值</strong></td>
-<td><code>agent_open</code> → <code>agent_msg_send</code> → <code>agent_summary_generate</code> → <code>agent_summary_cta</code></td>
-<td>AI 是否真的推动下一步</td>
 </tr>
 <tr>
 <td><strong>内容影响</strong></td>

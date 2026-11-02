@@ -143,16 +143,19 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
     <p class="toc__h">本单目录</p>
     <ol><li class="lv2"><a href="#1-规则">1. 规则</a></li>
 <li class="lv3"><a href="#1-1-入口与返回">1.1 入口与返回</a></li>
-<li class="lv3"><a href="#1-2-进入场景">1.2 进入场景</a></li>
-<li class="lv3"><a href="#1-3-快问快答">1.3 快问快答</a></li>
-<li class="lv3"><a href="#1-4-月报详情">1.4 月报详情</a></li>
+<li class="lv3"><a href="#1-2-页面结构-四种视图">1.2 页面结构（四种视图）</a></li>
+<li class="lv3"><a href="#1-3-列表页-默认落地页">1.3 列表页（默认落地页）</a></li>
+<li class="lv3"><a href="#1-4-快问快答-单页速填">1.4 快问快答（单页速填）</a></li>
+<li class="lv3"><a href="#1-5-月报详情">1.5 月报详情</a></li>
+<li class="lv3"><a href="#1-6-未到期次占位">1.6 未到期次占位</a></li>
+<li class="lv3"><a href="#1-7-空状态">1.7 空状态</a></li>
 <li class="lv2"><a href="#2-验收">2. 验收</a></li></ol>
   </nav>
   <main class="doc">
     <h1>减重月报</h1>
     <p class="subtitle">需求单 · 科学减重（WL） · 交付目标：可上线面向用户使用（H5 + 微信小程序）</p>
     <blockquote>
-<p>编号 <code>REQ-WL-RECORD-01</code> ｜ 项目：科学减重（WL）｜ 模块：数据记录 ｜ 优先级 P0 ｜ 状态：待评审
+<p>编号 <code>REQ-WL-RECORD-01</code> ｜ 项目：科学减重（WL）｜ 模块：记录沉淀 ｜ 优先级 P0 ｜ 状态：待评审
 Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion-ui/Monthly-Report/index.html">减重月报</a> ｜ 埋点：<code>REQ-WL-BASE-01</code></p>
 </blockquote>
 <hr>
@@ -168,7 +171,7 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion
 <li><strong>情况一「生成月报」</strong>：上一个月已经过完，用户还没做这期的快问快答。<ol>
 <li>首页减重卡片的「查看更多」按钮右上角出现红色角标「生成月报」。</li>
 <li>点「查看更多」进入聚合页后，「每月减重小结及后续建议」一栏右上角也出现红色角标「生成月报」。</li>
-<li>点这一栏直接进入快问快答页面，答完（或跳过）后生成月报。</li>
+<li>点这一栏进入月报的列表页，列表下方有 <code>生成最新月报</code> 按钮，点击进入快问快答，答完（或跳过）后生成月报。</li>
 </ol>
 </li>
 <li><strong>情况二「新月报」</strong>：已经有生成好的月报，用户还没有看过。<ol>
@@ -186,58 +189,101 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion
 <li>快问快答答到一半就返回的，同样直接退出，不会跳过快问快答看到本期月报——月报要等答完或跳过后才生成放出。</li>
 <li>如果手机上没有上一页可退（例如从消息通知直接打开月报），返回回到线上服务首页的「进行中」状态。</li>
 </ul>
-<h3 id="1-2-进入场景">1.2 进入场景</h3>
+<h3 id="1-2-页面结构-四种视图">1.2 页面结构（四种视图）</h3>
+<p>从入口进来，<strong>默认先落在「减重月报列表页」</strong>；页内共四种视图：</p>
 <table>
 <thead>
 <tr>
-<th>场景</th>
-<th>行为</th>
+<th>视图</th>
+<th>顶栏标题</th>
+<th>说明</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>本期未填快问快答</td>
-<td>先答快问快答，完成或跳过后看月报</td>
+<td>减重月报列表页（默认落地页）</td>
+<td><code>减重月报</code></td>
+<td>已生成月报的倒序列表 + 生成入口</td>
 </tr>
 <tr>
-<td>本期已填 / 回看历史</td>
-<td>直接看月报</td>
+<td>快问快答</td>
+<td><code>{X}月状态</code></td>
+<td>单页速填 8 题，填完生成月报</td>
 </tr>
 <tr>
-<td>无数据</td>
+<td>月报详情</td>
+<td><code>减重月报</code></td>
+<td>某一期的完整内容</td>
+</tr>
+<tr>
+<td>未到期次占位</td>
+<td><code>减重月报</code></td>
+<td>还没到期的期次，显示预计生成时间</td>
+</tr>
+<tr>
 <td>空状态</td>
+<td><code>减重月报</code></td>
+<td>还没有第一期月报时</td>
 </tr>
 </tbody></table>
-<h3 id="1-3-快问快答">1.3 快问快答</h3>
+<h3 id="1-3-列表页-默认落地页">1.3 列表页（默认落地页）</h3>
 <ul>
-<li>8 题（数字 / 单选 / 多选），全部选填，全跳过也能生成月报。</li>
+<li>倒序只列出<strong>已生成</strong>的月报：每行两行文字——第一行 <code>第 N 期 · 统计区间</code>（灰），第二行该期标题（深色加粗），点击看该期详情。</li>
+<li>列表下方吸底一个通栏按钮 <code>生成最新月报</code>，点击进入快问快答。</li>
+<li>进入某个视图后，列表页的吸底按钮隐藏。</li>
+</ul>
+<h3 id="1-4-快问快答-单页速填">1.4 快问快答（单页速填）</h3>
+<ul>
+<li>页内大标题 <code>{X}月状态快问快答</code>。<strong>填写口径</strong>：按填写时间定所属月份——当月 15 日（含）前填算上个月，15 日之后填算本月（例：11 月 14 日填 → 「10月状态」；11 月 16 日填 → 「11月状态」）。</li>
+<li><strong>8 题一次列完</strong>（不是一屏一题），按三个分组排列：<ul>
+<li><strong>身体数据</strong>：现在体重多少？（数字，kg）/ 腰围多少？（数字，cm）/ 这个月的身体反应？（单选：没有明显反应 / 轻微恶心或饱胀 / 食欲明显下降 / 其他不适）</li>
+<li><strong>生活习惯</strong>：平均每周运动几次？（单选：几乎不动 / 1–2 次 / 3–4 次 / 5 次以上）/ 平均每天睡多久？（单选：不足 6 小时 / 6–7 小时 / 7–8 小时 / 8 小时以上）/ 这个月喝过酒吗？（单选：没喝 / 1–2 次 / 3 次以上）</li>
+<li><strong>心理状态</strong>：这个月的状态？（单选：状态很好 / 还算顺利 / 有点吃力 / 快坚持不住）/ 最影响坚持的是？（多选：时间不够 / 应酬聚餐 / 食欲难控制 / 看不到变化 / 药物反应 / 情绪压力）</li>
+</ul>
+</li>
+<li>全部选填：单选点选互斥、多选可叠加；不填任何一题也能直接点底部通栏按钮 <code>生成月报</code> 生成月报（空记录同样标记为本期已填）。</li>
+<li>提交后提示 <code>已记录</code>，随即进入本期月报。</li>
 <li>答案按期留存，供本期月报与医生端使用；不做医疗判定。</li>
 </ul>
-<h3 id="1-4-月报详情">1.4 月报详情</h3>
+<h3 id="1-5-月报详情">1.5 月报详情</h3>
+<p><strong>月报内容来源待确认</strong>：每期月报的数据（体重记录、统计区间）和正文内容（分析文字、下月建议条目）从哪里来——是服务端生成后下发、还是客户端按记录数据拼装——需要和开发确认后才能定；本单只约定页面展示结构，不锁定内容来源方式。</p>
+<p><strong>顶部通栏配图</strong>：每期月报顶部有一张通栏大图，透顶展示（顶栏浮在图上，向下滚动约一屏图高后顶栏变实底）。配图按两个维度选取：</p>
 <ul>
-<li><strong>月报内容来源待确认</strong>：每期月报的数据（体重记录、统计区间）和正文内容（分析文字、下月建议条目）从哪里来——是服务端生成后下发、还是客户端按记录数据拼装——需要和开发确认后才能定；本单只约定页面展示结构，不锁定内容来源方式。</li>
-<li><strong>顶部通栏配图</strong>：每期月报顶部有一张通栏大图，透顶展示（顶栏浮在图上，滚动过图后变实底）。配图按两个维度选取：<ul>
 <li><strong>按月份切换</strong>：配图与该期的起始月份对应（如 6 月开始的期次用 6 月的图），一年 12 个月各一张；跨月的期次按起始月份取图。翻看不同期次的历史月报时，配图随之变化。</li>
 <li><strong>按性别区分</strong>：每张月份图都有男版、女版两个版本（素材两套已备好），按用户档案里的性别取对应版本。</li>
 </ul>
-</li>
-<li>每期包含：期数、统计区间、生成时间（未生成为预计时间）、状态（已生成 / 未生成）。</li>
-<li>正文固定两模块：<code>01 减重数据分析</code>（图表 + 一段话）、<code>02 下个月的饮食与运动</code>（各 3 条可执行动作）。</li>
-<li><code>查看历史月报</code>：期数 chips 切换，未到期次显示预计生成时间占位。</li>
+<p>配图下方自上而下：</p>
+<ol>
+<li><strong>期头</strong>：小字眉标 <code>体重管理 · 第 N 期月报</code> + 当期标题（如 <code>第一个月：把节奏建立起来</code>，每期一句，由内容侧产出）+ 一行元信息 <code>统计区间 | 第 X–Y 周 · 28 天</code>。</li>
+<li><strong>本期概览卡</strong>：体重变化折线图（5 个描点，首尾标数字）+ 四格指标 <code>本月变化</code> / <code>累计变化</code> / <code>BMI</code> / <code>腰围</code> + 卡片底部文字按钮 <code>查看历史月报</code>（点击展开期数切换条，再点收起）。</li>
+<li><strong>期数切换条</strong>（默认收起）：列出全部期次的 <code>第 N 期</code> 胶囊，当前期高亮；未生成的期次为置灰样式，点开是占位页（见 1.6）。</li>
+<li><strong><code>01 减重数据分析</code></strong>：图表下方一段话，讲清本月减了多少、节奏是否健康、为什么快或慢。</li>
+<li><strong><code>02 下个月的饮食与运动</code></strong>：两个小标题 <code>饮食</code> / <code>运动</code>，各 3 条编号的可执行动作（含具体数字目标，如「蛋白质补到 70g/天以上」）。</li>
+<li><strong>页脚</strong>：两行小字——测量口径 <code>体重为晨起空腹测量，腰围为肚脐水平呼气末测量，体成分来自 InBody。本页为健康管理服务记录，不构成诊疗建议。</code>；下方一个文字链 <code>补填{X}月状态</code>，点击重新打开快问快答（{X} 同样按 1.4 的填写口径计算）。</li>
 <li>顶栏「更多」：toast <code>月报暂不支持导出</code>。</li>
+</ol>
+<h3 id="1-6-未到期次占位">1.6 未到期次占位</h3>
+<ul>
+<li>配图 + 眉标 <code>体重管理 · 第 N 期月报</code> + 大标题 <code>这一期还没到总结的时候</code> + 元信息（区间 | 周数）。</li>
+<li>概览卡位置显示：<code>预计生成时间</code> + 具体日期（每期结束后次日生成），说明 <code>月报在每期结束后次日生成，包含这一期的减重数据分析，以及下个月的饮食与运动建议。</code> + <code>查看历史月报</code> 按钮。</li>
+</ul>
+<h3 id="1-7-空状态">1.7 空状态</h3>
+<ul>
+<li>还没有第一期月报时显示：空状态插画 + 标题 <code>第 1 份月报还在准备中</code> + 说明 <code>满 4 周后，这里会给出这个月的减重数据分析，以及下个月的饮食与运动建议。</code></li>
 </ul>
 <h2 id="2-验收">2. 验收</h2>
 <ul>
-<li><input disabled="" type="checkbox"> 全跳过快问快答可生成月报</li>
-<li><input disabled="" type="checkbox"> 上月过完未做快问快答：首页「查看更多」红点「生成月报」，聚合页月报栏红点「生成月报」，点击直达快问快答</li>
+<li><input disabled="" type="checkbox"> 进入默认落在列表页：只显示已生成期次（倒序），<code>生成最新月报</code> 吸底按钮进快问快答</li>
+<li><input disabled="" type="checkbox"> 快问快答 8 题单页列完，分组与选项文案与单内一致；全跳过点 <code>生成月报</code> 也能生成</li>
+<li><input disabled="" type="checkbox"> 快问快答标题按填写口径显示 <code>{X}月状态</code>：15 日前填算上月、15 日后算本月</li>
+<li><input disabled="" type="checkbox"> 月报详情：眉标、当期标题、元信息、概览四格、两模块内容与页脚声明齐全；<code>补填{X}月状态</code> 可重开快问快答</li>
+<li><input disabled="" type="checkbox"> <code>查看历史月报</code> 展开期数 chips，当前期高亮；点未生成期次进入占位页（<code>这一期还没到总结的时候</code> + 预计生成时间）</li>
+<li><input disabled="" type="checkbox"> 上月过完未做快问快答：首页「查看更多」红点「生成月报」，聚合页月报栏红点「生成月报」，点击进月报列表页，再经 <code>生成最新月报</code> 进快问快答</li>
 <li><input disabled="" type="checkbox"> 有已生成未读月报：首页红点「新月报」，聚合页红点「new」，点击直达最新月报</li>
-<li><input disabled="" type="checkbox"> 进入月报内容后，首页与聚合页红点同时消失</li>
-<li><input disabled="" type="checkbox"> 红点不改变减重卡片按钮本身的布局与展示逻辑</li>
+<li><input disabled="" type="checkbox"> 进入月报内容后，首页与聚合页红点同时消失；红点不改变减重卡片按钮本身的布局</li>
 <li><input disabled="" type="checkbox"> 快问快答与月报页返回均回首页，不出现「返回看到月报」</li>
-<li><input disabled="" type="checkbox"> 未到期次为预计生成占位</li>
-<li><input disabled="" type="checkbox"> 历史 chips 切换正常，本期高亮</li>
-<li><input disabled="" type="checkbox"> 配图按该期起始月份切换，翻看不同期次时配图随月份变化</li>
-<li><input disabled="" type="checkbox"> 同一期月报，男 / 女用户看到的配图分别是男版 / 女版素材</li>
-<li><input disabled="" type="checkbox"> 无数据用户看到空状态</li>
+<li><input disabled="" type="checkbox"> 配图按该期起始月份切换；同一期月报男 / 女用户看到男版 / 女版素材；滚动过图后顶栏变实底</li>
+<li><input disabled="" type="checkbox"> 顶栏「更多」提示 <code>月报暂不支持导出</code></li>
+<li><input disabled="" type="checkbox"> 无数据用户看到空状态（<code>第 1 份月报还在准备中</code>）</li>
 </ul>
 
   </main>

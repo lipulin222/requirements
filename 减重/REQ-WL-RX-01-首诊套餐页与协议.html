@@ -163,19 +163,19 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion
 </thead>
 <tbody><tr>
 <td>结论头</td>
-<td>用户信息（姓名 · 年龄 · 性别 · 身高/体重 · BMI）+ <code>套餐匹配度 较高</code>（78% 进度条，口径见 PLAN-02）+ 说明句 <code>你的 BMI {BMI} 已进入建议药物介入的区间，生活方式干预见效慢、难维持，可以考虑体重管理首诊套餐，配合减重。</code>（{BMI} 按用户实际值展示）</td>
+<td>用户信息（姓名 · 性别 · 年龄 · 身高/体重 · BMI）+ <code>套餐匹配度 较高</code>（78% 进度条，口径见 PLAN-02）+ 说明句 <code>你的 BMI {BMI} 已进入建议药物介入的区间，生活方式干预见效慢、难维持，可以考虑体重管理首诊套餐，配合减重。</code>（{BMI} 按用户实际值展示）。信息行右侧有一个 info 图标，点击弹出气泡 <code>生成时间：年-月-日 时:分</code>（演示取当前打开时刻，生产以服务端为准），点外面或再点一次收起</td>
 </tr>
 <tr>
 <td>01 套餐介绍</td>
-<td>导语 <code>基于多年临床经验，卓正推出这套减重服务套餐，包括：</code> + 5 条列表：<code>专业医生的科学诊断</code> / <code>循证依据充分的正规药物</code> / <code>营养师制定饮食方案</code> / <code>医护助理 1v1 的服务指导</code> / <code>AI 小程序全程跟踪进程</code>；尾段 <code>减重是一个复杂、系统性工程，卓正专业的服务能够帮助你的减重过程更加安全、有效。</code></td>
+<td>开头一句 <code>减重是一个复杂、系统性工程，卓正专业的服务能够帮助你的减重过程更加安全、有效。</code> + 4 格图文（上图下词，插图为本组配图素材）：<code>专业医生的科学诊断</code> / <code>循证充分的正规药物</code> / <code>营养师制定饮食方案</code> / <code>医护助理1v1的服务指导</code></td>
 </tr>
 <tr>
 <td>套餐卡</td>
-<td>「01 套餐介绍」内的浅底子卡片，卡名 <code>卓正医疗-减重管理首诊套餐</code>。4 项明细：医生制定减重方案 <code>¥400</code>（小字：含减重方案评估、营养支持方案评估、处方开具）/ 药物支持：替尔泊肽注射液 <code>¥580</code>（小字：GIP / GLP-1 双受体激动剂 · 目标剂量档 · 每周 1 次 · 4 支）/ 专属医疗助理服务 <code>¥300</code>（小字：1 个月内，线上 1 对 1 真人护士对接）/ AI 智能减重陪跑服务 <code>¥100</code>（小字：全天候在线，随时响应需求、解答疑问）。底行：<code>套餐价</code> <code>¥790</code> + 划线原价 <code>¥1,380</code> + 标签 <code>立省 ¥590</code></td>
+<td>「01 套餐介绍」内的浅底子卡片，卡名 <code>卓正医疗-减重管理首诊套餐</code>。4 项明细：医生制定减重方案 <code>¥400</code>（小字：含减重方案、营养方案评估，处方开具）/ 药物支持：替尔泊肽注射液 <code>¥580</code>（小字：GIP / GLP-1 双受体激动剂 · 10ml）/ 专属医疗助理服务 <code>¥300</code>（小字：线上 1 对 1 真人护士对接）/ AI 智能减重陪跑服务 <code>¥100</code>（小字：随时陪伴关怀，每月回顾进展）。底行：<code>套餐价</code> <code>¥790</code> + 划线原价 <code>¥1,380</code> + 标签 <code>立省 ¥590</code></td>
 </tr>
 <tr>
 <td>02 支付后流程</td>
-<td>4 步：<code>1 用户提交订单并支付</code> → <code>2 医生线上评估开具处方</code>（小字：若医生评估需要面诊，助理将电话联系用户）→ <code>3 用户填写收货信息</code>（标题右侧有品牌青色文字链 <code>现在填写</code>，点击进收货信息填写页——现成页面，无需开发，具体链接开发对接时确认）→ <code>4 同城顺丰冷链发货</code></td>
+<td>4 步：<code>1 用户提交订单并支付</code> → <code>2 医生线上评估开具处方</code>（标题带小字 <code>（约1个工作日）</code>；下方小字：若医生评估需要面诊，助理将电话联系用户）→ <code>3 用户填写收货信息</code>（标题右侧有品牌青色文字链 <code>现在填写</code>，点击进收货信息填写页——现成页面，无需开发，具体链接开发对接时确认）→ <code>4 同城顺丰冷链发货</code></td>
 </tr>
 <tr>
 <td>吸底</td>
@@ -199,7 +199,8 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion
 <ul>
 <li><input disabled="" type="checkbox"> 标题为 <code>体重管理首诊套餐</code></li>
 <li><input disabled="" type="checkbox"> 单价合计 ¥1,380 = 套餐价 ¥790 + 立省 ¥590，划线原价显示 <code>¥1,380</code></li>
-<li><input disabled="" type="checkbox"> 结论头说明句中的 BMI 与用户信息一致；换人后姓名与 BMI 同步变化</li>
+<li><input disabled="" type="checkbox"> 结论头说明句中的 BMI 与用户信息一致；换人后姓名与 BMI 同步变化；info 图标弹出生成时间气泡</li>
+<li><input disabled="" type="checkbox"> 套餐介绍为 1 句开头文案 + 4 格图文，图文词条与单内一致</li>
 <li><input disabled="" type="checkbox"> 4 项套餐明细的名称、价格、小字与单内文案一致</li>
 <li><input disabled="" type="checkbox"> 支付后流程为 4 步，顺序与单内一致</li>
 <li><input disabled="" type="checkbox"> 第 3 步「用户填写收货信息」右侧有青色文字链 <code>现在填写</code>，点击进现成的收货信息填写页</li>

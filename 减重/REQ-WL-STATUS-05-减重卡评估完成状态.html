@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>减重卡 · 评估完成状态 · 需求单</title>
+<title>减重卡 · 阶段② 评估完成（消费决策） · 需求单</title>
 <style>
 :root{
   --ink:#1B2733; --ink-2:#48596A; --ink-3:#7A8A99; --line:#E4E9EE; --line-2:#EFF3F6;
@@ -135,7 +135,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
     <a class="topbar__back" href="../index.html">← 需求单索引</a>
     <span class="badge">科学减重（WL）</span>
     <span class="badge badge--p0">优先级 P0</span>
-    <span class="topbar__title">减重卡 · 评估完成状态</span>
+    <span class="topbar__title">减重卡 · 阶段② 评估完成（消费决策）</span>
   </div>
 </header>
 <div class="wrap">
@@ -143,47 +143,44 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
     <p class="toc__h">本单目录</p>
     <ol><li class="lv2"><a href="#1-这张卡什么时候出现">1. 这张卡什么时候出现</a></li>
 <li class="lv2"><a href="#2-卡片上显示什么-自上而下">2. 卡片上显示什么（自上而下）</a></li>
-<li class="lv2"><a href="#3-点击与跳转">3. 点击与跳转</a></li>
-<li class="lv2"><a href="#4-验收">4. 验收</a></li></ol>
+<li class="lv2"><a href="#3-猜你想问-本阶段">3. 猜你想问（本阶段）</a></li>
+<li class="lv2"><a href="#4-点击与跳转">4. 点击与跳转</a></li>
+<li class="lv2"><a href="#5-验收">5. 验收</a></li></ol>
   </nav>
   <main class="doc">
-    <h1>减重卡 · 评估完成状态</h1>
+    <h1>减重卡 · 阶段② 评估完成（消费决策）</h1>
     <p class="subtitle">需求单 · 科学减重（WL） · 交付目标：可上线面向用户使用（H5 + 微信小程序）</p>
     <blockquote>
 <p>编号 <code>REQ-WL-STATUS-05</code> ｜ 项目：科学减重（WL）｜ 模块：服务状态与卡片 ｜ 优先级 P0 ｜ 状态：待评审
-Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion-ui/online-service.html?stage=2">线上服务页</a> ｜ 埋点：<code>REQ-WL-BASE-01</code></p>
+Demo：<a href="https://lipulin222.github.io/health-subscription-demo/online-service.html?stage=2">健康订阅区 Demo（阶段②）</a> ｜ 埋点：<code>REQ-WL-BASE-01</code></p>
 </blockquote>
 <hr>
 <h2 id="1-这张卡什么时候出现">1. 这张卡什么时候出现</h2>
 <p>用户被灰度到减重卡，已经做完首诊评估问卷、评估报告已生成，但还没支付首诊套餐（没有拿药 / 收货记录）。</p>
 <h2 id="2-卡片上显示什么-自上而下">2. 卡片上显示什么（自上而下）</h2>
-<p>健康订阅区的头图区与专项标签行见 <code>REQ-WL-STATUS-02</code>。</p>
+<p>卡头与猜你想问的共用规则见 <code>REQ-WL-STATUS-04</code> 第 4 节；本阶段轮播 4 条（见第 3 节）。</p>
 <ol>
-<li><strong>卡头</strong>：<ul>
-<li>左侧浅绿色方形圆角图标（体重秤图形）。</li>
-<li>右侧两行：<ul>
-<li>第一行：<code>体重管理</code>（大号、深色加粗）</li>
-<li>第二行：<code>猜你想问</code>（青色）+ <code>· </code> + 当前问题（深灰）+ 右侧箭头 <code>›</code></li>
-</ul>
-</li>
-<li>第二行的问题每 2.2 秒换一条，共 5 条，循环播放，前缀不动；具体文案由 @望时 提供后填入。</li>
-</ul>
-</li>
-<li><strong>结论句</strong>：<code>你的减重评估报告为 [&lt;结论&gt;]</code>，方括号里的结论取评估报告里的那句话（见 <code>REQ-WL-PLAN-02</code>）。</li>
-<li><strong>三档刻度条</strong>：<ul>
-<li>一条横向刻度，等分三段：第一段青色、第二段绿色、第三段橙色。</li>
-<li>当前档位上方有一个倒三角指示，落在对应那一段的中间。</li>
+<li><strong>结论句</strong>：<code>你的减重评估报告已生成</code>（固定文案，不引用报告结论）。</li>
+<li><strong>三段刻度条</strong>：<ul>
+<li>横向等分三段：第 1 段青色渐变、第 2 段绿色、第 3 段橙色。</li>
+<li>当前档位那一段正常高亮显示，其余两段弱化（降饱和、变淡）。</li>
 <li>三段下方各一行灰字：<code>无需减重</code> / <code>需要减重管理</code> / <code>立即减重</code>。</li>
-<li>档位对应：第 1 档 = 无需减重，第 2 档 = 需要减重管理，第 3 档 = 立即减重。</li>
+<li>档位对应：第 1 档 = 无需减重，第 2 档 = 需要减重管理，第 3 档 = 立即减重（口径见 <code>REQ-WL-PLAN-02</code>）。</li>
 </ul>
 </li>
-<li><strong>底部两个按钮</strong>，并排等宽、大圆角：<ul>
-<li>左：<code>AI减重助理</code>（浅青底 + 青色描边 + 青色文字）</li>
-<li>右：<code>查看评估报告</code>（青色实底 + 白字）</li>
+<li><strong>底部一个通栏按钮</strong>：<code>查看评估报告</code>（青色实底 + 白字，大圆角）。<ul>
+<li>「AI减重助理」按钮一期不做。</li>
 </ul>
 </li>
 </ol>
-<h2 id="3-点击与跳转">3. 点击与跳转</h2>
+<h2 id="3-猜你想问-本阶段">3. 猜你想问（本阶段）</h2>
+<p>轮播的问题文案<strong>从后台知识库对应的分类里随机拉取</strong>，不在端上写死：</p>
+<ul>
+<li>本阶段对应知识库中的相应分类，分类与文章的对应关系由后台配置。</li>
+<li>运营在知识库里增删文章后，轮播内容随之更新。</li>
+<li>每条问题与其对应文章的链接一并下发，点击进当前这条问题对应的文章。</li>
+</ul>
+<h2 id="4-点击与跳转">4. 点击与跳转</h2>
 <table>
 <thead>
 <tr>
@@ -196,21 +193,17 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion
 <td>科普知识库，定位到当前这条问题对应的文章</td>
 </tr>
 <tr>
-<td><code>AI减重助理</code></td>
-<td>AI 减重助理对话页，带购前场景（未开始用药）</td>
-</tr>
-<tr>
 <td><code>查看评估报告</code></td>
 <td>减重评估报告</td>
 </tr>
 </tbody></table>
-<h2 id="4-验收">4. 验收</h2>
+<h2 id="5-验收">5. 验收</h2>
 <ul>
-<li><input disabled="" type="checkbox"> 卡头为图标 + <code>体重管理</code> + <code>猜你想问 · 问题 ›</code> 两行结构，问题轮播且前缀不变</li>
-<li><input disabled="" type="checkbox"> 结论句方括号内文案与评估报告一致</li>
-<li><input disabled="" type="checkbox"> 刻度条三段颜色为 青 / 绿 / 橙，倒三角落在当前档位那一段中间</li>
+<li><input disabled="" type="checkbox"> 结论句为固定文案 <code>你的减重评估报告已生成</code></li>
+<li><input disabled="" type="checkbox"> 刻度条三段颜色为 青 / 绿 / 橙，当前档位段高亮、其余两段弱化</li>
 <li><input disabled="" type="checkbox"> 三档文字为 <code>无需减重</code> / <code>需要减重管理</code> / <code>立即减重</code>，与档位对应正确</li>
-<li><input disabled="" type="checkbox"> 两个按钮文案为 <code>AI减重助理</code> / <code>查看评估报告</code>，点击分别进 AI 助理与评估报告</li>
+<li><input disabled="" type="checkbox"> 猜你想问文案从后台知识库对应分类随机拉取，点击进当前问题对应的文章</li>
+<li><input disabled="" type="checkbox"> 底部只有一个通栏按钮 <code>查看评估报告</code>，点击进评估报告；无 AI 减重助理按钮</li>
 <li><input disabled="" type="checkbox"> App 与小程序一致</li>
 </ul>
 

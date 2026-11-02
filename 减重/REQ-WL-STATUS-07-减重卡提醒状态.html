@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>减重卡 · 提醒状态 · 需求单</title>
+<title>减重卡 · 阶段④ 提醒 / 续费 · 需求单</title>
 <style>
 :root{
   --ink:#1B2733; --ink-2:#48596A; --ink-3:#7A8A99; --line:#E4E9EE; --line-2:#EFF3F6;
@@ -135,7 +135,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
     <a class="topbar__back" href="../index.html">← 需求单索引</a>
     <span class="badge">科学减重（WL）</span>
     <span class="badge badge--p0">优先级 P0</span>
-    <span class="topbar__title">减重卡 · 提醒状态</span>
+    <span class="topbar__title">减重卡 · 阶段④ 提醒 / 续费</span>
   </div>
 </header>
 <div class="wrap">
@@ -143,39 +143,119 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
     <p class="toc__h">本单目录</p>
     <ol><li class="lv2"><a href="#1-这张卡什么时候出现">1. 这张卡什么时候出现</a></li>
 <li class="lv2"><a href="#2-卡片上显示什么-自上而下">2. 卡片上显示什么（自上而下）</a></li>
-<li class="lv2"><a href="#3-后台可配置的三件事">3. 后台可配置的三件事</a></li>
-<li class="lv2"><a href="#4-点击与跳转">4. 点击与跳转</a></li>
-<li class="lv2"><a href="#5-验收">5. 验收</a></li></ol>
+<li class="lv2"><a href="#3-提醒规划-一期只做续药提醒-其余二期">3. 提醒规划（一期只做续药提醒，其余二期）</a></li>
+<li class="lv2"><a href="#4-猜你想问-本阶段">4. 猜你想问（本阶段）</a></li>
+<li class="lv2"><a href="#5-后台可配置的三件事">5. 后台可配置的三件事</a></li>
+<li class="lv2"><a href="#6-点击与跳转">6. 点击与跳转</a></li>
+<li class="lv2"><a href="#7-验收">7. 验收</a></li></ol>
   </nav>
   <main class="doc">
-    <h1>减重卡 · 提醒状态</h1>
+    <h1>减重卡 · 阶段④ 提醒 / 续费</h1>
     <p class="subtitle">需求单 · 科学减重（WL） · 交付目标：可上线面向用户使用（H5 + 微信小程序）</p>
     <blockquote>
 <p>编号 <code>REQ-WL-STATUS-07</code> ｜ 项目：科学减重（WL）｜ 模块：服务状态与卡片 ｜ 优先级 P0 ｜ 状态：待评审
-Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion-ui/online-service.html?stage=4">线上服务页</a> ｜ 埋点：<code>REQ-WL-BASE-01</code></p>
+Demo：<a href="https://lipulin222.github.io/health-subscription-demo/online-service.html?stage=4">健康订阅区 Demo（阶段④）</a> ｜ 埋点：<code>REQ-WL-BASE-01</code></p>
 </blockquote>
 <hr>
 <h2 id="1-这张卡什么时候出现">1. 这张卡什么时候出现</h2>
-<p>用户在用药中（条件同 <code>REQ-WL-STATUS-06</code>），并且后台配置的某条提醒命中了触发条件——卡片在卡头下方多出一张提醒卡，其余内容和进行中状态一致。</p>
-<p>提醒不只有续药，也可能是复查、饮食、运动、问卷等任何后台配置的提醒。</p>
+<p>用户在用药中（条件同 <code>REQ-WL-STATUS-06</code>），并且后台配置的提醒命中了触发条件——本阶段卡片在数据区上方多出一张提醒卡，其余内容和进行中状态一致。</p>
+<p><strong>一期只做续药提醒（药快用完了）</strong>；随访、问卷、饮食、运动等其他提醒都放二期（见第 3 节）。</p>
 <h2 id="2-卡片上显示什么-自上而下">2. 卡片上显示什么（自上而下）</h2>
-<p>健康订阅区的头图区与专项标签行见 <code>REQ-WL-STATUS-02</code>。</p>
 <ol>
-<li><strong>卡头</strong>：与进行中状态一致（图标 + <code>体重管理</code> + <code>猜你想问 · 问题 ›</code>，问题轮播）。</li>
+<li><strong>卡头</strong>：与进行中状态一致（图标 + <code>体重管理</code> + 猜你想问轮播，共用规则见 <code>REQ-WL-STATUS-04</code> 第 4 节；本阶段轮播 4 条，见第 4 节）。</li>
 <li><strong>提醒卡</strong>（浅橙色底、圆角块）：<ul>
 <li>第一行：橙色铃铛图标 + 橙色加粗标题（例：<code>续药提醒</code>）。</li>
-<li>第二行：橙色正文，一句话讲清「发生了什么 + 建议怎么做」。</li>
-<li>同一时间只显示一张提醒卡。</li>
+<li>第二行：正文一句话，讲清「发生了什么 + 建议怎么做」。</li>
+<li>同一时间只显示一张提醒卡；整卡可点，跳该条提醒配置的目标页面。</li>
 </ul>
 </li>
 <li><strong>体重数据块</strong>：与进行中状态一致（大号已减重量 + 右侧圆形画笔按钮 + <code>已坚持 N 天 · 体重 X → Y</code>）。</li>
-<li><strong>底部两个按钮</strong>，并排等宽、大圆角：<ul>
-<li>左：<code>AI减重助理</code>（浅青底 + 青色描边 + 青色文字）</li>
-<li>右：<code>查看更多</code>（青色实底 + 白字）</li>
+<li><strong>底部一个通栏按钮</strong>：<code>查看更多</code>（青色实底 + 白字，大圆角）。<ul>
+<li>「AI减重助理」按钮一期不做。</li>
 </ul>
 </li>
 </ol>
-<h2 id="3-后台可配置的三件事">3. 后台可配置的三件事</h2>
+<h2 id="3-提醒规划-一期只做续药提醒-其余二期">3. 提醒规划（一期只做续药提醒，其余二期）</h2>
+<ul>
+<li><strong>一期只做一条：续药提醒（C1）</strong>——药品预计两周内消耗完时触发，正文 <code>药品预计两周内消耗完，建议续药或复诊。</code>，点击进支付页。</li>
+<li>其余提醒都放二期，一期不上线。8 条的规划文案如下，二期直接取用：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>标题</th>
+<th>正文</th>
+<th>点击去向</th>
+<th>一期</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A1</td>
+<td>随访提醒</td>
+<td>体重下降偏快，建议预约面诊一次。</td>
+<td>疗程随访评估</td>
+<td>二期</td>
+</tr>
+<tr>
+<td>A2</td>
+<td>随访提醒</td>
+<td>近三周体重变化很小，建议做一次体成分检测。</td>
+<td>疗程随访评估</td>
+<td>二期</td>
+</tr>
+<tr>
+<td>A3</td>
+<td>问卷提醒</td>
+<td>到第 12 周了，建议做一次复评问卷。</td>
+<td>疗程随访评估</td>
+<td>二期</td>
+</tr>
+<tr>
+<td>B1</td>
+<td>饮食提醒</td>
+<td>食欲下降期更要吃够营养，建议查看饮食方案。</td>
+<td>评估报告</td>
+<td>二期</td>
+</tr>
+<tr>
+<td>B2</td>
+<td>运动提醒</td>
+<td>加些力量训练，可以减少肌肉流失。</td>
+<td>评估报告</td>
+<td>二期</td>
+</tr>
+<tr>
+<td>C1</td>
+<td>续药提醒</td>
+<td>药品预计两周内消耗完，建议续药或复诊。</td>
+<td>疗程随访评估</td>
+<td><strong>一期</strong></td>
+</tr>
+<tr>
+<td>C2</td>
+<td>面部评估提醒</td>
+<td>体重下降过快，建议皮肤科面诊评估面部状态。</td>
+<td>疗程随访评估</td>
+<td>二期</td>
+</tr>
+<tr>
+<td>C3</td>
+<td>运动康复提醒</td>
+<td>运动中有疼痛不适，建议到院运动康复面诊。</td>
+<td>疗程随访评估</td>
+<td>二期</td>
+</tr>
+</tbody></table>
+<p>一期只有一条提醒，不存在多条同时命中的问题；多条提醒的优先级与轮换规则随其余提醒一起放二期，待技术确认。</p>
+<h2 id="4-猜你想问-本阶段">4. 猜你想问（本阶段）</h2>
+<p>轮播的问题文案<strong>从后台知识库对应的分类里随机拉取</strong>，不在端上写死：</p>
+<ul>
+<li>本阶段对应知识库中的相应分类，分类与文章的对应关系由后台配置。</li>
+<li>运营在知识库里增删文章后，轮播内容随之更新。</li>
+<li>每条问题与其对应文章的链接一并下发，点击进当前这条问题对应的文章。</li>
+</ul>
+<h2 id="5-后台可配置的三件事">5. 后台可配置的三件事</h2>
 <p>提醒卡的内容不在端上写死，全部由后台配置：</p>
 <table>
 <thead>
@@ -197,7 +277,7 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion
 <td>这条提醒最多展示几次；达到次数后不再展示</td>
 </tr>
 </tbody></table>
-<h2 id="4-点击与跳转">4. 点击与跳转</h2>
+<h2 id="6-点击与跳转">6. 点击与跳转</h2>
 <table>
 <thead>
 <tr>
@@ -207,7 +287,7 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion
 </thead>
 <tbody><tr>
 <td>提醒卡</td>
-<td>该条提醒配置的目标页面（例：续药提醒进支付页）</td>
+<td>该条提醒配置的目标页面（默认 8 条见第 3 节）</td>
 </tr>
 <tr>
 <td>卡头第二行（<code>猜你想问 · 问题 ›</code>）</td>
@@ -218,23 +298,20 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion
 <td>跳到现有的录入体重页面</td>
 </tr>
 <tr>
-<td><code>AI减重助理</code></td>
-<td>AI 减重助理对话页，带用药中场景，并带上当前是第几周、整个疗程 24 周</td>
-</tr>
-<tr>
 <td><code>查看更多</code></td>
 <td>查看更多聚合页——里面有相关订单、评估报告、减重月报三个入口（见 <code>REQ-WL-RX-06</code>）</td>
 </tr>
 </tbody></table>
-<h2 id="5-验收">5. 验收</h2>
+<h2 id="7-验收">7. 验收</h2>
 <ul>
-<li><input disabled="" type="checkbox"> 命中后台配置的触发条件时，卡头下方出现提醒卡；未命中不出现</li>
-<li><input disabled="" type="checkbox"> 提醒卡为浅橙底，第一行铃铛图标 + 橙色标题，第二行橙色一句话正文</li>
+<li><input disabled="" type="checkbox"> 命中后台配置的触发条件时，数据区上方出现提醒卡；未命中不出现（卡片回落阶段③）</li>
+<li><input disabled="" type="checkbox"> 提醒卡为浅橙底，第一行铃铛图标 + 橙色标题，第二行一句话正文，整卡可点</li>
 <li><input disabled="" type="checkbox"> 标题、正文、触发条件、展示次数均在后台可改，端上不写死</li>
 <li><input disabled="" type="checkbox"> 达到配置的展示次数后不再出现该提醒</li>
 <li><input disabled="" type="checkbox"> 同一时间只显示一张提醒卡</li>
-<li><input disabled="" type="checkbox"> 点击提醒卡跳到该条提醒配置的页面</li>
-<li><input disabled="" type="checkbox"> 体重数据块、两个按钮与进行中状态一致</li>
+<li><input disabled="" type="checkbox"> 一期只有续药提醒（C1）会触发并展示，其余 7 条提醒不出现</li>
+<li><input disabled="" type="checkbox"> 猜你想问文案从后台知识库对应分类随机拉取，点击进当前问题对应的文章</li>
+<li><input disabled="" type="checkbox"> 体重数据块、底部通栏 <code>查看更多</code> 按钮与进行中状态一致；无 AI 减重助理按钮</li>
 <li><input disabled="" type="checkbox"> App 与小程序一致</li>
 </ul>
 

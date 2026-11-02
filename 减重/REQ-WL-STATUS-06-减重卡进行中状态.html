@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>减重卡 · 进行中状态（用药陪跑） · 需求单</title>
+<title>减重卡 · 阶段③ 进行中（用药陪跑） · 需求单</title>
 <style>
 :root{
   --ink:#1B2733; --ink-2:#48596A; --ink-3:#7A8A99; --line:#E4E9EE; --line-2:#EFF3F6;
@@ -135,7 +135,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
     <a class="topbar__back" href="../index.html">← 需求单索引</a>
     <span class="badge">科学减重（WL）</span>
     <span class="badge badge--p0">优先级 P0</span>
-    <span class="topbar__title">减重卡 · 进行中状态（用药陪跑）</span>
+    <span class="topbar__title">减重卡 · 阶段③ 进行中（用药陪跑）</span>
   </div>
 </header>
 <div class="wrap">
@@ -143,19 +143,20 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
     <p class="toc__h">本单目录</p>
     <ol><li class="lv2"><a href="#1-这张卡什么时候出现">1. 这张卡什么时候出现</a></li>
 <li class="lv2"><a href="#2-卡片上显示什么-自上而下">2. 卡片上显示什么（自上而下）</a></li>
-<li class="lv2"><a href="#3-点击与跳转">3. 点击与跳转</a></li>
-<li class="lv2"><a href="#4-验收">4. 验收</a></li></ol>
+<li class="lv2"><a href="#3-猜你想问-本阶段">3. 猜你想问（本阶段）</a></li>
+<li class="lv2"><a href="#4-点击与跳转">4. 点击与跳转</a></li>
+<li class="lv2"><a href="#5-验收">5. 验收</a></li></ol>
   </nav>
   <main class="doc">
-    <h1>减重卡 · 进行中状态（用药陪跑）</h1>
+    <h1>减重卡 · 阶段③ 进行中（用药陪跑）</h1>
     <p class="subtitle">需求单 · 科学减重（WL） · 交付目标：可上线面向用户使用（H5 + 微信小程序）</p>
     <blockquote>
 <p>编号 <code>REQ-WL-STATUS-06</code> ｜ 项目：科学减重（WL）｜ 模块：服务状态与卡片 ｜ 优先级 P0 ｜ 状态：待评审
-Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion-ui/online-service.html?stage=3">线上服务页</a> ｜ 埋点：<code>REQ-WL-BASE-01</code></p>
+Demo：<a href="https://lipulin222.github.io/health-subscription-demo/online-service.html?stage=3">健康订阅区 Demo（阶段③）</a> ｜ 埋点：<code>REQ-WL-BASE-01</code></p>
 </blockquote>
 <hr>
 <h2 id="1-这张卡什么时候出现">1. 这张卡什么时候出现</h2>
-<p>用户已购健康订阅，有支付记录，并且有拿药 / 收货记录，还在处方药程内（见 <code>REQ-WL-STATUS-01</code>）。</p>
+<p>用户有首诊套餐支付记录，并且有拿药 / 收货记录，还在处方药程内（见 <code>REQ-WL-STATUS-01</code>），由服务端判定进入本阶段。</p>
 <h2 id="2-卡片上显示什么-自上而下">2. 卡片上显示什么（自上而下）</h2>
 <p>健康订阅区的头图区与专项标签行见 <code>REQ-WL-STATUS-02</code>。</p>
 <ol>
@@ -175,13 +176,20 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion
 <li>两种情况都不显示 <code>−0kg</code> 这类没有意义的数字。</li>
 </ul>
 </li>
-<li><strong>底部两个按钮</strong>，并排等宽、大圆角：<ul>
-<li>左：<code>AI减重助理</code>（浅青底 + 青色描边 + 青色文字）</li>
-<li>右：<code>查看更多</code>（青色实底 + 白字）</li>
+<li><strong>底部一个通栏按钮</strong>：<code>查看更多</code>（青色实底 + 白字，大圆角）；有待办（生成月报 / 新月报）时按钮右上角挂红色角标，规则见 <code>REQ-WL-RECORD-01</code>。<ul>
+<li>「AI减重助理」按钮一期不做。</li>
 </ul>
 </li>
 </ol>
-<h2 id="3-点击与跳转">3. 点击与跳转</h2>
+<h2 id="3-猜你想问-本阶段">3. 猜你想问（本阶段）</h2>
+<p>轮播的问题文案<strong>从后台知识库对应的分类里随机拉取</strong>，不在端上写死：</p>
+<ul>
+<li>本阶段对应知识库中的相应分类，分类与文章的对应关系由后台配置。</li>
+<li>运营在知识库里增删文章后，轮播内容随之更新。</li>
+<li>每条问题与其对应文章的链接一并下发，点击进当前这条问题对应的文章。</li>
+</ul>
+<p>卡头与猜你想问的共用规则（图标 + <code>体重管理</code> + 2.6 秒轮播 + 深链文章）见 <code>REQ-WL-STATUS-04</code> 第 4 节。</p>
+<h2 id="4-点击与跳转">4. 点击与跳转</h2>
 <table>
 <thead>
 <tr>
@@ -198,22 +206,18 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion
 <td>跳到现有的录入体重页面</td>
 </tr>
 <tr>
-<td><code>AI减重助理</code></td>
-<td>AI 减重助理对话页，带用药中场景，并带上当前是第几周、整个疗程 24 周</td>
-</tr>
-<tr>
 <td><code>查看更多</code></td>
 <td>查看更多聚合页——里面有相关订单、评估报告、减重月报三个入口（见 <code>REQ-WL-RX-06</code>）</td>
 </tr>
 </tbody></table>
-<h2 id="4-验收">4. 验收</h2>
+<h2 id="5-验收">5. 验收</h2>
 <ul>
-<li><input disabled="" type="checkbox"> 卡头为图标 + <code>体重管理</code> + <code>猜你想问 · 问题 ›</code> 两行结构，问题轮播且前缀不变</li>
 <li><input disabled="" type="checkbox"> 有体重记录时显示已减重量、坚持天数、起止体重</li>
 <li><input disabled="" type="checkbox"> 无体重记录时显示起始体重与引导文案，不出现 <code>−0kg</code></li>
 <li><input disabled="" type="checkbox"> 体重块右侧圆形画笔按钮跳到录入体重页面</li>
-<li><input disabled="" type="checkbox"> 右下角主按钮为 <code>查看更多</code>，点击进入含订单 / 评估报告 / 减重月报的聚合页</li>
-<li><input disabled="" type="checkbox"> <code>AI减重助理</code> 按用药中场景唤起</li>
+<li><input disabled="" type="checkbox"> 有月报待办时 <code>查看更多</code> 按钮挂红点，文案与 RECORD-01 一致</li>
+<li><input disabled="" type="checkbox"> 猜你想问文案从后台知识库对应分类随机拉取，点击进当前问题对应的文章</li>
+<li><input disabled="" type="checkbox"> 右下角主按钮为 <code>查看更多</code>，点击进入含订单 / 评估报告 / 减重月报的聚合页；无 AI 减重助理按钮</li>
 <li><input disabled="" type="checkbox"> App 与小程序一致</li>
 </ul>
 

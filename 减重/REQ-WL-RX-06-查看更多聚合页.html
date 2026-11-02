@@ -161,23 +161,27 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion
 <h3 id="1-1-层级与返回">1.1 层级与返回</h3>
 <p>入口页（Portal 减重卡 <code>查看更多</code> 进入）→ 汇总页（三个列表页三选一）→ 明细页。汇总页返回回入口页，入口页返回回 Portal。</p>
 <h3 id="1-2-入口页">1.2 入口页</h3>
-<p>三个入口自上而下：</p>
+<p>三个入口自上而下，每个入口为「名称 + 描述」两行文字，右侧角标数量：</p>
 <table>
 <thead>
 <tr>
-<th>入口</th>
+<th>入口名称</th>
+<th>描述</th>
 <th>角标</th>
 </tr>
 </thead>
 <tbody><tr>
+<td>评估报告</td>
 <td>历次评估结论建议汇总</td>
 <td>N 份</td>
 </tr>
 <tr>
+<td>减重月报</td>
 <td>每月减重小结及后续建议</td>
 <td>N 期</td>
 </tr>
 <tr>
+<td>相关订单</td>
 <td>套餐订单记录</td>
 <td>N 条</td>
 </tr>
@@ -185,30 +189,34 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion
 <p>角标数量与列表条数一致。</p>
 <p>「每月减重小结及后续建议」一栏在有待办时右上角显示红色角标（详见 RECORD-01 的红点联动规则）：</p>
 <ul>
-<li>待办为「生成月报」时：角标文字「生成月报」，点击这一栏直接进入快问快答页面。</li>
+<li>待办为「生成月报」时：角标文字「生成月报」，点击这一栏进入月报的列表页，再点列表下方 <code>生成最新月报</code> 进入快问快答。</li>
 <li>待办为「新月报」时：角标文字「new」，点击这一栏直接进入最新一期月报内容。</li>
 <li>红点状态与首页减重卡「查看更多」按钮上的红点保持一致；进入月报内容后两处红点同时消失。</li>
 </ul>
 <h3 id="1-3-历次评估结论建议汇总-列表页">1.3 历次评估结论建议汇总（列表页）</h3>
 <ul>
-<li>单列统一卡片：日期 + 标题 + 一句摘要，无数据块、无标签，点击进对应报告。</li>
-<li>本页底部没有吸底按钮。</li>
+<li>页面标题 <code>评估报告</code>；单列统一卡片：日期 + 标题 + 一句摘要 + 右下 <code>查看详情 ›</code>，无数据块、无标签，点击进对应报告。</li>
+<li>吸底常驻 <code>新增评估</code> → 随访问卷（PLAN-04）；仅本列表显示。</li>
 </ul>
 <h3 id="1-4-每月减重小结及后续建议-列表页">1.4 每月减重小结及后续建议（列表页）</h3>
-<p>与 1.3 同款结构，点击进月报详情（RECORD-01）。</p>
+<ul>
+<li>页面标题 <code>减重月报</code>；与 1.3 同款卡片结构（每期标题形如 <code>第 N 个月月报</code>），点击进月报详情（RECORD-01）。</li>
+<li>本页底部没有吸底按钮。</li>
+</ul>
 <h3 id="1-5-套餐订单记录-列表页">1.5 套餐订单记录（列表页）</h3>
 <ul>
-<li><strong>整页用现成的订单记录列表页（即「我的订单」页），不需要新做</strong>。本单只约定：入口页点「套餐订单记录」直接进该现成页面。</li>
-<li>页内的订单卡样式、金额、操作按钮（<code>查看物流</code> → 订单详情页，也是现成页面）、空态等，全部沿用现成页面已有逻辑，本单不做约束、不重复定义。</li>
+<li><strong>在现成的订单页（Order-Records「已购套餐」）基础上改成 demo 的样子，不是新做页面</strong>：入口页点「相关订单」进入，页面交互与内容按 demo。</li>
+<li>订单卡结构（按 demo）：卡头 <code>订单编号：O…</code> + 状态（<code>已完成</code> 青色 / <code>配送中</code> 橙色 / <code>已取消</code> 灰色）；商品行 = 封面图 + 商品名 + 单价 + 规格 + <code>× 1</code>；底部右对齐 <code>共 1 件，合计:¥X.00</code>（金额橙色加粗）+ 操作按钮 <code>查看物流</code>（进订单详情，见 RX-03）/ <code>再次续订</code>（进 RX-02）/ <code>评价</code>（一期占位）。</li>
+<li>列表为空显示空态。</li>
 </ul>
 <h2 id="2-验收">2. 验收</h2>
 <ul>
-<li><input disabled="" type="checkbox"> 三个入口名称与角标与单内一致，角标数量与列表条数一致</li>
-<li><input disabled="" type="checkbox"> 月报栏红点与首页卡片联动：待办「生成月报」显示「生成月报」并直达快问快答；未读显示「new」并直达最新月报；进入月报内容后红点消失</li>
+<li><input disabled="" type="checkbox"> 三个入口名称、描述与角标与单内一致，角标数量与列表条数一致</li>
+<li><input disabled="" type="checkbox"> 月报栏红点与首页卡片联动：待办「生成月报」显示「生成月报」，点击进月报列表页；未读显示「new」，点击直达最新月报；进入月报内容后红点消失</li>
+<li><input disabled="" type="checkbox"> 评估报告列表页吸底 <code>新增评估</code> 进随访问卷；月报列表页无吸底按钮</li>
 <li><input disabled="" type="checkbox"> 评估 / 月报两个列表页统一样式，无数据块无标签</li>
-<li><input disabled="" type="checkbox"> 两个列表页底部都没有吸底按钮</li>
-<li><input disabled="" type="checkbox"> 「套餐订单记录」进的是现成订单记录列表页，无需开发</li>
-<li><input disabled="" type="checkbox"> 空列表有空态（评估 / 月报两个列表页）</li>
+<li><input disabled="" type="checkbox"> 订单列表在现成订单页基础上改造，卡片结构、状态色与按钮按 demo</li>
+<li><input disabled="" type="checkbox"> 空列表有空态</li>
 </ul>
 
   </main>

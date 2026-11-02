@@ -287,48 +287,44 @@ const WL_DOCS = [
   {
     md: '减重/REQ-WL-STATUS-01-减重卡展示与阶段.md',
     module: 'STATUS', code: 'REQ-WL-STATUS-01', pri: 'P0', status: '待评审',
-    desc: '三渠道（线上/客服/线下）处方 + 支付判定 → 健康订阅区置顶减重卡并进入「进行中」',
-    demos: [
-      ['线上服务页', 'https://lipulin222.github.io/online-health-care/online-service.html'],
-      ['确认购药页', 'https://lipulin222.github.io/online-health-care/Invoice-Review-Page/index.html'],
-      ['AI 减重助理', 'https://lipulin222.github.io/online-health-care/weight-management/Weight-loss-Assistant/index.html'],
-    ],
+    desc: '展示准入 + 五阶段状态机（①购前科普 ②评估完成 ③进行中 ④提醒续费 ⑤维持期；开启日二期），阶段由服务端判定下发',
+    demos: [['健康订阅区 Demo', 'https://lipulin222.github.io/health-subscription-demo/']],
   },
   {
     md: '减重/REQ-WL-STATUS-02-健康订阅区结构与排序规则.md',
     module: 'STATUS', code: 'REQ-WL-STATUS-02', pri: 'P0', status: '待评审',
-    desc: '健康订阅区共用结构（头图区 + 专项标签行）+ 减重卡固定排第一位',
-    demos: [['线上服务页', 'https://lipulin222.github.io/online-health-care/online-service.html']],
+    desc: '健康订阅区块：艺术字标题 + 五专项标签行 + 减重卡同属一张白卡；新客/老客两种状态',
+    demos: [['健康订阅区 Demo', 'https://lipulin222.github.io/health-subscription-demo/']],
   },
   {
     md: '减重/REQ-WL-STATUS-04-减重卡科普状态.md',
     module: 'STATUS', code: 'REQ-WL-STATUS-04', pri: 'P0', status: '待评审',
-    desc: '科普状态卡：问题轮播 5 条 + 四个分类入口 + 快速评估 / AI 助理，兜底状态',
-    demos: [['线上服务页 · 科普状态', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/online-service.html?stage=1']],
+    desc: '阶段①购前科普（兜底）：猜你想问（后台知识库对应分类随机拉取）+ 四分类入口 + 快速评估（新客态）/ AI 助理（购前场景）',
+    demos: [['Demo · 阶段①', 'https://lipulin222.github.io/health-subscription-demo/online-service.html?stage=1']],
   },
   {
     md: '减重/REQ-WL-STATUS-05-减重卡评估完成状态.md',
     module: 'STATUS', code: 'REQ-WL-STATUS-05', pri: 'P0', status: '待评审',
-    desc: '评估完成状态卡：结论句 + 三档刻度条（无需减重 / 需要减重管理 / 立即减重）+ 查看评估报告 / AI 助理',
-    demos: [['线上服务页 · 评估完成', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/online-service.html?stage=2']],
+    desc: '阶段②评估完成：固定结论句 + 三段刻度条（旗标指示档位）+ 查看评估报告 / AI 助理（购前场景）',
+    demos: [['Demo · 阶段②', 'https://lipulin222.github.io/health-subscription-demo/online-service.html?stage=2']],
   },
   {
     md: '减重/REQ-WL-STATUS-06-减重卡进行中状态.md',
     module: 'STATUS', code: 'REQ-WL-STATUS-06', pri: 'P0', status: '待评审',
-    desc: '进行中状态卡（用药陪跑）：体重数据块（笔形按钮记录）+ 查看更多 / AI 助理',
-    demos: [['线上服务页 · 进行中', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/online-service.html?stage=3']],
+    desc: '阶段③进行中（用药陪跑）：体重数据块两态（有记录/初始态）+ 查看更多（可挂月报红点）/ AI 助理（用药中场景）',
+    demos: [['Demo · 阶段③', 'https://lipulin222.github.io/health-subscription-demo/online-service.html?stage=3']],
   },
   {
     md: '减重/REQ-WL-STATUS-07-减重卡提醒状态.md',
     module: 'STATUS', code: 'REQ-WL-STATUS-07', pri: 'P0', status: '待评审',
-    desc: '提醒状态卡：浅橙提醒卡（触发逻辑 / 文案 / 次数后台可配）+ 体重数据块 + 查看更多',
-    demos: [['线上服务页 · 提醒', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/online-service.html?stage=4']],
+    desc: '阶段④提醒/续费：浅橙提醒卡置顶（默认 8 条已定稿，触发/文案/次数后台可配）+ 体重数据块',
+    demos: [['Demo · 阶段④', 'https://lipulin222.github.io/health-subscription-demo/online-service.html?stage=4']],
   },
   {
     md: '减重/REQ-WL-STATUS-08-减重卡维持期状态.md',
-    module: 'STATUS', code: 'REQ-WL-STATUS-08', pri: 'P0', status: '待评审',
-    desc: '维持期状态卡：成果区（减重 8.6kg + 打卡/腰围/复查）+ 打开回顾，卡头右侧更多入口，置顶 1 个月',
-    demos: [['线上服务页 · 维持期', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/online-service.html?stage=5']],
+    module: 'STATUS', code: 'REQ-WL-STATUS-08', pri: 'P0', status: '二期（暂缓）',
+    desc: '阶段⑤维持期：插画 + 恭喜减重成功！+ 通栏「打开回顾」进结营回顾页，置顶 1 个月',
+    demos: [['Demo · 阶段⑤', 'https://lipulin222.github.io/health-subscription-demo/online-service.html?stage=5']],
   },
   {
     md: '减重/REQ-WL-BASE-01-数据上报规范.md',
@@ -401,7 +397,7 @@ const WL_DOCS = [
   },
   {
     md: '减重/REQ-WL-RECORD-02-旅程回顾.md',
-    module: 'RECORD', code: 'REQ-WL-RECORD-02', pri: 'P1', status: '待评审',
+    module: 'RECORD', code: 'REQ-WL-RECORD-02', pri: 'P1', status: '二期（暂缓）',
     desc: '结营回顾长页：封面数字滚动 + 体重曲线/成分/指标 + 七型减重人格判定 + 开启健康管理',
     demos: [
       ['结营回顾', 'https://lipulin222.github.io/online-health-care/Journey-Recap/index.html'],
@@ -907,6 +903,26 @@ ${secs}
     <p style="margin:0 0 8px"><b>命名规范：</b><code>REQ-WL-{模块}-{序号}-{中文短名}</code>。模块：<code>STATUS</code> 服务状态与卡片 / <code>PLAN</code> 评估及报告 / <code>RX</code> 处方与订单 / <code>RECORD</code> 记录沉淀 / <code>EDU</code> 科普相关 / <code>BASE</code> 规范与基线。序号在模块内从 <code>01</code> 递增，<b>不复用、不重排</b>；废弃单保留编号并标注「已作废」。</p>
     <p style="margin:0 0 8px"><b>文档结构（6 节）：</b>1 背景与目标 · 2 规则 · 3 字段 · 4 验收与上线要求 · 5 依赖与风险 · 6 待决策。<b>埋点不写在单子里</b>，统一登记在 <code>REQ-WL-BASE-01 数据上报规范</code>；通用上线要求引用 <code>REQ-WL-BASE-02 上线基线</code>。</p>
     <p style="margin:0"><b>页面不放截图</b>，只保留相关 Demo 链接（在卡片下方）。改内容请改 <code>.md</code> 后 <code>cd _build &amp;&amp; npm run build</code>。</p>
+  </div>
+</div>
+<div class="wlnote">
+  <div class="wlnote__in">
+    <p style="margin:0 0 10px"><b>待办清单</b>（补齐后回填对应需求单并删除本行）</p>
+    <table style="width:100%;border-collapse:collapse;font-size:13.5px">
+      <tr style="text-align:left;color:#5A6B76">
+        <th style="padding:6px 10px 6px 0;border-bottom:1px solid #E3E9EE;width:44px">#</th>
+        <th style="padding:6px 10px;border-bottom:1px solid #E3E9EE;width:150px">负责人</th>
+        <th style="padding:6px 10px;border-bottom:1px solid #E3E9EE">补什么</th>
+        <th style="padding:6px 0 6px 10px;border-bottom:1px solid #E3E9EE;width:150px">时间点</th>
+      </tr>
+      <tr><td style="padding:7px 10px 7px 0;border-bottom:1px solid #EEF2F5">1</td><td style="padding:7px 10px;border-bottom:1px solid #EEF2F5"><b>@望时</b></td><td style="padding:7px 10px;border-bottom:1px solid #EEF2F5">减重卡展示准入的「指定区域」范围，回填 STATUS-01</td><td style="padding:7px 0 7px 10px;border-bottom:1px solid #EEF2F5">一期评审前</td></tr>
+      <tr><td style="padding:7px 10px 7px 0;border-bottom:1px solid #EEF2F5">2</td><td style="padding:7px 10px;border-bottom:1px solid #EEF2F5"><b>@望时</b></td><td style="padding:7px 10px;border-bottom:1px solid #EEF2F5">《减重管理服务知情同意书》协议内容与链接，回填 RX-01</td><td style="padding:7px 0 7px 10px;border-bottom:1px solid #EEF2F5">一期上线前</td></tr>
+      <tr><td style="padding:7px 10px 7px 0;border-bottom:1px solid #EEF2F5">3</td><td style="padding:7px 10px;border-bottom:1px solid #EEF2F5"><b>@望时</b></td><td style="padding:7px 10px;border-bottom:1px solid #EEF2F5">下单 8 分钟未支付的微信公众号催办消息文案，回填 RX-02</td><td style="padding:7px 0 7px 10px;border-bottom:1px solid #EEF2F5">一期上线前</td></tr>
+      <tr><td style="padding:7px 10px 7px 0;border-bottom:1px solid #EEF2F5">4</td><td style="padding:7px 10px;border-bottom:1px solid #EEF2F5"><b>@望时 @罗兑 @冠成 @张林</b></td><td style="padding:7px 10px;border-bottom:1px solid #EEF2F5">知识库文章结构与分类清单（C-04），对齐拉取接口与字段，回填 EDU-01 / EDU-02</td><td style="padding:7px 0 7px 10px;border-bottom:1px solid #EEF2F5">一期开发启动前</td></tr>
+      <tr><td style="padding:7px 10px 7px 0;border-bottom:1px solid #EEF2F5">5</td><td style="padding:7px 10px;border-bottom:1px solid #EEF2F5"><b>@罗兑 @冠成 @张林</b></td><td style="padding:7px 10px;border-bottom:1px solid #EEF2F5">评估报告接口契约（路径、入参、出参、错误码），回填 PLAN-03</td><td style="padding:7px 0 7px 10px;border-bottom:1px solid #EEF2F5">一期开发启动前</td></tr>
+      <tr><td style="padding:7px 10px 7px 0;border-bottom:1px solid #EEF2F5">6</td><td style="padding:7px 10px;border-bottom:1px solid #EEF2F5"><b>@罗兑 @冠成 @张林</b></td><td style="padding:7px 10px;border-bottom:1px solid #EEF2F5">减重月报内容来源定论（服务端下发 or 客户端拼装，C-01），回填 RECORD-01</td><td style="padding:7px 0 7px 10px;border-bottom:1px solid #EEF2F5">一期开发启动前</td></tr>
+      <tr><td style="padding:7px 10px 7px 0;border-bottom:1px solid #EEF2F5">7</td><td style="padding:7px 10px;border-bottom:1px solid #EEF2F5"><b>@罗兑 @冠成 @张林</b></td><td style="padding:7px 10px;border-bottom:1px solid #EEF2F5">DMS 后台新增字段并**与门诊等其他团队对齐**：处方药程、发货时间、发货地点（药程支撑减重卡阶段判定，发货时间/地点支撑订单流程页），回填 STATUS-01 / RX-03</td><td style="padding:7px 0 7px 10px;border-bottom:1px solid #EEF2F5">一期开发启动前</td></tr>
+    </table>
   </div>
 </div>
 <script>${JS}</script>

@@ -63,19 +63,9 @@
 | --- | --- | --- | --- |
 | `edu_list_view` | 科普列表曝光 | `stage`、`entry` | 内容入口 |
 | `article_read` | 阅读文章 | `article_id`、`duration`、`progress`、`finished` | 内容质量 |
-| `article_cta` | 文章内 CTA | `article_id`、`cta_id(agent/assess)` | 内容转化 |
+| `article_cta` | 文章内 CTA | `article_id`、`cta_id(assess)` | 内容转化 |
 
-### 3.5 AI 助理（AI）
-
-| 事件 | 触发时机 | 关键参数 | 用途 |
-| --- | --- | --- | --- |
-| `agent_open` | 打开助理 | `entry`、`plan_name`、`stage`、`week`、`remind_type` | 入口分布 |
-| `agent_msg_send` | 用户发送 | `entry`、`msg_index`、`has_option` | 会话深度 |
-| `agent_msg_recv` | 收到回复 | `entry`、`latency`、`success` | 服务质量 |
-| `agent_summary_generate` | 生成小结 | `entry`、`turn_count` | 价值达成 |
-| `agent_summary_cta` | 小结后下一步 | `entry`、`cta_id` | 助理→主链路转化 |
-
-### 3.6 通用技术事件
+### 3.5 通用技术事件
 
 | 事件 | 说明 |
 | --- | --- |
@@ -92,7 +82,6 @@
 | --- | --- | --- |
 | **服务状态生效** | `wcard_pin_view` → `wcard_state_view`（进行中）→ `wcard_cta_click` | 置顶卡是否被看到并点击 |
 | **减重成交** | `wcard_cta_click` → `assess_complete` → `plan_view` → `invoice_view` → `consent_sign` → `addr_save` → `pay_result`(success) | 从门户到成交，哪步流失最大 |
-| **AI 助理价值** | `agent_open` → `agent_msg_send` → `agent_summary_generate` → `agent_summary_cta` | AI 是否真的推动下一步 |
 | **内容影响** | `edu_list_view` → `article_read` → `article_cta` | 科普对决策的影响 |
 
 ---

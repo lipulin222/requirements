@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>减重卡 · 科普状态 · 需求单</title>
+<title>减重卡 · 阶段① 购前科普 · 需求单</title>
 <style>
 :root{
   --ink:#1B2733; --ink-2:#48596A; --ink-3:#7A8A99; --line:#E4E9EE; --line-2:#EFF3F6;
@@ -135,7 +135,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
     <a class="topbar__back" href="../index.html">← 需求单索引</a>
     <span class="badge">科学减重（WL）</span>
     <span class="badge badge--p0">优先级 P0</span>
-    <span class="topbar__title">减重卡 · 科普状态</span>
+    <span class="topbar__title">减重卡 · 阶段① 购前科普</span>
   </div>
 </header>
 <div class="wrap">
@@ -143,55 +143,55 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
     <p class="toc__h">本单目录</p>
     <ol><li class="lv2"><a href="#1-这张卡什么时候出现">1. 这张卡什么时候出现</a></li>
 <li class="lv2"><a href="#2-卡片上显示什么-自上而下">2. 卡片上显示什么（自上而下）</a></li>
-<li class="lv2"><a href="#3-问题轮播">3. 问题轮播</a></li>
-<li class="lv2"><a href="#4-点击与跳转">4. 点击与跳转</a></li>
-<li class="lv2"><a href="#5-验收">5. 验收</a></li></ol>
+<li class="lv2"><a href="#3-猜你想问-本阶段">3. 猜你想问（本阶段）</a></li>
+<li class="lv2"><a href="#4-卡头与猜你想问-各阶段共用规则">4. 卡头与猜你想问（各阶段共用规则）</a></li>
+<li class="lv2"><a href="#5-点击与跳转">5. 点击与跳转</a></li>
+<li class="lv2"><a href="#6-验收">6. 验收</a></li></ol>
   </nav>
   <main class="doc">
-    <h1>减重卡 · 科普状态</h1>
+    <h1>减重卡 · 阶段① 购前科普</h1>
     <p class="subtitle">需求单 · 科学减重（WL） · 交付目标：可上线面向用户使用（H5 + 微信小程序）</p>
     <blockquote>
 <p>编号 <code>REQ-WL-STATUS-04</code> ｜ 项目：科学减重（WL）｜ 模块：服务状态与卡片 ｜ 优先级 P0 ｜ 状态：待评审
-Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion-ui/online-service.html?stage=1">线上服务页</a> ｜ 埋点：<code>REQ-WL-BASE-01</code></p>
+Demo：<a href="https://lipulin222.github.io/health-subscription-demo/online-service.html?stage=1">健康订阅区 Demo（阶段①）</a> ｜ 埋点：<code>REQ-WL-BASE-01</code></p>
 </blockquote>
 <hr>
 <h2 id="1-这张卡什么时候出现">1. 这张卡什么时候出现</h2>
-<p>科普状态是减重卡的<strong>兜底状态</strong>，以下任一情况都显示它：</p>
+<p>阶段 ① 是减重卡的<strong>兜底阶段</strong>，以下任一情况都显示它：</p>
 <ol>
 <li>用户被灰度到减重卡，还没做过首诊评估问卷；同时也没买过健康订阅、没看过减重门诊（否则不展示卡，见 <code>REQ-WL-STATUS-01</code>）。</li>
-<li>一个疗程已经结束（维持期置顶 1 个月后），后台没有新的状态更新——卡片回到科普状态。</li>
+<li>一个疗程已经结束（维持期置顶 1 个月后），后台没有新的状态更新——卡片回到本阶段。</li>
 </ol>
 <h2 id="2-卡片上显示什么-自上而下">2. 卡片上显示什么（自上而下）</h2>
-<p>健康订阅区的头图区与专项标签行是共用样式，见 <code>REQ-WL-STATUS-02</code>；本单只写减重卡卡片内部。</p>
+<p>卡头（图标 + <code>体重管理</code> + 猜你想问轮播）为所有阶段共用，统一规则见本单第 4 节。</p>
 <ol>
-<li>卡头：<ul>
-<li>左侧方形圆角图标（浅青底 + 体重秤图形）。</li>
-<li>右侧两行：<ul>
-<li>第一行：<code>体重管理</code>（大号、深色加粗）</li>
-<li>第二行：<code>猜你想问</code>（青色）+ <code>· </code> + 当前问题（深灰）+ 右侧箭头 <code>›</code></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>卡头下方一条浅灰分隔线，横贯卡片。</li>
-<li>四个分类入口，横排四等分，相邻之间用浅灰竖线分隔。每个入口两行、居中：上行为深色主词，下行为灰色说明（小一号）：<ul>
+<li><strong>四个分类入口</strong>，横排四等分，相邻之间浅灰竖线分隔。每个入口两行、居中：上行为深色主词，下行为灰色说明（小一号）：<ul>
 <li><code>效果</code> — <code>多久有变化</code></li>
 <li><code>安全</code> — <code>副作用说明</code></li>
 <li><code>花费</code> — <code>价格说明</code></li>
 <li><code>使用</code> — <code>操作方法</code></li>
 </ul>
 </li>
-<li>底部两个按钮，并排等宽、大圆角：<ul>
-<li>左：<code>AI减重助理</code>（浅青底 + 青色描边 + 青色文字）</li>
-<li>右：<code>快速评估</code>（青色实底 + 白字）</li>
-<li>按钮下方不放任何小字（原「7×24 响应」「约 1 分钟」不再显示）。</li>
+<li><strong>底部一个通栏按钮</strong>：<code>快速评估</code>（青色实底 + 白字，大圆角）；按钮下方不放任何小字。<ul>
+<li>「AI减重助理」按钮一期不做。</li>
 </ul>
 </li>
 </ol>
-<h2 id="3-问题轮播">3. 问题轮播</h2>
-<p>卡头第二行里的「当前问题」每 2.2 秒换一条，共 5 条，循环播放；<code>猜你想问 ·</code> 这个前缀固定不动，只换问题文字。</p>
-<p>具体 5 条问题文案由 @望时 提供后填入。</p>
-<h2 id="4-点击与跳转">4. 点击与跳转</h2>
+<h2 id="3-猜你想问-本阶段">3. 猜你想问（本阶段）</h2>
+<p>轮播的问题文案<strong>从后台知识库对应的分类里随机拉取</strong>，不在端上写死：</p>
+<ul>
+<li>本阶段对应知识库的购前科普分类（效果 / 安全 / 花费 / 使用四个分类下的文章）。</li>
+<li>运营在知识库里增删文章后，轮播内容随之更新。</li>
+<li>每条问题与其对应文章的链接一并下发，点击进当前这条问题对应的文章。</li>
+</ul>
+<h2 id="4-卡头与猜你想问-各阶段共用规则">4. 卡头与猜你想问（各阶段共用规则）</h2>
+<ol>
+<li><strong>卡头</strong>：左侧方形圆角图标（浅青底 + 体重秤图形）；右侧第一行 <code>体重管理</code>（大号深色加粗），第二行为猜你想问轮播：<code>猜你想问</code> 青色标签 + <code>·</code> + 当前问题（深灰）+ 右侧箭头 <code>›</code>。</li>
+<li>卡头下方一条浅灰分隔线，横贯卡片。</li>
+<li>轮播每 2.6 秒换一条，循环播放；<code>猜你想问</code> 前缀固定不动，只换问题文字。</li>
+<li>每个阶段的问题都从后台知识库对应的分类里随机拉取，不在端上写死（见各阶段单）；问题与文章链接一并下发，点击深链到对应文章。</li>
+</ol>
+<h2 id="5-点击与跳转">5. 点击与跳转</h2>
 <table>
 <thead>
 <tr>
@@ -201,29 +201,25 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion
 </thead>
 <tbody><tr>
 <td>卡头第二行（<code>猜你想问 · 问题 ›</code>）</td>
-<td>科普知识库，定位到当前这条问题对应的文章</td>
+<td>科普文章页，定位到当前这条问题对应的文章（现成页面）</td>
 </tr>
 <tr>
 <td>四个分类入口</td>
-<td>科普知识库首页（带当前阶段参数）</td>
-</tr>
-<tr>
-<td><code>AI减重助理</code></td>
-<td>AI 减重助理对话页，带购前场景（未开始用药）</td>
+<td>科普知识库首页，定位到对应分组（带当前阶段参数）</td>
 </tr>
 <tr>
 <td><code>快速评估</code></td>
-<td>首诊用药适应性评估问卷（新客态）</td>
+<td>首诊用药适应性评估问卷（新客态，见 <code>REQ-WL-PLAN-01</code>）</td>
 </tr>
 </tbody></table>
-<p>科普知识库、首诊问卷、AI 助理三个目标页见 <code>REQ-WL-EDU-01</code>、<code>REQ-WL-PLAN-01</code>。</p>
-<h2 id="5-验收">5. 验收</h2>
+<h2 id="6-验收">6. 验收</h2>
 <ul>
 <li><input disabled="" type="checkbox"> 卡头为图标 + <code>体重管理</code> + <code>猜你想问 · 问题 ›</code> 两行结构</li>
-<li><input disabled="" type="checkbox"> 5 条问题循环轮播，前缀 <code>猜你想问 ·</code> 不变，点击进科普页并定位到对应文章</li>
-<li><input disabled="" type="checkbox"> 四个分类入口两行文案正确、有竖分隔线，点击进科普页</li>
-<li><input disabled="" type="checkbox"> 两个按钮文案为 <code>AI减重助理</code> / <code>快速评估</code>，无按钮下方小字</li>
-<li><input disabled="" type="checkbox"> <code>快速评估</code> 进首诊问卷（新客态）；<code>AI减重助理</code> 按购前场景唤起</li>
+<li><input disabled="" type="checkbox"> 猜你想问文案从后台知识库对应分类随机拉取，不在端上写死；运营增删文章后轮播随之更新</li>
+<li><input disabled="" type="checkbox"> 2.6 秒轮播，前缀不变，点击进当前问题对应的文章</li>
+<li><input disabled="" type="checkbox"> 四个分类入口两行文案正确、有竖分隔线，点击进科普页对应分组</li>
+<li><input disabled="" type="checkbox"> 底部只有一个通栏按钮 <code>快速评估</code>，无 AI 减重助理按钮、无按钮下方小字</li>
+<li><input disabled="" type="checkbox"> <code>快速评估</code> 进首诊问卷（新客态）</li>
 <li><input disabled="" type="checkbox"> App 与小程序一致</li>
 </ul>
 

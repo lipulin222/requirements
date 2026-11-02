@@ -142,8 +142,9 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
   <nav class="toc">
     <p class="toc__h">本单目录</p>
     <ol><li class="lv2"><a href="#1-规则">1. 规则</a></li>
-<li class="lv3"><a href="#1-1-页面结构-自上而下">1.1 页面结构（自上而下）</a></li>
-<li class="lv2"><a href="#2-验收">2. 验收</a></li></ol>
+<li class="lv3"><a href="#1-1-页面定位与数据来源">1.1 页面定位与数据来源</a></li>
+<li class="lv3"><a href="#1-2-页面结构-自上而下">1.2 页面结构（自上而下）</a></li>
+<li class="lv3"><a href="#1-3-验收">1.3 验收</a></li></ol>
   </nav>
   <main class="doc">
     <h1>科普知识库首页</h1>
@@ -154,7 +155,12 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion
 </blockquote>
 <hr>
 <h2 id="1-规则">1. 规则</h2>
-<h3 id="1-1-页面结构-自上而下">1.1 页面结构（自上而下）</h3>
+<h3 id="1-1-页面定位与数据来源">1.1 页面定位与数据来源</h3>
+<ul>
+<li>页面与顶栏标题为 <code>减重科普</code>。</li>
+<li><strong>全部科普文章都存在知识库里，页面从知识库拉取</strong>：端上不放固定的文章列表；入门卡、「你现在可能想看」、主题分组都从知识库接口按用户阶段实时取文章。知识库内容会持续迭代更新，运营增删改文章后页面随之变化，不需要发版。知识库内容与结构由望时负责维护提供，接口与字段由开发对接（见《待确认问题清单》C-04）。</li>
+</ul>
+<h3 id="1-2-页面结构-自上而下">1.2 页面结构（自上而下）</h3>
 <table>
 <thead>
 <tr>
@@ -164,37 +170,39 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion
 </thead>
 <tbody><tr>
 <td>入门卡</td>
-<td>1 张置顶大卡，取用户当前阶段第一篇，点击进文章详情</td>
+<td>1 张置顶大卡：角签 <code>入门第一课</code> + 标题 <code>什么是体重管理？</code> + 副文 <code>不是饿肚子，也不靠意志力硬扛。它做的是一件更本质的事——把你身体里本来就有的「吃饱了」信号找回来，并且留得久一点。</code> + 文字链 <code>开始了解 ›</code>；点击进对应文章</td>
 </tr>
 <tr>
-<td>你可能想看</td>
-<td>按用药阶段取 3–4 篇：早期取 W01–W06，中期取 M01–M06；阶段判定依赖 <code>REQ-WL-STATUS-01</code> 的月序，接口就绪前按「早期」兜底</td>
+<td>你现在可能想看</td>
+<td>标题 <code>你现在可能想看</code>；按用户阶段取 3 篇文章卡（购前 / 用药中 / 维持期各一组），每张卡显示标题 + 导语</td>
 </tr>
 <tr>
 <td>按主题找</td>
-<td>饮食 / 运动 / 用药 / 复查分组入口，点击 toast <code>内容整理中，敬请期待</code>（二期承接）</td>
+<td>标题 <code>按主题找</code>，右侧文字链 <code>全部内容 ›</code>；4 个分组入口：<code>认识减重</code>（适合谁 · 效果 · 流程）/ <code>用药与安全</code>（常见反应 · 漏服）/ <code>日常生活</code>（怎么吃 · 怎么动）/ <code>过程管理</code>（平台期 · 复查 · 维持）；每组卡上有 <code>N 篇</code> 计数，点击进该分组文章列表</td>
 </tr>
 <tr>
 <td>全部内容 ›</td>
-<td>同上占位（二期）</td>
+<td>进全部文章二级列表页</td>
 </tr>
 <tr>
 <td>吸底</td>
-<td><code>快速减重评估</code> → PLAN-01（<code>?state=new</code>）</td>
+<td>阶段 ≤2：<code>体重管理评估</code> → 首诊评估（新客态 <code>?state=new</code>，见 PLAN-01）或随访评估（按阶段分流）；阶段 ≥3 的吸底按钮 demo 为问 AI 助理，AI 一期不做，一期此位置的按钮形式待确认</td>
 </tr>
 </tbody></table>
 <ul>
-<li>文章卡不带发布时间。</li>
-<li>首页消费字段：标题、导语（≤30 字，不写阅读指引）、封面（可选）、所属阶段；接口由技术方案定。</li>
+<li>文章卡显示：标题、导语、meta 行（<code>{审核医生}审核 · {审核日期}</code>，如 <code>李医生审核 · 11/03</code>）；无封面图。</li>
 <li>下架文章即时消失，列表重排不留空位。</li>
 </ul>
-<h2 id="2-验收">2. 验收</h2>
+<h3 id="1-3-验收">1.3 验收</h3>
 <ul>
-<li><input disabled="" type="checkbox"> 入门卡为当前阶段第一篇</li>
-<li><input disabled="" type="checkbox"> 「你可能想看」按阶段取数，早期 / 中期用户列表不同</li>
-<li><input disabled="" type="checkbox"> 无封面文章渲染纯文字卡，无破图</li>
-<li><input disabled="" type="checkbox"> 二期入口点击 toast 原文一致，不 404</li>
-<li><input disabled="" type="checkbox"> 吸底按钮带新客态跳 PLAN-01</li>
+<li><input disabled="" type="checkbox"> 页面与顶栏标题 <code>减重科普</code></li>
+<li><input disabled="" type="checkbox"> 入门卡文案与 <code>开始了解 ›</code> 与单内一致，点击进对应文章</li>
+<li><input disabled="" type="checkbox"> 「你现在可能想看」按阶段取 3 篇，购前 / 用药中 / 维持期用户列表不同</li>
+<li><input disabled="" type="checkbox"> 按主题找 4 组名称与副题与单内一致，每组显示篇数计数，点击进分组列表</li>
+<li><input disabled="" type="checkbox"> <code>全部内容 ›</code> 进全部文章列表页</li>
+<li><input disabled="" type="checkbox"> 文章卡为标题 + 导语 + 审核人 / 日期 meta，无封面</li>
+<li><input disabled="" type="checkbox"> 吸底按钮按阶段分流：阶段 ≤2 进首诊（新客态）/ 随访评估</li>
+<li><input disabled="" type="checkbox"> 下架文章即时消失</li>
 </ul>
 
   </main>

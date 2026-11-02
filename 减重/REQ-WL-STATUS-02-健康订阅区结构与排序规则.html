@@ -141,40 +141,59 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <div class="wrap">
   <nav class="toc">
     <p class="toc__h">本单目录</p>
-    <ol><li class="lv2"><a href="#1-区域结构-自上而下-所有卡片共用">1. 区域结构（自上而下，所有卡片共用）</a></li>
-<li class="lv2"><a href="#2-排序规则">2. 排序规则</a></li>
-<li class="lv2"><a href="#3-验收">3. 验收</a></li></ol>
+    <ol><li class="lv2"><a href="#1-首页整体结构-自上而下">1. 首页整体结构（自上而下）</a></li>
+<li class="lv2"><a href="#2-健康订阅区块-自上而下">2. 健康订阅区块（自上而下）</a></li>
+<li class="lv2"><a href="#3-两种用户状态">3. 两种用户状态</a></li>
+<li class="lv2"><a href="#4-排序规则">4. 排序规则</a></li>
+<li class="lv2"><a href="#5-验收">5. 验收</a></li></ol>
   </nav>
   <main class="doc">
     <h1>健康订阅区结构与排序规则</h1>
     <p class="subtitle">需求单 · 科学减重（WL） · 交付目标：可上线面向用户使用（H5 + 微信小程序）</p>
     <blockquote>
 <p>编号 <code>REQ-WL-STATUS-02</code> ｜ 项目：科学减重（WL）｜ 模块：服务状态与卡片 ｜ 优先级 P0 ｜ 状态：待评审
-Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion-ui/online-service.html">线上服务页</a> ｜ 埋点：<code>REQ-WL-BASE-01</code></p>
+Demo：<a href="https://lipulin222.github.io/health-subscription-demo/">健康订阅区 Demo</a> ｜ 埋点：<code>REQ-WL-BASE-01</code></p>
 </blockquote>
 <hr>
-<h2 id="1-区域结构-自上而下-所有卡片共用">1. 区域结构（自上而下，所有卡片共用）</h2>
+<h2 id="1-首页整体结构-自上而下">1. 首页整体结构（自上而下）</h2>
+<p>健康订阅区是「线上服务」首页的第一个内容区块；页面其余区块沿用设计稿，不在本单展开：</p>
 <ol>
-<li><strong>头图区</strong>（浅青色底）：标题 <code>健康订阅</code>（深色加粗），右侧一个药瓶插图（药瓶 + 药片 + 胶囊，纯装饰，不可点）。</li>
+<li>顶部：渐变头部背景 + 左对齐大标题 <code>线上服务</code> + 搜索按钮 + 健康助手按钮 + 右上角胶囊。</li>
+<li><strong>健康订阅区块</strong>（本单范围，见下）。</li>
+<li>线上问诊（头像 + 名称 + 科室横滑行：儿科 / 皮肤科 / 耳鼻喉科 / 内全科 / 全部）。</li>
+<li>视频心理咨询、家庭私人医生（金刚位）。</li>
+<li>通栏 banner、底部 TabBar（预约门诊 / 线上服务 / 消息 / 健康工具 / 我的）、AI 助手浮钮。</li>
+</ol>
+<h2 id="2-健康订阅区块-自上而下">2. 健康订阅区块（自上而下）</h2>
+<p>标题、专项标签、减重卡同属<strong>一张连续的白色卡片</strong>：</p>
+<ol>
+<li><strong>标题行</strong>：<code>健康订阅</code> 艺术字标题（设计稿黑色字体图形，居左）。</li>
 <li><strong>专项标签行</strong>：横向排列 <code>减重</code> <code>痤疮</code> <code>过敏</code> <code>血脂</code> <code>痛风</code>。<ul>
-<li>当前选中 <code>减重</code>：白底 + 青色描边 + 青色文字。</li>
-<li>其他标签：白底、深灰文字、无描边。</li>
+<li>当前选中 <code>减重</code>：青色底色高亮态。</li>
+<li>其他标签：灰底深灰文字。</li>
+<li>点其他专项标签跳各自原有页面（Demo 里因目标页缺失仅演示选中态切换，线上以本条为准）。</li>
 </ul>
 </li>
-<li><strong>卡片区</strong>：只有减重有卡片，卡片占满整行，位于标签行下方；卡片内部各状态见 <code>REQ-WL-STATUS-04</code> ~ <code>REQ-WL-STATUS-08</code>。</li>
+<li><strong>减重卡</strong>：只有减重有卡片，卡片占满整行，位于标签行下方；卡片内部各阶段见 <code>REQ-WL-STATUS-01</code>、<code>REQ-WL-STATUS-04</code> ~ <code>REQ-WL-STATUS-08</code>。</li>
 </ol>
-<h2 id="2-排序规则">2. 排序规则</h2>
+<h2 id="3-两种用户状态">3. 两种用户状态</h2>
+<p>首页有两种用户状态，减重卡的起始阶段不同：</p>
+<ul>
+<li><strong>未开启减重的纯新用户</strong>：从阶段 ① 购前科普开始。</li>
+<li><strong>已开启减重的新用户</strong>：起始阶段由服务端按用户数据判定下发（Demo 中默认落在阶段 ④ 提醒 / 续费，仅为演示）。</li>
+</ul>
+<h2 id="4-排序规则">4. 排序规则</h2>
 <ol>
 <li>被灰度到减重卡的用户，减重卡固定在健康订阅区第一位。</li>
 <li>其他专项没有卡片，只有上面那排标签入口，点击直接跳各自原有页面。</li>
 </ol>
-<h2 id="3-验收">3. 验收</h2>
+<h2 id="5-验收">5. 验收</h2>
 <ul>
-<li><input disabled="" type="checkbox"> 头图区标题为 <code>健康订阅</code>，右侧有药瓶插图，插图不可点</li>
-<li><input disabled="" type="checkbox"> 五个专项标签顺序为 减重 / 痤疮 / 过敏 / 血脂 / 痛风</li>
-<li><input disabled="" type="checkbox"> <code>减重</code> 为选中态（白底 + 青色描边 + 青色文字），其余标签白底深灰文字无描边</li>
+<li><input disabled="" type="checkbox"> 健康订阅区块为一张连续白卡：艺术字标题 + 专项标签行 + 减重卡</li>
+<li><input disabled="" type="checkbox"> 五个专项标签顺序为 减重 / 痤疮 / 过敏 / 血脂 / 痛风；<code>减重</code> 为选中态</li>
 <li><input disabled="" type="checkbox"> 点其他专项标签跳各自原有页面</li>
 <li><input disabled="" type="checkbox"> 被灰度到减重卡的用户，减重卡排第一位</li>
+<li><input disabled="" type="checkbox"> 新客从阶段 ① 开始；老客起始阶段由服务端下发</li>
 <li><input disabled="" type="checkbox"> App 与小程序一致</li>
 </ul>
 

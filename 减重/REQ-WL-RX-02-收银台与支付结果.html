@@ -167,6 +167,7 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion
 <ul>
 <li>用户已下单但还没支付时，这笔订单不会消失，会挂在订单列表页里，状态显示为「待支付」。</li>
 <li>从下单起 15 分钟内，用户可以随时在订单列表页看到这笔订单，点进去回到收银台继续支付。</li>
+<li>下单超过 8 分钟还没有支付时，通过微信公众号给用户发一条催办消息，提醒这笔订单还没支付、可以继续支付（催办消息的具体文案待补充）。</li>
 <li>超过 15 分钟还没有支付，订单自动关闭，订单列表页里这笔订单的状态更新为「已关闭」，不能再支付；用户需要重新下单。</li>
 <li>已关闭的订单不会自动消失，一直留在订单列表页里可以查看；用户也可以把它删掉，删掉后订单列表页里就不再显示。</li>
 </ul>
@@ -211,6 +212,7 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion
 <ul>
 <li><input disabled="" type="checkbox"> 进入收银台时，商品名与价格来自后台接口，与套餐页所选套餐一致；换套餐后收银台同步变化</li>
 <li><input disabled="" type="checkbox"> 下单未支付时，订单列表页能立刻看到「待支付」订单，点进去可回到收银台继续支付</li>
+<li><input disabled="" type="checkbox"> 下单超过 8 分钟未支付，用户在微信公众号收到催办消息（仅一次，支付后或订单关闭后不再发）</li>
 <li><input disabled="" type="checkbox"> 下单后超过 15 分钟仍未支付，订单自动变为「已关闭」，不能再支付</li>
 <li><input disabled="" type="checkbox"> 已关闭订单可在订单列表页查看，也可删除，删除后列表里不再显示</li>
 <li><input disabled="" type="checkbox"> 成功后 5 秒必达 RX-03；手动点文字链同目标</li>
