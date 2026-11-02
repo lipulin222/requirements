@@ -247,6 +247,12 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/online-ser
 <td>二期</td>
 </tr>
 </tbody></table>
+<p><strong>续药提醒的持续曝光规则（一期）</strong>：</p>
+<ul>
+<li>续药提醒出现后，只要后台查不到这个用户的续药下单记录，提醒卡就一直显示——每次打开健康订阅页都曝光，不受「展示次数」配置的限制。</li>
+<li>曝光期间用户完成了续药下单，提醒卡立即消失。</li>
+<li>一直没下单的，曝光到药程结束后第 7 天为止；过了这一天提醒卡不再显示，卡片按 <code>REQ-WL-STATUS-01</code> 的阶段判定回落到对应状态。</li>
+</ul>
 <p>一期只有一条提醒，不存在多条同时命中的问题；多条提醒的优先级与轮换规则随其余提醒一起放二期，待技术确认。</p>
 <h2 id="4-猜你想问-本阶段">4. 猜你想问（本阶段）</h2>
 <p>轮播的问题文案<strong>从后台知识库对应的分类里随机拉取</strong>，不在端上写死：</p>
@@ -310,6 +316,9 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/online-ser
 <li><input disabled="" type="checkbox"> 达到配置的展示次数后不再出现该提醒</li>
 <li><input disabled="" type="checkbox"> 同一时间只显示一张提醒卡</li>
 <li><input disabled="" type="checkbox"> 一期只有续药提醒（C1）会触发并展示，其余 7 条提醒不出现</li>
+<li><input disabled="" type="checkbox"> 续药提醒出现后，后台没有续药下单记录时持续曝光，直至药程结束后第 7 天</li>
+<li><input disabled="" type="checkbox"> 曝光期间完成续药下单，提醒卡立即消失</li>
+<li><input disabled="" type="checkbox"> 超过药程结束后第 7 天仍无续药下单，提醒卡不再显示，卡片按阶段判定回落</li>
 <li><input disabled="" type="checkbox"> 猜你想问文案从后台知识库对应分类随机拉取，点击进当前问题对应的文章</li>
 <li><input disabled="" type="checkbox"> 体重数据块、底部通栏 <code>查看更多</code> 按钮与进行中状态一致；无 AI 减重助理按钮</li>
 <li><input disabled="" type="checkbox"> App 与小程序一致</li>
