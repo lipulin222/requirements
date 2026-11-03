@@ -171,8 +171,9 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/online-ser
 </ul>
 </li>
 <li><strong>体重数据块</strong>，分两种情况：<ul>
-<li>已经有体重记录：左侧大号数字 <code>−3.2kg</code>（减掉的体重）；右侧一个浅灰圆形按钮，里面是画笔图标（点击跳到现有的录入体重页面）；数字下方一行 <code>已坚持 28 天 · 体重 71.6kg → 68.4kg</code>（天数、起止体重取真实数据）。</li>
-<li>还没有任何体重记录：大号数字显示起始体重 <code>71.6kg</code>，右侧同样是圆形画笔按钮；下方一行 <code>每周更新体重记录，更好追踪身体变化。</code></li>
+<li><strong>基线体重 = 用户填写首诊问卷时登记的体重</strong>（不是首次录入的体重）。首次展示、后续计算都用它做起点。</li>
+<li>已经有体重更新记录：左侧大号数字 = <strong>当前最新体重 − 基线体重</strong> 的差值，展示形如 <code>−3.2kg</code>（减了多少）；右侧一个浅灰圆形按钮，里面是画笔图标（点击跳到现有的录入体重页面）；数字下方一行 <code>已坚持 28 天 · 体重 71.6kg → 68.4kg</code>（起点=基线体重，终点=当前最新体重，天数、数值取真实数据）。</li>
+<li>还没有任何体重更新记录：大号数字直接显示基线体重 <code>71.6kg</code>，右侧同样是圆形画笔按钮；下方一行 <code>每周更新体重记录，更好追踪身体变化。</code></li>
 <li>两种情况都不显示 <code>−0kg</code> 这类没有意义的数字。</li>
 </ul>
 </li>
@@ -212,8 +213,9 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/online-ser
 </tbody></table>
 <h2 id="5-验收">5. 验收</h2>
 <ul>
-<li><input disabled="" type="checkbox"> 有体重记录时显示已减重量、坚持天数、起止体重</li>
-<li><input disabled="" type="checkbox"> 无体重记录时显示起始体重与引导文案，不出现 <code>−0kg</code></li>
+<li><input disabled="" type="checkbox"> 已减重量的起点为首诊问卷登记的体重（基线），展示值为最新体重减基线的差值（形如 <code>−3.2kg</code>）</li>
+<li><input disabled="" type="checkbox"> 下方一行为 <code>已坚持 N 天 · 体重 基线 → 最新</code>，天数与数值取真实数据</li>
+<li><input disabled="" type="checkbox"> 无体重更新记录时显示基线体重与引导文案，不出现 <code>−0kg</code></li>
 <li><input disabled="" type="checkbox"> 体重块右侧圆形画笔按钮跳到录入体重页面</li>
 <li><input disabled="" type="checkbox"> 有月报待办时 <code>查看更多</code> 按钮挂红点，文案与 RECORD-01 一致</li>
 <li><input disabled="" type="checkbox"> 猜你想问文案从后台知识库对应分类随机拉取，点击进当前问题对应的文章</li>
