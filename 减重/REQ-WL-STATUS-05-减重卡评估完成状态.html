@@ -157,6 +157,7 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/online-ser
 <hr>
 <h2 id="1-这张卡什么时候出现">1. 这张卡什么时候出现</h2>
 <p>用户被灰度到减重卡，已经做完首诊评估问卷、评估报告已生成，但还没支付首诊套餐（没有拿药 / 收货记录）。</p>
+<p><strong>30 天转化窗口</strong>：自评估报告生成之日起，30 天内仍未支付首诊套餐的，本卡片退回①购前科普状态（<code>REQ-WL-STATUS-04</code>）；期间完成支付则正常进入③进行中。</p>
 <h2 id="2-卡片上显示什么-自上而下">2. 卡片上显示什么（自上而下）</h2>
 <p>卡头与猜你想问的共用规则见 <code>REQ-WL-STATUS-04</code> 第 4 节；本阶段轮播 4 条（见第 3 节）。</p>
 <ol>
@@ -204,6 +205,8 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/online-ser
 <li><input disabled="" type="checkbox"> 三档文字为 <code>无需减重</code> / <code>需要减重管理</code> / <code>立即减重</code>，与档位对应正确</li>
 <li><input disabled="" type="checkbox"> 猜你想问文案从后台知识库对应分类随机拉取，点击进当前问题对应的文章</li>
 <li><input disabled="" type="checkbox"> 底部只有一个通栏按钮 <code>查看评估报告</code>，点击进评估报告；无 AI 减重助理按钮</li>
+<li><input disabled="" type="checkbox"> 报告生成满 30 天仍未支付首诊套餐，卡片退回购前科普状态；30 天内完成支付正常进入进行中状态</li>
+<li><input disabled="" type="checkbox"> 卡片右上角有灰色「切换旧版」文字链（通用规则见 <code>REQ-WL-STATUS-01</code> 第 2 节）</li>
 <li><input disabled="" type="checkbox"> App 与小程序一致</li>
 </ul>
 
