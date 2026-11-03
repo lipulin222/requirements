@@ -333,6 +333,12 @@ const WL_DOCS = [
     demos: [],
   },
   {
+    md: '减重/REQ-WL-DATA-01-提炼字段清洗.md',
+    module: 'DATA', code: 'REQ-WL-DATA-01', pri: 'P0', status: '制定中',
+    desc: '6 张业务表 → 每人 17 个诊断字段：合并取值规则、新鲜度与溜溜球判定、分流档位顺序、特殊情况、10 人设验收',
+    demos: [['医生速览页（产出效果）', 'https://lipulin222.github.io/health-subscription-demo/patient-ai-summary/']],
+  },
+  {
     md: '减重/REQ-WL-PLAN-05-选择就诊人.md',
     module: 'PLAN', code: 'REQ-WL-PLAN-05', pri: 'P0', status: '待评审',
     desc: '首诊评估前置：复用现网半屏浮层组件选就诊人（单选 + 详情只读），不新开发页面，主要做组件拉取与联调',
@@ -374,6 +380,14 @@ const WL_DOCS = [
     demos: [
       ['疗程随访评估', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/weight-management/Follow-up-assessment/index.html'],
       ['首诊评估问卷', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/weight-management/Medication-eligibility-assessment/index.html'],
+    ],
+  },
+  {
+    md: '减重/REQ-WL-PLAN-06-用户数据生成评估报告.md',
+    module: 'PLAN', code: 'REQ-WL-PLAN-06', pri: 'P0', status: '待评审',
+    desc: '用户健康数据 → 17 诊断字段 → AI 生成评估报告：三档分档、结论头、固定五模块与用药建议约定',
+    demos: [
+      ['评估报告样例（10 位样例患者）', 'https://lipulin222.github.io/health-subscription-demo/weight-management/Assessment-report-sample/index.html'],
     ],
   },
   {
@@ -825,7 +839,7 @@ for (const cfg of ALL) {
 /* 顺序即索引页的分组顺序：状态卡片 → 评估及报告 → 处方与订单 → 记录沉淀 → 科普相关 → 规范与基线 */
 const WL_MODULES = {
   STATUS: '服务状态与卡片', PLAN: '评估及报告', RX: '处方与订单',
-  RECORD: '记录沉淀', EDU: '科普相关', AI: 'AI 助理', BASE: '规范与基线',
+  RECORD: '记录沉淀', EDU: '科普相关', AI: 'AI 助理', BASE: '规范与基线', DATA: '数据清洗',
 };
 const WL_STYLE = `
 .wlhero{max-width:1180px;margin:0 auto;padding:38px 24px 10px}

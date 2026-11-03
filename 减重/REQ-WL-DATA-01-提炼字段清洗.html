@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>提炼字段清洗（AI 诊断数据集） · 需求单</title>
+<style>
+:root{
+  --ink:#1B2733; --ink-2:#48596A; --ink-3:#7A8A99; --line:#E4E9EE; --line-2:#EFF3F6;
+  --bg:#F6F8FA; --card:#FFFFFF; --brand:#0F7C86; --brand-2:#E7F4F5; --warn:#C2761C; --warn-bg:#FDF3E4;
+  --danger:#B4453C; --danger-bg:#FBEDEB;
+  --radius:14px; --shadow:0 1px 2px rgba(16,32,48,.05),0 8px 24px rgba(16,32,48,.05);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;}
+a{color:var(--brand);text-decoration:none}
+a:hover{text-decoration:underline}
+.topbar{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);}
+.topbar__in{max-width:1320px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.topbar__back{font-size:13px;color:var(--ink-2);border:1px solid var(--line);border-radius:999px;padding:4px 12px;background:#fff;white-space:nowrap}
+.topbar__back:hover{text-decoration:none;border-color:var(--brand);color:var(--brand)}
+.badge{font-size:12px;line-height:1;padding:5px 10px;border-radius:999px;background:var(--brand-2);color:var(--brand);font-weight:600;white-space:nowrap}
+.badge--warn{background:var(--warn-bg);color:var(--warn)}
+.badge--p0{background:var(--danger-bg);color:var(--danger)}
+.topbar__title{font-size:14px;font-weight:600;color:var(--ink)}
+.wrap{max-width:1320px;margin:0 auto;padding:26px 24px 80px;display:grid;grid-template-columns:258px minmax(0,1fr);gap:34px;align-items:start}
+.toc{position:sticky;top:70px;max-height:calc(100vh - 96px);overflow:auto;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 14px;box-shadow:var(--shadow)}
+.toc__h{font-size:11px;letter-spacing:.12em;color:var(--ink-3);text-transform:uppercase;margin:0 0 10px}
+.toc ol{list-style:none;margin:0;padding:0}
+.toc li{margin:2px 0}
+.toc a{display:block;padding:5px 8px;border-radius:8px;font-size:13px;color:var(--ink-2);line-height:1.45}
+.toc a:hover{background:var(--line-2);text-decoration:none;color:var(--brand)}
+.toc .lv3 a{padding-left:20px;font-size:12.5px;color:var(--ink-3)}
+.doc{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:34px 40px 46px;box-shadow:var(--shadow);min-width:0}
+.doc h1{font-size:26px;line-height:1.35;margin:0 0 6px;letter-spacing:-.01em}
+.doc .subtitle{color:var(--ink-3);font-size:13px;margin:0 0 22px}
+.doc h2{font-size:19px;margin:44px 0 14px;padding-bottom:10px;border-bottom:1px solid var(--line);scroll-margin-top:78px}
+.doc h3{font-size:15.5px;margin:26px 0 10px;scroll-margin-top:78px}
+.doc p{margin:10px 0;color:var(--ink-2)}
+.doc strong{color:var(--ink)}
+.doc ul,.doc ol{padding-left:1.35em;color:var(--ink-2)}
+.doc li{margin:5px 0}
+.doc li:has(> input[type=checkbox]){list-style:none;margin-left:-1.35em;display:flex;gap:9px;align-items:flex-start;color:var(--ink)}
+.doc input[type=checkbox]{flex:none;width:16px;height:16px;margin:5px 0 0;border-radius:4px;accent-color:var(--brand)}
+.doc code{background:#F1F5F8;border:1px solid var(--line-2);border-radius:5px;padding:1px 5px;font-size:12.5px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#20465A}
+.doc pre{background:#F7FAFB;border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow:auto}
+.doc pre code{background:none;border:0;padding:0;font-size:12.5px;color:var(--ink-2)}
+.doc blockquote{margin:14px 0;padding:10px 16px;background:#FFFBF0;border-left:3px solid #E9C683;border-radius:0 10px 10px 0}
+.doc blockquote p{margin:4px 0;color:#7A5C1E}
+.doc hr{border:0;border-top:1px dashed var(--line);margin:26px 0}
+.doc table{width:100%;border-collapse:separate;border-spacing:0;margin:16px 0;font-size:13.5px;display:block;overflow-x:auto}
+.doc thead th{background:#F3F7F9;color:var(--ink);font-weight:600;text-align:left;white-space:nowrap}
+.doc th,.doc td{border-bottom:1px solid var(--line-2);padding:9px 12px;vertical-align:top;color:var(--ink-2)}
+.doc tbody tr:last-child td{border-bottom:0}
+.doc tbody tr:hover td{background:#FAFCFD}
+/* 关联需求单 chip */
+.doc a.xref{display:inline-block;padding:1px 8px;margin:1px 0;border-radius:7px;background:var(--brand-2);color:var(--brand);
+  font-weight:600;font-size:12.5px;border:1px solid #CFE7E9;white-space:nowrap}
+.doc a.xref:hover{background:#D6EDEF;text-decoration:none;border-color:var(--brand)}
+.doc .xref--self{display:inline-block;padding:1px 8px;border-radius:7px;background:#F1F5F8;color:var(--ink-3);
+  font-weight:600;font-size:12.5px;border:1px solid var(--line);white-space:nowrap}
+.figs{margin:22px 0 6px;display:grid;gap:18px}
+.figs__h{font-size:12px;letter-spacing:.1em;color:var(--ink-3);text-transform:uppercase;margin:0}
+.fig{margin:0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:#fff}
+.fig__shot{max-height:520px;overflow:auto;background:#F1F5F7}
+.fig__shot img{display:block;width:100%;height:auto;cursor:zoom-in}
+.fig figcaption{padding:10px 14px;font-size:12.5px;color:var(--ink-2);border-top:1px solid var(--line-2);background:#FBFDFE;display:flex;gap:10px;align-items:baseline}
+.fig figcaption b{color:var(--brand);font-weight:600;flex:none}
+.fig figcaption em{margin-left:auto;font-style:normal;color:var(--ink-3);font-size:11.5px;white-space:nowrap;flex:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:14px}
+.grid .fig__shot{max-height:none;overflow:visible}
+.grid figcaption{display:block;font-size:12px;padding:8px 11px}
+.grid figcaption em{display:none}
+.lb{position:fixed;inset:0;z-index:99;background:rgba(12,22,30,.92);display:flex;align-items:center;justify-content:center;padding:28px}
+.lb[hidden]{display:none}
+.lb img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,.5);background:#fff;cursor:zoom-out}
+.lb__x{position:absolute;top:16px;right:20px;width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.14);
+  color:#fff;font-size:22px;line-height:1;cursor:pointer}
+.lb__x:hover{background:rgba(255,255,255,.26)}
+.lb__tip{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);color:#CBD6DE;font-size:12px}
+/* 索引页 */
+.hero{max-width:1320px;margin:0 auto;padding:38px 24px 6px}
+.hero h1{margin:0 0 10px;font-size:30px;letter-spacing:-.02em}
+.hero p{margin:0 0 8px;color:var(--ink-2);max-width:900px}
+.stats{display:flex;gap:28px;margin:20px 0 0;flex-wrap:wrap}
+.stat b{display:block;font-size:24px;color:var(--brand);line-height:1.2}
+.stat span{font-size:12.5px;color:var(--ink-3)}
+.callout{max-width:1320px;margin:22px auto 0;padding:0 24px}
+.callout__in{background:linear-gradient(135deg,#FFF7EC,#FDF1E3);border:1px solid #F0D9B4;border-radius:var(--radius);padding:16px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.callout__in b{color:#8A5A15}
+.callout__in a{margin-left:auto;font-weight:600}
+.sec{max-width:1320px;margin:0 auto;padding:8px 24px}
+.sec__h{display:flex;align-items:baseline;gap:12px;margin:32px 0 16px}
+.sec__h h2{margin:0;font-size:19px}
+.sec__h span{font-size:12.5px;color:var(--ink-3)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:18px}
+.rcard{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden;box-shadow:var(--shadow);transition:transform .16s ease,box-shadow .16s ease}
+.rcard:hover{transform:translateY(-2px);box-shadow:0 2px 4px rgba(16,32,48,.06),0 14px 32px rgba(16,32,48,.09);text-decoration:none}
+.rcard__cover{height:132px;background:#EFF4F6;overflow:hidden;border-bottom:1px solid var(--line-2);position:relative}
+.rcard__cover img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+.rcard__cover--ph{display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#0F7C86,#14A0A8);color:#fff;font-weight:700;font-size:15px;letter-spacing:.04em}
+.rcard__b{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
+.rcard__t{font-size:14.5px;font-weight:600;color:var(--ink);line-height:1.45}
+.rcard__d{font-size:12.5px;color:var(--ink-3);line-height:1.6}
+.rcard__f{margin-top:auto;padding-top:10px;display:flex;gap:8px;align-items:center;font-size:11.5px;color:var(--ink-3)}
+.note{max-width:1320px;margin:32px auto 0;padding:0 24px 70px}
+.note__in{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px 22px;color:var(--ink-2);font-size:13px;box-shadow:var(--shadow)}
+.note__in b{color:var(--ink)}
+footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);font-size:12px}
+@media (max-width:1080px){
+  .wrap{grid-template-columns:1fr;gap:20px;padding-top:20px}
+  .toc{position:static;max-height:none}
+  .doc{padding:26px 20px 34px}
+  .fig__shot{max-height:400px}
+}
+@media print{
+  .topbar,.toc,.lb{display:none}
+  .wrap{display:block;padding:0;max-width:none}
+  .doc{border:0;box-shadow:none;padding:0}
+  .fig__shot{max-height:none;overflow:visible}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar__in">
+    <a class="topbar__back" href="../index.html">← 需求单索引</a>
+    <span class="badge">科学减重（WL）</span>
+    <span class="badge badge--p0">优先级 P0</span>
+    <span class="topbar__title">提炼字段清洗（AI 诊断数据集）</span>
+  </div>
+</header>
+<div class="wrap">
+  <nav class="toc">
+    <p class="toc__h">本单目录</p>
+    <ol><li class="lv2"><a href="#1-做什么">1. 做什么</a></li>
+<li class="lv2"><a href="#2-同一件事多处记录时-用哪一份">2. 同一件事多处记录时，用哪一份</a></li>
+<li class="lv2"><a href="#3-这些字段不要-用不到的都删掉">3. 这些字段不要（用不到的都删掉）</a></li>
+<li class="lv2"><a href="#4-两个判定规则">4. 两个判定规则</a></li>
+<li class="lv2"><a href="#5-分流档位怎么定">5. 分流档位怎么定</a></li>
+<li class="lv2"><a href="#6-特殊情况处理">6. 特殊情况处理</a></li>
+<li class="lv2"><a href="#7-数据红线">7. 数据红线</a></li>
+<li class="lv2"><a href="#8-验收-用-10-个测试人设逐个对">8. 验收（用 10 个测试人设逐个对）</a></li></ol>
+  </nav>
+  <main class="doc">
+    <h1>提炼字段清洗（AI 诊断数据集）</h1>
+    <p class="subtitle">需求单 · 科学减重（WL） · 交付目标：可上线面向用户使用（H5 + 微信小程序）</p>
+    <blockquote>
+<p>编号 <code>REQ-WL-DATA-01</code> ｜ 项目：科学减重（WL）｜ 模块：数据清洗 ｜ 状态：制定中
+一句话：把 6 张业务表合并成「每人一份、17 个字段」的提炼数据集，供减重问卷分流判定和医生端「患者身体状况 AI 总结」使用。效果可看 <a href="https://lipulin222.github.io/health-subscription-demo/patient-ai-summary/">医生速览页</a>。</p>
+</blockquote>
+<hr>
+<h2 id="1-做什么">1. 做什么</h2>
+<p>系统里关于一个患者的信息分散在 6 张表里，很多内容重复记录、有的是自由文本，不能直接用来做分流判定。本需求要求把这 6 张表洗成 <strong>每个就诊人一份、固定 17 个字段</strong> 的数据集。</p>
+<p><strong>输入表（6 张）</strong></p>
+<table>
+<thead>
+<tr>
+<th>表</th>
+<th>关键内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>就诊人基本信息</td>
+<td>姓名、性别、出生日期</td>
+</tr>
+<tr>
+<td>订单</td>
+<td>订单号、商品名、类别、规格、创建时间</td>
+</tr>
+<tr>
+<td>就诊记录</td>
+<td>到达时间、身高、体重、病历内容（医生写的自由文本）</td>
+</tr>
+<tr>
+<td>体检报告</td>
+<td>身高体重 BMI、血压、脉搏、腰围、家族史、既往病史、主要发现、体检建议、创建时间</td>
+</tr>
+<tr>
+<td>问卷记录</td>
+<td>提交时间、填写渠道、初筛结果</td>
+</tr>
+<tr>
+<td>问卷答案</td>
+<td>10 道题的逐题回答</td>
+</tr>
+</tbody></table>
+<p><strong>输出的 17 个字段（7 组）</strong></p>
+<table>
+<thead>
+<tr>
+<th>组</th>
+<th>字段</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A 基础身份（4）</td>
+<td>就诊人 ID、姓名、性别、出生日期</td>
+</tr>
+<tr>
+<td>B 体重与轨迹（2）</td>
+<td>当前体重（附测量时间和新鲜度）、近 24 个月体重轨迹（起始→…→当前、反弹次数）</td>
+</tr>
+<tr>
+<td>C 疾病与用药（4）</td>
+<td>确诊疾病清单、当前用药类别、家族史、其他重要病史</td>
+</tr>
+<tr>
+<td>D 关键指标（3）</td>
+<td>血压（标注是否服药中）、异常指标清单、腰围</td>
+</tr>
+<tr>
+<td>E 安全筛查（2）</td>
+<td>禁忌症（是 / 否 / 不确定）、孕产状态（备孕 / 怀孕 / 哺乳 / 否，男性跳过）</td>
+</tr>
+<tr>
+<td>F 归因与意愿（2）</td>
+<td>体重增加自评原因、减重目标</td>
+</tr>
+<tr>
+<td>G 系统判定（1）</td>
+<td>预期分流档位（无慢病 / 轻微异常 / 线下优先 / 排除）+ 触发依据</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="2-同一件事多处记录时-用哪一份">2. 同一件事多处记录时，用哪一份</h2>
+<table>
+<thead>
+<tr>
+<th>内容</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>体重</td>
+<td>就诊记录、体检报告、问卷第③题都可能有。<strong>取时间最新的那次实际测量值</strong>，并带上测量时间。问卷里自己填的数和实测对不上时，以实测为准，同时把差异记进触发依据（例：问卷填 84.4kg，最近实测 83.5kg）。</td>
+</tr>
+<tr>
+<td>身高</td>
+<td><strong>只认体检报告里的身高</strong>。就诊记录里的身高（门诊很少复测，多为空）和问卷里自己填的都不用。</td>
+</tr>
+<tr>
+<td>BMI</td>
+<td>不照抄报告里的数，用「当前体重 ÷ 身高²」现算，保留 1 位小数。</td>
+</tr>
+<tr>
+<td>年龄</td>
+<td>用出生日期算。问卷里自己填的年龄只用来对账，对不上要在输出里提示。</td>
+</tr>
+<tr>
+<td>性别</td>
+<td>只用就诊人表里的，问卷第①题只做对账。</td>
+</tr>
+<tr>
+<td>确诊疾病</td>
+<td>体检报告「既往病史」+ 问卷第⑤题 + 病历里写到的诊断，三处合并去重。同一种病的不同叫法要统一成一种说法（以病历写法为准）。</td>
+</tr>
+<tr>
+<td>当前用药</td>
+<td>从病历文本和订单商品名里找药，归类成：胰岛素 / 口服降糖药 / 降压药 / 他汀或抗凝 / 糖皮质激素 / 其他处方药 / 无。用药类别直接决定分流档位，<strong>宁可多归不可漏归</strong>。</td>
+</tr>
+<tr>
+<td>家族史</td>
+<td>体检报告「家族史」+ 问卷第④题勾选的「遗传 / 家族因素」，合并去重。</td>
+</tr>
+<tr>
+<td>异常指标</td>
+<td>从体检报告「主要发现」里只抽「偏高 / 异常」的结论项（血脂、血糖或糖化、尿酸、肝功、脂肪肝、胰岛素等），再和问卷第⑥题合并去重。「未见异常」之类的描述全部丢掉。</td>
+</tr>
+<tr>
+<td>各种时间</td>
+<td>就诊、报告、问卷、订单的时间都不单独输出，只用来算下面第 4 节的「新鲜度」。</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="3-这些字段不要-用不到的都删掉">3. 这些字段不要（用不到的都删掉）</h2>
+<table>
+<thead>
+<tr>
+<th>删掉的</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>脉搏</td>
+<td>不参与任何分流规则</td>
+</tr>
+<tr>
+<td>订单号、商品类别、规格、商品名原文</td>
+<td>对判定没用；订单只保留两个「是 / 否」标记：是否购买过减重服务、是否购买过慢病处方药</td>
+</tr>
+<tr>
+<td>问卷填写渠道、问卷初筛结果、问卷记录编号</td>
+<td>工程字段</td>
+</tr>
+<tr>
+<td>问卷第①②③题的答案</td>
+<td>和档案重复，只做对账</td>
+</tr>
+<tr>
+<td>体检报告「体检建议」原文</td>
+<td>和异常指标重叠，且是建议不是事实</td>
+</tr>
+<tr>
+<td>各表的创建时间、更新时间、逻辑删除等工程字段</td>
+<td>工程字段</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="4-两个判定规则">4. 两个判定规则</h2>
+<p><strong>4.1 体重新鲜度</strong></p>
+<ul>
+<li>最近一次实测体重距今 <strong>超过 3 个月</strong> → 标「过期，需重填」；</li>
+<li>距今 <strong>2~3 个月</strong> → 标「临界，建议复测」；</li>
+<li>3 个月以内 → 标「新鲜」。</li>
+</ul>
+<p><strong>4.2 反弹次数（溜溜球判定）</strong></p>
+<ul>
+<li>把近 24 个月内的就诊体重按时间排序；</li>
+<li>体重比上一次 <strong>下降 2kg 及以上</strong>，之后又 <strong>回升 2kg 及以上</strong>，记反弹 1 次；</li>
+<li>反弹 <strong>2 次及以上</strong> 即判定为「溜溜球体重」。</li>
+</ul>
+<hr>
+<h2 id="5-分流档位怎么定">5. 分流档位怎么定</h2>
+<p>按下面的顺序判断，<strong>排在前面的先看，命中就定档</strong>：</p>
+<ol>
+<li><strong>先看排除</strong>：年龄不满 18 岁、孕产状态是备孕 / 怀孕 / 哺乳、禁忌症答「有」——只要占一条，直接判「排除」（排除优先级最高，其他条件再符合也排除）；</li>
+<li><strong>再看需要医生把关的情形</strong>：确诊糖尿病（尤其正在打胰岛素）、确诊冠心病或中风、正在用糖皮质激素（可能是药物引起的增重）、严重肾脏疾病——判「线下优先」；</li>
+<li><strong>再看体重反复</strong>：没有确诊疾病，但反弹 2 次及以上——判「线下优先（溜溜球）」；</li>
+<li><strong>再看指标偏高</strong>：没有确诊疾病，但异常指标清单不为空——判「轻微异常」，输出里带「建议复查××」；</li>
+<li><strong>最后看是否符合适应症</strong>：BMI ≥ 28，或 BMI ≥ 24 且有体重相关合并症——判「无慢病，直达订阅」。</li>
+</ol>
+<p>每条分档结论都必须写清「触发依据」，指到具体字段值（如「确诊 2 型糖尿病 + 当前用药含胰岛素」），不允许只给档位不给原因。</p>
+<hr>
+<h2 id="6-特殊情况处理">6. 特殊情况处理</h2>
+<table>
+<thead>
+<tr>
+<th>情况</th>
+<th>处理</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>病在问卷选项里找不到（如肾病综合征）</td>
+<td>以病历和问卷第⑧题「其他病史」为准定档，并在触发依据里标注「问卷选项未覆盖」。只看问卷第⑤题会漏判</td>
+</tr>
+<tr>
+<td>患者在「指标偏高」题勾了其实已经确诊的项目</td>
+<td>属于常见误选，<strong>保留原样</strong>并在触发依据里说明，不要擅自清洗掉</td>
+</tr>
+<tr>
+<td>男性跳过「备孕怀孕哺乳」题</td>
+<td>该字段记「未作答」，不算缺失</td>
+</tr>
+<tr>
+<td>某次就诊只测了体重、医生没写病历</td>
+<td>病历为空不报错，该次记录照常参与体重轨迹</td>
+</tr>
+<tr>
+<td>体检报告太旧（如 2 年前、当时体重还正常）</td>
+<td>报告已过有效期时，异常指标、腰围等一律标「无有效数据」，不得拿旧报告当现状</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="7-数据红线">7. 数据红线</h2>
+<ul>
+<li>血压、血糖、血脂等指标原值 <strong>只在医生端展示</strong>，用户端不展示原值；</li>
+<li>输出数据里不得出现姓名之外的身份信息（手机号、身份证、地址等）；</li>
+<li>病历原文、报告原文不直接输出，一律按第 2 节归类成结构化字段。</li>
+</ul>
+<hr>
+<h2 id="8-验收-用-10-个测试人设逐个对">8. 验收（用 10 个测试人设逐个对）</h2>
+<table>
+<thead>
+<tr>
+<th>人设</th>
+<th>验收要点</th>
+<th>预期档位</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>王雅静（女 32）</td>
+<td>当前体重取实测 83.5kg 而非问卷的 84.4kg；轻度脂肪肝进异常指标</td>
+<td>无慢病</td>
+</tr>
+<tr>
+<td>李婷（女 28）</td>
+<td>体重已过期 11 个月，标「需重填」；无订单无就诊不报错</td>
+<td>无慢病（重填后确认）</td>
+</tr>
+<tr>
+<td>许雯（女 35）</td>
+<td>血脂偏高进异常指标；腰围缺失正常输出「缺失」</td>
+<td>轻微异常</td>
+</tr>
+<tr>
+<td>张建国（男 52）</td>
+<td>用药归出「口服降糖药 + 降压药」；问卷误选保留；备孕题记「未作答」</td>
+<td>线下优先</td>
+</tr>
+<tr>
+<td>刘桂芳（女 45）</td>
+<td>用药归出「胰岛素」；胆囊切除进其他重要病史</td>
+<td>线下优先</td>
+</tr>
+<tr>
+<td>赵德海（男 58）</td>
+<td>体重标「临界」；脉搏不出现在任何输出里</td>
+<td>线下优先</td>
+</tr>
+<tr>
+<td>孙梦琪（女 29）</td>
+<td>第⑤题「以上都没有」但第⑧题「严重肾脏疾病」+ 用药「糖皮质激素」，仍判线下优先并标「问卷选项未覆盖」；旧报告标失效</td>
+<td>线下优先</td>
+</tr>
+<tr>
+<td>周凯（男 36）</td>
+<td>反弹计数 = 3；1 条空病历不报错</td>
+<td>线下优先（溜溜球）</td>
+</tr>
+<tr>
+<td>沈佳怡（女 30）</td>
+<td>备孕「是」→ 排除，即使 BMI、疾病等条件都满足</td>
+<td>排除</td>
+</tr>
+<tr>
+<td>唐子睿（男 17）</td>
+<td>17 岁 → 排除</td>
+<td>排除</td>
+</tr>
+</tbody></table>
+<p>交付物：① 字段字典（17 字段名、类型、来源表）；② 清洗程序或服务；③ 上述 10 人设跑出的输出与预期档位的对照报告。</p>
+
+  </main>
+</div>
+<div class="lb" id="lb" hidden><button class="lb__x" aria-label="关闭">×</button><img id="lbImg" alt=""><p class="lb__tip">原图 · 点击图片或按 Esc 关闭</p></div>
+<script>
+(function(){
+  var lb=document.getElementById('lb'),lbImg=document.getElementById('lbImg');
+  if(!lb) return;
+  function close(){lb.hidden=true;lbImg.src='';document.body.style.overflow='';}
+  document.addEventListener('click',function(e){
+    var img=e.target.closest && e.target.closest('.fig__shot img');
+    if(img){lbImg.src=img.src;lb.hidden=false;document.body.style.overflow='hidden';return;}
+    if(e.target===lb||e.target===lbImg||(e.target.classList&&e.target.classList.contains('lb__x'))) close();
+  });
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!lb.hidden) close();});
+})();
+</script>
+</body>
+</html>
