@@ -156,8 +156,8 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <ul>
 <li>首次进入首诊评估前，先选择就诊人。</li>
 <li>页面不单独设计：直接用现网现成的半屏浮层组件承载（开发知道该组件），本单只定逻辑；不额外开发页面，主要工作是对这个组件的拉取和联调。</li>
-<li>浮层内是就诊人列表，单选：点选一位，再点可取消；默认无人选中。</li>
-<li>选中后在浮层内展示该就诊人详情：姓名 / 性别 / 年龄 / 身高 / 体重 / BMI / 腰围 / 过敏史，只读，由健康档案接口带入。</li>
+<li>浮层内<strong>只显示用户本人一个就诊人，不展示其他关系人</strong>（家人、亲属等都不能选，一期只能给自己做评估）。</li>
+<li>单选：点选自己后，在浮层内展示本人详情：姓名 / 性别 / 年龄 / 身高 / 体重 / BMI / 腰围 / 过敏史，只读，由健康档案接口带入。</li>
 </ul>
 <h2 id="2-出口">2. 出口</h2>
 <table>
@@ -181,7 +181,8 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </tbody></table>
 <h2 id="3-验收">3. 验收</h2>
 <ul>
-<li><input disabled="" type="checkbox"> 未选中无法进入评估；选中可取消重选</li>
+<li><input disabled="" type="checkbox"> 未选中无法进入评估</li>
+<li><input disabled="" type="checkbox"> 浮层内只显示本人，不出现其他关系人；选中可取消重选</li>
 <li><input disabled="" type="checkbox"> 详情随选中切换，内容与健康档案一致</li>
 <li><input disabled="" type="checkbox"> 浮层复用现网现成的半屏浮层组件，不新开发 UI</li>
 </ul>
