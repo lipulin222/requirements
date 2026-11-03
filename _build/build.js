@@ -384,7 +384,7 @@ const WL_DOCS = [
   },
   {
     md: '减重/REQ-WL-PLAN-06-用户数据生成评估报告.md',
-    module: 'PLAN', code: 'REQ-WL-PLAN-06', pri: 'P0', status: '待评审',
+    module: 'DATA', code: 'REQ-WL-PLAN-06', pri: 'P0', status: '待评审',
     desc: '用户健康数据 → 17 诊断字段 → AI 生成评估报告：三档分档、结论头、固定五模块与用药建议约定',
     demos: [
       ['评估报告样例（10 位样例患者）', 'https://lipulin222.github.io/health-subscription-demo/weight-management/Assessment-report-sample/index.html'],
@@ -839,7 +839,7 @@ for (const cfg of ALL) {
 /* 顺序即索引页的分组顺序：状态卡片 → 评估及报告 → 处方与订单 → 记录沉淀 → 科普相关 → 规范与基线 */
 const WL_MODULES = {
   STATUS: '服务状态与卡片', PLAN: '评估及报告', RX: '处方与订单',
-  RECORD: '记录沉淀', EDU: '科普相关', AI: 'AI 助理', BASE: '规范与基线', DATA: '数据清洗',
+  RECORD: '记录沉淀', EDU: '科普相关', AI: 'AI 助理', BASE: '规范与基线', DATA: '数据及提示词处理',
 };
 const WL_STYLE = `
 .wlhero{max-width:1180px;margin:0 auto;padding:38px 24px 10px}
