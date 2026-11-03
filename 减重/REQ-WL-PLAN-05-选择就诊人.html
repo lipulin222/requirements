@@ -134,7 +134,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
   <div class="topbar__in">
     <a class="topbar__back" href="../index.html">← 需求单索引</a>
     <span class="badge">科学减重（WL）</span>
-    <span class="badge badge--warn">优先级 P2</span>
+    <span class="badge badge--p0">优先级 P0</span>
     <span class="topbar__title">选择就诊人</span>
   </div>
 </header>
@@ -149,13 +149,13 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
     <h1>选择就诊人</h1>
     <p class="subtitle">需求单 · 科学减重（WL） · 交付目标：可上线面向用户使用（H5 + 微信小程序）</p>
     <blockquote>
-<p>编号 <code>REQ-WL-PLAN-05</code> ｜ 项目：科学减重（WL）｜ 模块：方案·评估·随访 ｜ 优先级 P2 ｜ 状态：<strong>暂缓</strong>（入口已下线，待就诊人管理立项后重启）</p>
+<p>编号 <code>REQ-WL-PLAN-05</code> ｜ 项目：科学减重（WL）｜ 模块：方案·评估·随访 ｜ 优先级 P0 ｜ 状态：<strong>待评审</strong>（一期范围）</p>
 </blockquote>
 <hr>
 <h2 id="1-规则">1. 规则</h2>
 <ul>
 <li>首次进入首诊评估前，先选择就诊人。</li>
-<li>页面不单独设计：直接用现网现成的半屏浮层组件承载（开发知道该组件），本单只定逻辑。</li>
+<li>页面不单独设计：直接用现网现成的半屏浮层组件承载（开发知道该组件），本单只定逻辑；不额外开发页面，主要工作是对这个组件的拉取和联调。</li>
 <li>浮层内是就诊人列表，单选：点选一位，再点可取消；默认无人选中。</li>
 <li>选中后在浮层内展示该就诊人详情：姓名 / 性别 / 年龄 / 身高 / 体重 / BMI / 腰围 / 过敏史，只读，由健康档案接口带入。</li>
 </ul>

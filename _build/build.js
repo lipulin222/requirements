@@ -334,8 +334,8 @@ const WL_DOCS = [
   },
   {
     md: '减重/REQ-WL-PLAN-05-选择就诊人.md',
-    module: 'PLAN', code: 'REQ-WL-PLAN-05', pri: 'P2', status: '暂缓',
-    desc: '首诊评估前置：现网半屏浮层选就诊人（单选 + 详情只读），未选中不可进评估',
+    module: 'PLAN', code: 'REQ-WL-PLAN-05', pri: 'P0', status: '待评审',
+    desc: '首诊评估前置：复用现网半屏浮层组件选就诊人（单选 + 详情只读），不新开发页面，主要做组件拉取与联调',
     demos: [
       ['选择就诊人', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/weight-management/Patient-select/index.html'],
       ['首诊评估问卷', 'https://lipulin222.github.io/online-health-care/weight-companion-ui/weight-management/Medication-eligibility-assessment/index.html'],
