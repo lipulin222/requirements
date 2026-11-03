@@ -222,13 +222,13 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion
 <ul>
 <li>每次评估生成一份独立报告，各有单独的链接；同一个月可以生成多份，不在同一份报告上迭代更新。</li>
 <li>报告时效：满足任一条件即视为已过时效——① 这份报告已完成订单转化（已由它产生支付/订单）；② 报告生成时间超过 30 天。</li>
-<li>已过时效的报告仍可查看，但<strong>点击购药时阻拦进入支付，并 toast 提示：<code>评估报告已过时效，请重新评估。</code></strong>（是否在 toast 同时引导跳转重新评估，待产品确认。）</li>
+<li>已过时效的报告仍可查看，但<strong>点击购药时阻拦进入支付，并 toast 提示：<code>评估报告已过时效，请重新评估。</code></strong>；toast 后引导用户跳转重新评估，去向为随访问卷（<code>REQ-WL-PLAN-04</code>）。</li>
 <li>用户重新完成评估生成新报告后，可正常购药。</li>
 </ul>
 <h2 id="2-验收">2. 验收</h2>
 <ul>
 <li><input disabled="" type="checkbox"> 四分支与 1.1 条件一一对应，同一问卷结果重复进入结果稳定</li>
-<li><input disabled="" type="checkbox"> 报告已转化订单、或生成超 30 天时，点击购药被阻拦并 toast「评估报告已过时效，请重新评估。」；未过时效可正常进入支付</li>
+<li><input disabled="" type="checkbox"> 报告已转化订单、或生成超 30 天时，点击购药被阻拦并 toast「评估报告已过时效，请重新评估。」，随后引导进随访问卷（PLAN-04）；未过时效可正常进入支付</li>
 <li><input disabled="" type="checkbox"> 同一个月生成多份报告时，每份报告链接独立，互不覆盖</li>
 <li><input disabled="" type="checkbox"> 吸底按分支正确分流，无 404</li>
 <li><input disabled="" type="checkbox"> 刻度、总结、匹配度按分支正确渲染</li>
