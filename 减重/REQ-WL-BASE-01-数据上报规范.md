@@ -30,11 +30,23 @@
 
 ### 3.1 服务状态与卡片（STATUS）
 
+卡片各阶段的可交互元素全部登记；主按钮统一走 `wcard_cta_click`，其余独立元素单独建事件。
+
 | 事件 | 触发时机 | 关键参数 | 用途 | 来源单 |
 | --- | --- | --- | --- | --- |
 | `wcard_pin_view` | 健康订阅区置顶减重卡曝光 | `position` | 置顶触达 | STATUS-01 |
-| `wcard_state_view` | 卡片渲染「进行中」 | `stage`、`month_index` | 状态一致性 | STATUS-01 |
-| `wcard_cta_click` | 卡片 CTA 点击 | `stage`、`cta_id` | 转化 | STATUS-01 |
+| `wcard_state_view` | 卡片渲染（各阶段） | `stage`、`month_index` | 状态一致性 | STATUS-01 |
+| `wcard_cta_click` | 主按钮点击（`cta_id`：assess 查看评估报告 / report 查看用药方案 / more 查看更多 / consult 线上咨询 / book 预约面诊 / return 返回 / reorder 再次续订 / weight_edit 录体重） | `stage`、`cta_id` | 转化 | STATUS-01 |
+| `wcard_category_click` | 阶段① 四分类科普入口点击 | `category_id` | 分类入口效果 | STATUS-04 |
+| `wcard_faq_view` | 猜你想问每条问题轮播曝光（自动换条逐次记） | `stage`、`article_id`、`seq` | 问题触达 | STATUS-04~07 |
+| `wcard_faq_click` | 点猜你想问问题进文章 | `stage`、`article_id` | 深链点击 | STATUS-04~07 |
+| `wcard_remind_view` | 提醒卡曝光（持续曝光逐次记） | `remind_id`、`expose_seq` | 曝光频次 | STATUS-07 |
+| `wcard_remind_click` | 点提醒卡 | `remind_id` | 提醒转化 | STATUS-07 |
+| `wcard_data_click` | 点体重数据块（进趋势页） | — | 数据关注行为 | STATUS-06 |
+| `wcard_red_dot_click` | 点查看更多红点 | `todo_type(生成月报/new)` | 红点联动有效性 | RECORD-01 |
+| `wcard_old_switch_click` | 点右上角「切换旧版」 | `stage` | 旧版切换意愿 | STATUS-01 |
+| `wcard_ai_click` | 点「AI减重助理」按钮 | `stage`、`entry` | 助理入口转化 | STATUS-01 |
+| `wcard_recap_click` | 点结营回顾入口 | `stage` | 回顾入口（二期） | STATUS-08 |
 
 ### 3.2 处方·健康订阅·订单（RX）
 
@@ -56,6 +68,12 @@
 | `assess_complete` | 提交评估 | `assess_type`、`duration`、`result_code` | 完成率 |
 | `plan_view` | 方案页曝光 | `plan_id`、`weeks` | 方案触达 |
 | `plan_buy_click` | 方案页点击订阅 | `plan_id` | 方案→订阅转化 |
+| `report_view` | 报告页曝光 | `report_id`、`branch`、`generate_days` | 报告触达 + 时效分布 |
+| `report_buy_click` | 报告内点购药 | `report_id`、`branch` | 购药意愿 |
+| `report_buy_block` | 报告过时效被拦截并 toast | `report_id`、`reason(converted/expired)` | 时效拦截量 |
+| `report_reassess_click` | toast 后点引导重新评估 | `report_id` | 拦截→重评挽回率 |
+
+就诊人浮层（PLAN-05）前端不上报，由服务端记录。
 
 ### 3.4 科普·内容（EDU）
 
@@ -64,6 +82,7 @@
 | `edu_list_view` | 科普列表曝光 | `stage`、`entry` | 内容入口 |
 | `article_read` | 阅读文章 | `article_id`、`duration`、`progress`、`finished` | 内容质量 |
 | `article_cta` | 文章内 CTA | `article_id`、`cta_id(assess)` | 内容转化 |
+| `content_share_click` | 点分享（文章 / 评估报告 / 减重月报 / 结营回顾，功能陆续上线） | `content_type(article/report/month_report/recap)`、`content_id`、`method(system/copy)` | 分享行为与方式占比 |
 
 ### 3.5 通用技术事件
 
@@ -73,6 +92,23 @@
 | `net_error` | 接口失败（带 `api`、`code`、`latency`） |
 | `page_perf` | 首屏与可交互耗时 |
 | `js_error` | 前端异常（不含用户数据） |
+
+### 3.6 体重 · 聚合页 · 月报（STATUS-06 / RX-06 / RECORD-01）
+
+体重、BMI 等数值属第 5 节红线，体重相关事件**只报动作、不报数值**。
+
+| 事件 | 触发时机 | 关键参数 | 用途 | 来源单 |
+| --- | --- | --- | --- | --- |
+| `weight_edit_click` | 点画笔进录入体重页 | `entry(card/trend)` | 录入入口 | STATUS-06 |
+| `weight_submit_result` | 录入体重提交成功 / 失败 | `success`（不含数值） | 录入完成率 | STATUS-06 |
+| `trend_view` | 体重趋势页曝光 | — | 趋势页触达 | STATUS-06 |
+| `more_view` | 聚合页入口页曝光 | — | 聚合页触达 | RX-06 |
+| `more_entry_click` | 点三入口（评估报告 / 减重月报 / 相关订单） | `entry(report/month/orders)` | 入口分流 | RX-06 |
+| `more_new_assess_click` | 点吸底「新增评估」 | — | 重评入口 | RX-06 |
+| `order_list_btn_click` | 订单列表点操作按钮 | `btn(logistics/reorder/review)`、`order_id` | 订单操作 | RX-06 |
+| `month_report_generate_click` | 点「生成最新月报」 | — | 生成意愿 | RECORD-01 |
+| `month_report_generate_result` | 月报生成成功 / 失败 | `success`（不含报告内容） | 生成成功率 | RECORD-01 |
+| `month_report_view` | 月报详情曝光 | `issue` | 阅读触达 | RECORD-01 |
 
 ---
 

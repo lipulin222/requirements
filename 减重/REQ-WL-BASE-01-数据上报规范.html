@@ -149,6 +149,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <li class="lv3"><a href="#3-3-方案-评估-随访-plan">3.3 方案·评估·随访（PLAN）</a></li>
 <li class="lv3"><a href="#3-4-科普-内容-edu">3.4 科普·内容（EDU）</a></li>
 <li class="lv3"><a href="#3-5-通用技术事件">3.5 通用技术事件</a></li>
+<li class="lv3"><a href="#3-6-体重-聚合页-月报-status-06-rx-06-record-01">3.6 体重 · 聚合页 · 月报（STATUS-06 / RX-06 / RECORD-01）</a></li>
 <li class="lv2"><a href="#4-核心漏斗">4. 核心漏斗</a></li>
 <li class="lv2"><a href="#5-不报什么-红线">5. 不报什么（红线）</a></li></ol>
   </nav>
@@ -203,6 +204,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <hr>
 <h2 id="3-事件登记表">3. 事件登记表</h2>
 <h3 id="3-1-服务状态与卡片-status">3.1 服务状态与卡片（STATUS）</h3>
+<p>卡片各阶段的可交互元素全部登记；主按钮统一走 <code>wcard_cta_click</code>，其余独立元素单独建事件。</p>
 <table>
 <thead>
 <tr>
@@ -222,17 +224,87 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </tr>
 <tr>
 <td><code>wcard_state_view</code></td>
-<td>卡片渲染「进行中」</td>
+<td>卡片渲染（各阶段）</td>
 <td><code>stage</code>、<code>month_index</code></td>
 <td>状态一致性</td>
 <td>STATUS-01</td>
 </tr>
 <tr>
 <td><code>wcard_cta_click</code></td>
-<td>卡片 CTA 点击</td>
+<td>主按钮点击（<code>cta_id</code>：assess 查看评估报告 / report 查看用药方案 / more 查看更多 / consult 线上咨询 / book 预约面诊 / return 返回 / reorder 再次续订 / weight_edit 录体重）</td>
 <td><code>stage</code>、<code>cta_id</code></td>
 <td>转化</td>
 <td>STATUS-01</td>
+</tr>
+<tr>
+<td><code>wcard_category_click</code></td>
+<td>阶段① 四分类科普入口点击</td>
+<td><code>category_id</code></td>
+<td>分类入口效果</td>
+<td>STATUS-04</td>
+</tr>
+<tr>
+<td><code>wcard_faq_view</code></td>
+<td>猜你想问每条问题轮播曝光（自动换条逐次记）</td>
+<td><code>stage</code>、<code>article_id</code>、<code>seq</code></td>
+<td>问题触达</td>
+<td>STATUS-04~07</td>
+</tr>
+<tr>
+<td><code>wcard_faq_click</code></td>
+<td>点猜你想问问题进文章</td>
+<td><code>stage</code>、<code>article_id</code></td>
+<td>深链点击</td>
+<td>STATUS-04~07</td>
+</tr>
+<tr>
+<td><code>wcard_remind_view</code></td>
+<td>提醒卡曝光（持续曝光逐次记）</td>
+<td><code>remind_id</code>、<code>expose_seq</code></td>
+<td>曝光频次</td>
+<td>STATUS-07</td>
+</tr>
+<tr>
+<td><code>wcard_remind_click</code></td>
+<td>点提醒卡</td>
+<td><code>remind_id</code></td>
+<td>提醒转化</td>
+<td>STATUS-07</td>
+</tr>
+<tr>
+<td><code>wcard_data_click</code></td>
+<td>点体重数据块（进趋势页）</td>
+<td>—</td>
+<td>数据关注行为</td>
+<td>STATUS-06</td>
+</tr>
+<tr>
+<td><code>wcard_red_dot_click</code></td>
+<td>点查看更多红点</td>
+<td><code>todo_type(生成月报/new)</code></td>
+<td>红点联动有效性</td>
+<td>RECORD-01</td>
+</tr>
+<tr>
+<td><code>wcard_old_switch_click</code></td>
+<td>点右上角「切换旧版」</td>
+<td><code>stage</code></td>
+<td>旧版切换意愿</td>
+<td>STATUS-01</td>
+</tr>
+<tr>
+<td><code>wcard_ai_click</code></td>
+<td>点「AI减重助理」按钮</td>
+<td><code>stage</code>、<code>entry</code></td>
+<td>助理入口转化</td>
+<td>STATUS-01</td>
+</tr>
+<tr>
+<td><code>wcard_recap_click</code></td>
+<td>点结营回顾入口</td>
+<td><code>stage</code></td>
+<td>回顾入口（二期）</td>
+<td>STATUS-08</td>
 </tr>
 </tbody></table>
 <h3 id="3-2-处方-健康订阅-订单-rx">3.2 处方·健康订阅·订单（RX）</h3>
@@ -322,7 +394,32 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <td><code>plan_id</code></td>
 <td>方案→订阅转化</td>
 </tr>
+<tr>
+<td><code>report_view</code></td>
+<td>报告页曝光</td>
+<td><code>report_id</code>、<code>branch</code>、<code>generate_days</code></td>
+<td>报告触达 + 时效分布</td>
+</tr>
+<tr>
+<td><code>report_buy_click</code></td>
+<td>报告内点购药</td>
+<td><code>report_id</code>、<code>branch</code></td>
+<td>购药意愿</td>
+</tr>
+<tr>
+<td><code>report_buy_block</code></td>
+<td>报告过时效被拦截并 toast</td>
+<td><code>report_id</code>、<code>reason(converted/expired)</code></td>
+<td>时效拦截量</td>
+</tr>
+<tr>
+<td><code>report_reassess_click</code></td>
+<td>toast 后点引导重新评估</td>
+<td><code>report_id</code></td>
+<td>拦截→重评挽回率</td>
+</tr>
 </tbody></table>
+<p>就诊人浮层（PLAN-05）前端不上报，由服务端记录。</p>
 <h3 id="3-4-科普-内容-edu">3.4 科普·内容（EDU）</h3>
 <table>
 <thead>
@@ -351,6 +448,12 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <td><code>article_id</code>、<code>cta_id(assess)</code></td>
 <td>内容转化</td>
 </tr>
+<tr>
+<td><code>content_share_click</code></td>
+<td>点分享（文章 / 评估报告 / 减重月报 / 结营回顾，功能陆续上线）</td>
+<td><code>content_type(article/report/month_report/recap)</code>、<code>content_id</code>、<code>method(system/copy)</code></td>
+<td>分享行为与方式占比</td>
+</tr>
 </tbody></table>
 <h3 id="3-5-通用技术事件">3.5 通用技术事件</h3>
 <table>
@@ -375,6 +478,89 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <tr>
 <td><code>js_error</code></td>
 <td>前端异常（不含用户数据）</td>
+</tr>
+</tbody></table>
+<h3 id="3-6-体重-聚合页-月报-status-06-rx-06-record-01">3.6 体重 · 聚合页 · 月报（STATUS-06 / RX-06 / RECORD-01）</h3>
+<p>体重、BMI 等数值属第 5 节红线，体重相关事件<strong>只报动作、不报数值</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>触发时机</th>
+<th>关键参数</th>
+<th>用途</th>
+<th>来源单</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>weight_edit_click</code></td>
+<td>点画笔进录入体重页</td>
+<td><code>entry(card/trend)</code></td>
+<td>录入入口</td>
+<td>STATUS-06</td>
+</tr>
+<tr>
+<td><code>weight_submit_result</code></td>
+<td>录入体重提交成功 / 失败</td>
+<td><code>success</code>（不含数值）</td>
+<td>录入完成率</td>
+<td>STATUS-06</td>
+</tr>
+<tr>
+<td><code>trend_view</code></td>
+<td>体重趋势页曝光</td>
+<td>—</td>
+<td>趋势页触达</td>
+<td>STATUS-06</td>
+</tr>
+<tr>
+<td><code>more_view</code></td>
+<td>聚合页入口页曝光</td>
+<td>—</td>
+<td>聚合页触达</td>
+<td>RX-06</td>
+</tr>
+<tr>
+<td><code>more_entry_click</code></td>
+<td>点三入口（评估报告 / 减重月报 / 相关订单）</td>
+<td><code>entry(report/month/orders)</code></td>
+<td>入口分流</td>
+<td>RX-06</td>
+</tr>
+<tr>
+<td><code>more_new_assess_click</code></td>
+<td>点吸底「新增评估」</td>
+<td>—</td>
+<td>重评入口</td>
+<td>RX-06</td>
+</tr>
+<tr>
+<td><code>order_list_btn_click</code></td>
+<td>订单列表点操作按钮</td>
+<td><code>btn(logistics/reorder/review)</code>、<code>order_id</code></td>
+<td>订单操作</td>
+<td>RX-06</td>
+</tr>
+<tr>
+<td><code>month_report_generate_click</code></td>
+<td>点「生成最新月报」</td>
+<td>—</td>
+<td>生成意愿</td>
+<td>RECORD-01</td>
+</tr>
+<tr>
+<td><code>month_report_generate_result</code></td>
+<td>月报生成成功 / 失败</td>
+<td><code>success</code>（不含报告内容）</td>
+<td>生成成功率</td>
+<td>RECORD-01</td>
+</tr>
+<tr>
+<td><code>month_report_view</code></td>
+<td>月报详情曝光</td>
+<td><code>issue</code></td>
+<td>阅读触达</td>
+<td>RECORD-01</td>
 </tr>
 </tbody></table>
 <hr>
