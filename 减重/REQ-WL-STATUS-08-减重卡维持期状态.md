@@ -45,3 +45,12 @@
 - [ ] 猜你想问文案从后台知识库对应分类随机拉取，点击进当前问题对应的文章
 - [ ] 置顶 1 个月后卡片回到阶段①
 - [ ] App 与小程序一致
+
+## 6. 埋点（二期上线时启用，汇总见 `REQ-WL-BASE-01` 第 3.1 节）
+
+| 事件 | 触发时机 | 关键参数 |
+| --- | --- | --- |
+| `wcard_state_view` | 卡片渲染 | `stage=5` |
+| `wcard_recap_click` | 点 `打开回顾` 进结营回顾 | `stage=5` |
+| `wcard_faq_view` | 猜你想问每条问题轮播曝光 | `stage=5`、`article_id`、`seq` |
+| `wcard_faq_click` | 点猜你想问问题进文章 | `stage=5`、`article_id` |

@@ -145,7 +145,8 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <li class="lv2"><a href="#2-卡片上显示什么-自上而下">2. 卡片上显示什么（自上而下）</a></li>
 <li class="lv2"><a href="#3-猜你想问-本阶段">3. 猜你想问（本阶段）</a></li>
 <li class="lv2"><a href="#4-点击与跳转">4. 点击与跳转</a></li>
-<li class="lv2"><a href="#5-验收">5. 验收</a></li></ol>
+<li class="lv2"><a href="#5-验收">5. 验收</a></li>
+<li class="lv2"><a href="#6-埋点-汇总见-req-wl-base-01-第-3-1-节">6. 埋点（汇总见 REQ-WL-BASE-01 第 3.1 节）</a></li></ol>
   </nav>
   <main class="doc">
     <h1>减重卡 · 阶段② 评估完成（消费决策）</h1>
@@ -209,6 +210,36 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/online-ser
 <li><input disabled="" type="checkbox"> 卡片右上角有灰色「切换旧版」文字链（通用规则见 <code>REQ-WL-STATUS-01</code> 第 2 节）</li>
 <li><input disabled="" type="checkbox"> App 与小程序一致</li>
 </ul>
+<h2 id="6-埋点-汇总见-req-wl-base-01-第-3-1-节">6. 埋点（汇总见 <code>REQ-WL-BASE-01</code> 第 3.1 节）</h2>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>触发时机</th>
+<th>关键参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>wcard_state_view</code></td>
+<td>卡片渲染</td>
+<td><code>stage=2</code></td>
+</tr>
+<tr>
+<td><code>wcard_faq_view</code></td>
+<td>猜你想问每条问题轮播曝光</td>
+<td><code>stage=2</code>、<code>article_id</code>、<code>seq</code></td>
+</tr>
+<tr>
+<td><code>wcard_faq_click</code></td>
+<td>点猜你想问问题进文章</td>
+<td><code>stage=2</code>、<code>article_id</code></td>
+</tr>
+<tr>
+<td><code>wcard_cta_click</code></td>
+<td>点 <code>查看评估报告</code></td>
+<td><code>stage=2</code>、<code>cta_id=report</code></td>
+</tr>
+</tbody></table>
 
   </main>
 </div>

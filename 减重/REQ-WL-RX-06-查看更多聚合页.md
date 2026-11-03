@@ -56,3 +56,14 @@
 - [ ] 评估 / 月报两个列表页统一样式，无数据块无标签
 - [ ] 订单列表在现成订单页基础上改造，卡片结构、状态色与按钮按 demo
 - [ ] 空列表有空态
+
+## 3. 埋点（汇总见 `REQ-WL-BASE-01` 第 3.6 节）
+
+| 事件 | 触发时机 | 关键参数 |
+| --- | --- | --- |
+| `more_view` | 入口页曝光 | — |
+| `more_entry_click` | 点三入口 | `entry(report/month/orders)` |
+| `more_list_view` | 三个列表页曝光 | `list_type(report/month/orders)` |
+| `more_item_click` | 列表条目点击进明细 | `list_type`、`item_id` |
+| `more_new_assess_click` | 点报告列表吸底 `新增评估` | — |
+| `order_list_btn_click` | 订单列表点 `查看物流` / `再次续订` / `评价` | `btn(logistics/reorder/review)`、`order_id` |

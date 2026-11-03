@@ -56,3 +56,13 @@
 - [ ] 底部只有一个通栏按钮 `快速评估`，无 AI 减重助理按钮、无按钮下方小字
 - [ ] `快速评估` 进首诊问卷（新客态）
 - [ ] App 与小程序一致
+
+## 7. 埋点（汇总见 `REQ-WL-BASE-01` 第 3.1 节）
+
+| 事件 | 触发时机 | 关键参数 |
+| --- | --- | --- |
+| `wcard_state_view` | 卡片渲染 | `stage=1` |
+| `wcard_category_click` | 点四个分类科普入口 | `category_id(效果/安全/花费/使用)` |
+| `wcard_faq_view` | 猜你想问每条问题轮播曝光 | `stage=1`、`article_id`、`seq` |
+| `wcard_faq_click` | 点猜你想问问题进文章 | `stage=1`、`article_id` |
+| `wcard_cta_click` | 点 `快速评估` | `stage=1`、`cta_id=assess` |

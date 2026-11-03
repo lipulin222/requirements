@@ -145,7 +145,8 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <li class="lv2"><a href="#2-待支付订单的处理">2. 待支付订单的处理</a></li>
 <li class="lv2"><a href="#3-支付成功页">3. 支付成功页</a></li>
 <li class="lv2"><a href="#4-关键值">4. 关键值</a></li>
-<li class="lv2"><a href="#5-验收">5. 验收</a></li></ol>
+<li class="lv2"><a href="#5-验收">5. 验收</a></li>
+<li class="lv2"><a href="#6-埋点-汇总见-req-wl-base-01-第-3-2-节">6. 埋点（汇总见 REQ-WL-BASE-01 第 3.2 节）</a></li></ol>
   </nav>
   <main class="doc">
     <h1>收银台与支付结果</h1>
@@ -219,6 +220,26 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion
 <li><input disabled="" type="checkbox"> 倒计时期间离开不二次跳转</li>
 <li><input disabled="" type="checkbox"> 支付成功状态以服务端回调为准，回调成功后才启动倒计时</li>
 </ul>
+<h2 id="6-埋点-汇总见-req-wl-base-01-第-3-2-节">6. 埋点（汇总见 <code>REQ-WL-BASE-01</code> 第 3.2 节）</h2>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>触发时机</th>
+<th>关键参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>pay_click</code></td>
+<td>点 <code>提交支付</code></td>
+<td><code>order_id</code>、<code>amount</code>、<code>pay_channel</code></td>
+</tr>
+<tr>
+<td><code>pay_result</code></td>
+<td>支付结果返回</td>
+<td><code>order_id</code>、<code>amount</code>、<code>result(success/fail/cancel)</code>、<code>err_code</code></td>
+</tr>
+</tbody></table>
 
   </main>
 </div>

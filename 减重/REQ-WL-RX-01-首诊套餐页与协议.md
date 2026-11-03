@@ -41,3 +41,11 @@
 - [ ] 两个模块标题可折叠、再展开
 - [ ] 顶栏「更多」提示原文一致
 - [ ] 未勾选无法进入支付，提示原文一致
+
+## 4. 埋点（汇总见 `REQ-WL-BASE-01` 第 3.2 节）
+
+| 事件 | 触发时机 | 关键参数 |
+| --- | --- | --- |
+| `invoice_view` | 进入本套餐页 | `plan_id`、`amount` |
+| `pay_todo_block` | 未勾选协议点 `购买套餐` 被拦截 | `missing(signed)` |
+| `consent_sign` | 勾选同意《减重管理服务知情同意书》 | `consent_version`、`success` |

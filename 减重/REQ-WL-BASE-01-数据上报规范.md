@@ -1,7 +1,7 @@
 ﻿# 数据上报规范
 
 > 编号 `REQ-WL-BASE-01` ｜ 项目：科学减重（WL）｜ 模块：规范与基线 ｜ 状态：制定中
-> 本页是**减重项目埋点的唯一登记表**：需求单只写业务规则，不写埋点章节。
+> 本页是**减重项目埋点的唯一登记表**：各需求单末尾附本单相关的上报点（与本表口径一致），开发看单即知要报什么；新增或调整事件仍以本表为准。
 
 ---
 
@@ -104,6 +104,8 @@
 | `trend_view` | 体重趋势页曝光 | — | 趋势页触达 | STATUS-06 |
 | `more_view` | 聚合页入口页曝光 | — | 聚合页触达 | RX-06 |
 | `more_entry_click` | 点三入口（评估报告 / 减重月报 / 相关订单） | `entry(report/month/orders)` | 入口分流 | RX-06 |
+| `more_list_view` | 三个列表页曝光 | `list_type(report/month/orders)` | 列表触达 | RX-06 |
+| `more_item_click` | 列表条目点击进明细 | `list_type`、`item_id` | 列表转化 | RX-06 |
 | `more_new_assess_click` | 点吸底「新增评估」 | — | 重评入口 | RX-06 |
 | `order_list_btn_click` | 订单列表点操作按钮 | `btn(logistics/reorder/review)`、`order_id` | 订单操作 | RX-06 |
 | `month_report_generate_click` | 点「生成最新月报」 | — | 生成意愿 | RECORD-01 |

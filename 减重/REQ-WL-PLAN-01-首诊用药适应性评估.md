@@ -72,3 +72,11 @@
 - [ ] 安全题选到有风险的选项不中断问卷，10 题全部答完进汇总与报告，不出现「需要医生先确认」拦截页
 - [ ] 汇总页每行可修改回跳；BMI 行不可改
 - [ ] 中转页无操作入口，必达报告页
+
+## 3. 埋点（汇总见 `REQ-WL-BASE-01` 第 3.3 节）
+
+| 事件 | 触发时机 | 关键参数 |
+| --- | --- | --- |
+| `assess_start` | 进入评估问卷 | `assess_type(first/followup)`、`entry(card/list)`、`state(new/old)` |
+| `assess_step` | 完成一题 | `question_id`、`step`、`skipped` |
+| `assess_complete` | 提交评估 | `duration`、`result_code` |

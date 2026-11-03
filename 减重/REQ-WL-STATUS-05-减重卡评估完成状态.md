@@ -49,3 +49,12 @@
 - [ ] 报告生成满 30 天仍未支付首诊套餐，卡片退回购前科普状态；30 天内完成支付正常进入进行中状态
 - [ ] 卡片右上角有灰色「切换旧版」文字链（通用规则见 `REQ-WL-STATUS-01` 第 2 节）
 - [ ] App 与小程序一致
+
+## 6. 埋点（汇总见 `REQ-WL-BASE-01` 第 3.1 节）
+
+| 事件 | 触发时机 | 关键参数 |
+| --- | --- | --- |
+| `wcard_state_view` | 卡片渲染 | `stage=2` |
+| `wcard_faq_view` | 猜你想问每条问题轮播曝光 | `stage=2`、`article_id`、`seq` |
+| `wcard_faq_click` | 点猜你想问问题进文章 | `stage=2`、`article_id` |
+| `wcard_cta_click` | 点 `查看评估报告` | `stage=2`、`cta_id=report` |

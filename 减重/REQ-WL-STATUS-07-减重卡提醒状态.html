@@ -147,7 +147,8 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <li class="lv2"><a href="#4-猜你想问-本阶段">4. 猜你想问（本阶段）</a></li>
 <li class="lv2"><a href="#5-后台可配置的三件事">5. 后台可配置的三件事</a></li>
 <li class="lv2"><a href="#6-点击与跳转">6. 点击与跳转</a></li>
-<li class="lv2"><a href="#7-验收">7. 验收</a></li></ol>
+<li class="lv2"><a href="#7-验收">7. 验收</a></li>
+<li class="lv2"><a href="#8-埋点-汇总见-req-wl-base-01-第-3-1-节">8. 埋点（汇总见 REQ-WL-BASE-01 第 3.1 节）</a></li></ol>
   </nav>
   <main class="doc">
     <h1>减重卡 · 阶段④ 提醒 / 续费</h1>
@@ -323,6 +324,46 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/online-ser
 <li><input disabled="" type="checkbox"> 体重数据块、底部通栏 <code>查看更多</code> 按钮与进行中状态一致；无 AI 减重助理按钮</li>
 <li><input disabled="" type="checkbox"> App 与小程序一致</li>
 </ul>
+<h2 id="8-埋点-汇总见-req-wl-base-01-第-3-1-节">8. 埋点（汇总见 <code>REQ-WL-BASE-01</code> 第 3.1 节）</h2>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>触发时机</th>
+<th>关键参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>wcard_state_view</code></td>
+<td>卡片渲染</td>
+<td><code>stage=4</code></td>
+</tr>
+<tr>
+<td><code>wcard_remind_view</code></td>
+<td>提醒卡曝光（持续曝光逐次记）</td>
+<td><code>remind_id</code>、<code>expose_seq</code></td>
+</tr>
+<tr>
+<td><code>wcard_remind_click</code></td>
+<td>点提醒卡</td>
+<td><code>remind_id</code></td>
+</tr>
+<tr>
+<td><code>wcard_faq_view</code></td>
+<td>猜你想问每条问题轮播曝光</td>
+<td><code>stage=4</code>、<code>article_id</code>、<code>seq</code></td>
+</tr>
+<tr>
+<td><code>wcard_faq_click</code></td>
+<td>点猜你想问问题进文章</td>
+<td><code>stage=4</code>、<code>article_id</code></td>
+</tr>
+<tr>
+<td><code>wcard_cta_click</code></td>
+<td>点 <code>查看更多</code></td>
+<td><code>stage=4</code>、<code>cta_id=more</code></td>
+</tr>
+</tbody></table>
 
   </main>
 </div>

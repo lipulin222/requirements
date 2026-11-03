@@ -87,3 +87,14 @@
 - [ ] 猜你想问文案从后台知识库对应分类随机拉取，点击进当前问题对应的文章
 - [ ] 体重数据块、底部通栏 `查看更多` 按钮与进行中状态一致；无 AI 减重助理按钮
 - [ ] App 与小程序一致
+
+## 8. 埋点（汇总见 `REQ-WL-BASE-01` 第 3.1 节）
+
+| 事件 | 触发时机 | 关键参数 |
+| --- | --- | --- |
+| `wcard_state_view` | 卡片渲染 | `stage=4` |
+| `wcard_remind_view` | 提醒卡曝光（持续曝光逐次记） | `remind_id`、`expose_seq` |
+| `wcard_remind_click` | 点提醒卡 | `remind_id` |
+| `wcard_faq_view` | 猜你想问每条问题轮播曝光 | `stage=4`、`article_id`、`seq` |
+| `wcard_faq_click` | 点猜你想问问题进文章 | `stage=4`、`article_id` |
+| `wcard_cta_click` | 点 `查看更多` | `stage=4`、`cta_id=more` |

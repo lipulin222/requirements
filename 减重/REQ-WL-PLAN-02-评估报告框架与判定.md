@@ -49,3 +49,12 @@
 - [ ] 同一个月生成多份报告时，每份报告链接独立，互不覆盖
 - [ ] 吸底按分支正确分流，无 404
 - [ ] 刻度、总结、匹配度按分支正确渲染
+
+## 3. 埋点（汇总见 `REQ-WL-BASE-01` 第 3.3 节）
+
+| 事件 | 触发时机 | 关键参数 |
+| --- | --- | --- |
+| `report_view` | 报告页曝光 | `report_id`、`branch`、`generate_days` |
+| `report_buy_click` | 报告内点购药 | `report_id`、`branch` |
+| `report_buy_block` | 过时效被拦截并 toast | `report_id`、`reason(converted/expired)` |
+| `report_reassess_click` | toast 后点引导重新评估 | `report_id` |

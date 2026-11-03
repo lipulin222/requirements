@@ -145,7 +145,8 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <li class="lv2"><a href="#2-卡片上显示什么-自上而下">2. 卡片上显示什么（自上而下）</a></li>
 <li class="lv2"><a href="#3-猜你想问-本阶段">3. 猜你想问（本阶段）</a></li>
 <li class="lv2"><a href="#4-点击与跳转">4. 点击与跳转</a></li>
-<li class="lv2"><a href="#5-验收">5. 验收</a></li></ol>
+<li class="lv2"><a href="#5-验收">5. 验收</a></li>
+<li class="lv2"><a href="#6-埋点-汇总见-req-wl-base-01-第-3-1-3-6-节">6. 埋点（汇总见 REQ-WL-BASE-01 第 3.1、3.6 节）</a></li></ol>
   </nav>
   <main class="doc">
     <h1>减重卡 · 阶段③ 进行中（用药陪跑）</h1>
@@ -226,6 +227,61 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/online-ser
 <li><input disabled="" type="checkbox"> 右下角主按钮为 <code>查看更多</code>，点击进入含订单 / 评估报告 / 减重月报的聚合页；无 AI 减重助理按钮</li>
 <li><input disabled="" type="checkbox"> App 与小程序一致</li>
 </ul>
+<h2 id="6-埋点-汇总见-req-wl-base-01-第-3-1-3-6-节">6. 埋点（汇总见 <code>REQ-WL-BASE-01</code> 第 3.1、3.6 节）</h2>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>触发时机</th>
+<th>关键参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>wcard_state_view</code></td>
+<td>卡片渲染</td>
+<td><code>stage=3</code></td>
+</tr>
+<tr>
+<td><code>wcard_faq_view</code></td>
+<td>猜你想问每条问题轮播曝光</td>
+<td><code>stage=3</code>、<code>article_id</code>、<code>seq</code></td>
+</tr>
+<tr>
+<td><code>wcard_faq_click</code></td>
+<td>点猜你想问问题进文章</td>
+<td><code>stage=3</code>、<code>article_id</code></td>
+</tr>
+<tr>
+<td><code>wcard_cta_click</code></td>
+<td>点 <code>查看更多</code></td>
+<td><code>stage=3</code>、<code>cta_id=more</code></td>
+</tr>
+<tr>
+<td><code>wcard_red_dot_click</code></td>
+<td>点查看更多红点</td>
+<td><code>todo_type(生成月报/new)</code></td>
+</tr>
+<tr>
+<td><code>wcard_data_click</code></td>
+<td>点体重数据块（进趋势页）</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>weight_edit_click</code></td>
+<td>点画笔进录入体重页</td>
+<td><code>entry=card</code></td>
+</tr>
+<tr>
+<td><code>weight_submit_result</code></td>
+<td>录入体重提交成功 / 失败</td>
+<td><code>success</code>（不含数值）</td>
+</tr>
+<tr>
+<td><code>trend_view</code></td>
+<td>体重趋势页曝光</td>
+<td>—</td>
+</tr>
+</tbody></table>
 
   </main>
 </div>

@@ -104,3 +104,13 @@
 - [ ] 配图按该期起始月份切换；同一期月报男 / 女用户看到男版 / 女版素材；滚动过图后顶栏变实底
 - [ ] 顶栏「更多」提示 `月报暂不支持导出`
 - [ ] 无数据用户看到空状态（`第 1 份月报还在准备中`）
+
+## 3. 埋点（汇总见 `REQ-WL-BASE-01` 第 3.6 节）
+
+| 事件 | 触发时机 | 关键参数 |
+| --- | --- | --- |
+| `wcard_red_dot_click` | 首页卡片「查看更多」红点被点击 | `todo_type(生成月报/new)` |
+| `more_item_click` | 月报列表点某一期进详情 | `list_type=month`、`item_id` |
+| `month_report_generate_click` | 点 `生成最新月报` | — |
+| `month_report_generate_result` | 快问快答提交生成月报成功 / 失败 | `success`（不含答案内容） |
+| `month_report_view` | 月报详情曝光 | `issue` |

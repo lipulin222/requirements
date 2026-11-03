@@ -35,3 +35,14 @@
 - 维持期卡片（含其中的结营回顾入口）为二期功能，一期不做——一期用药结束后，减重卡不出现维持期形态。
 - 各阶段的「AI减重助理」按钮一期不做，一期卡片底部只保留一个主按钮。
 - **所有阶段的减重卡右上角固定显示一个「切换旧版」文字链，灰色字体**；点击后切回旧版减重卡展示形态，切换的口径与能否再切回新版待产品确认。
+
+## 3. 埋点（汇总见 `REQ-WL-BASE-01` 第 3.1 节）
+
+| 事件 | 触发时机 | 关键参数 |
+| --- | --- | --- |
+| `wcard_pin_view` | 健康订阅区置顶减重卡曝光 | `position` |
+| `wcard_state_view` | 卡片渲染（各阶段） | `stage` |
+| `wcard_cta_click` | 各阶段主按钮点击 | `stage`、`cta_id(assess/report/more/consult/book/return/reorder/weight_edit)` |
+| `wcard_old_switch_click` | 点右上角「切换旧版」 | `stage` |
+| `wcard_ai_click` | 点「AI减重助理」按钮（功能上线后） | `stage`、`entry` |
+| `wcard_recap_click` | 点结营回顾入口（二期，STATUS-08） | `stage` |

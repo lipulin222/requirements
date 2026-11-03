@@ -158,7 +158,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
     <p class="subtitle">需求单 · 科学减重（WL） · 交付目标：可上线面向用户使用（H5 + 微信小程序）</p>
     <blockquote>
 <p>编号 <code>REQ-WL-BASE-01</code> ｜ 项目：科学减重（WL）｜ 模块：规范与基线 ｜ 状态：制定中
-本页是<strong>减重项目埋点的唯一登记表</strong>：需求单只写业务规则，不写埋点章节。</p>
+本页是<strong>减重项目埋点的唯一登记表</strong>：各需求单末尾附本单相关的上报点（与本表口径一致），开发看单即知要报什么；新增或调整事件仍以本表为准。</p>
 </blockquote>
 <hr>
 <h2 id="1-命名规范">1. 命名规范</h2>
@@ -525,6 +525,20 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <td>点三入口（评估报告 / 减重月报 / 相关订单）</td>
 <td><code>entry(report/month/orders)</code></td>
 <td>入口分流</td>
+<td>RX-06</td>
+</tr>
+<tr>
+<td><code>more_list_view</code></td>
+<td>三个列表页曝光</td>
+<td><code>list_type(report/month/orders)</code></td>
+<td>列表触达</td>
+<td>RX-06</td>
+</tr>
+<tr>
+<td><code>more_item_click</code></td>
+<td>列表条目点击进明细</td>
+<td><code>list_type</code>、<code>item_id</code></td>
+<td>列表转化</td>
 <td>RX-06</td>
 </tr>
 <tr>

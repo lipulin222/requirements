@@ -49,3 +49,10 @@
 - [ ] 成功后 5 秒必达 RX-03；手动点文字链同目标
 - [ ] 倒计时期间离开不二次跳转
 - [ ] 支付成功状态以服务端回调为准，回调成功后才启动倒计时
+
+## 6. 埋点（汇总见 `REQ-WL-BASE-01` 第 3.2 节）
+
+| 事件 | 触发时机 | 关键参数 |
+| --- | --- | --- |
+| `pay_click` | 点 `提交支付` | `order_id`、`amount`、`pay_channel` |
+| `pay_result` | 支付结果返回 | `order_id`、`amount`、`result(success/fail/cancel)`、`err_code` |

@@ -146,7 +146,8 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <li class="lv3"><a href="#1-2-结论头">1.2 结论头</a></li>
 <li class="lv3"><a href="#1-3-吸底分流">1.3 吸底分流</a></li>
 <li class="lv3"><a href="#1-4-报告时效与购药拦截">1.4 报告时效与购药拦截</a></li>
-<li class="lv2"><a href="#2-验收">2. 验收</a></li></ol>
+<li class="lv2"><a href="#2-验收">2. 验收</a></li>
+<li class="lv2"><a href="#3-埋点-汇总见-req-wl-base-01-第-3-3-节">3. 埋点（汇总见 REQ-WL-BASE-01 第 3.3 节）</a></li></ol>
   </nav>
   <main class="doc">
     <h1>减重评估报告：分支判定与结论</h1>
@@ -233,6 +234,36 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion
 <li><input disabled="" type="checkbox"> 吸底按分支正确分流，无 404</li>
 <li><input disabled="" type="checkbox"> 刻度、总结、匹配度按分支正确渲染</li>
 </ul>
+<h2 id="3-埋点-汇总见-req-wl-base-01-第-3-3-节">3. 埋点（汇总见 <code>REQ-WL-BASE-01</code> 第 3.3 节）</h2>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>触发时机</th>
+<th>关键参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>report_view</code></td>
+<td>报告页曝光</td>
+<td><code>report_id</code>、<code>branch</code>、<code>generate_days</code></td>
+</tr>
+<tr>
+<td><code>report_buy_click</code></td>
+<td>报告内点购药</td>
+<td><code>report_id</code>、<code>branch</code></td>
+</tr>
+<tr>
+<td><code>report_buy_block</code></td>
+<td>过时效被拦截并 toast</td>
+<td><code>report_id</code>、<code>reason(converted/expired)</code></td>
+</tr>
+<tr>
+<td><code>report_reassess_click</code></td>
+<td>toast 后点引导重新评估</td>
+<td><code>report_id</code></td>
+</tr>
+</tbody></table>
 
   </main>
 </div>

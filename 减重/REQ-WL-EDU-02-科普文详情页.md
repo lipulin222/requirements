@@ -58,3 +58,11 @@
 - [ ] 审核卡医生信息与更新日期正确，免责声明原文一致
 - [ ] 页面底部无吸底按钮（AI 减重助理一期不做）
 - [ ] 文内篇目引用可跳转；引用已下架篇目时提示原文一致
+
+## 7. 埋点（汇总见 `REQ-WL-BASE-01` 第 3.4 节）
+
+| 事件 | 触发时机 | 关键参数 |
+| --- | --- | --- |
+| `article_read` | 进入文章页（及退出时补时长） | `article_id`、`duration`、`progress`、`finished` |
+| `article_cta` | 点文内 CTA | `article_id`、`cta_id(assess)` |
+| `content_share_click` | 点顶栏分享 | `content_type=article`、`content_id`、`method(system/copy)` |

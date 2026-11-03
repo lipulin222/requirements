@@ -146,7 +146,8 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <li class="lv2"><a href="#3-正文卡片内的元素类型">3. 正文卡片内的元素类型</a></li>
 <li class="lv2"><a href="#4-文内引用跳转">4. 文内引用跳转</a></li>
 <li class="lv2"><a href="#5-关键值">5. 关键值</a></li>
-<li class="lv2"><a href="#6-验收">6. 验收</a></li></ol>
+<li class="lv2"><a href="#6-验收">6. 验收</a></li>
+<li class="lv2"><a href="#7-埋点-汇总见-req-wl-base-01-第-3-4-节">7. 埋点（汇总见 REQ-WL-BASE-01 第 3.4 节）</a></li></ol>
   </nav>
   <main class="doc">
     <h1>科普文详情页</h1>
@@ -265,6 +266,31 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <li><input disabled="" type="checkbox"> 页面底部无吸底按钮（AI 减重助理一期不做）</li>
 <li><input disabled="" type="checkbox"> 文内篇目引用可跳转；引用已下架篇目时提示原文一致</li>
 </ul>
+<h2 id="7-埋点-汇总见-req-wl-base-01-第-3-4-节">7. 埋点（汇总见 <code>REQ-WL-BASE-01</code> 第 3.4 节）</h2>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>触发时机</th>
+<th>关键参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>article_read</code></td>
+<td>进入文章页（及退出时补时长）</td>
+<td><code>article_id</code>、<code>duration</code>、<code>progress</code>、<code>finished</code></td>
+</tr>
+<tr>
+<td><code>article_cta</code></td>
+<td>点文内 CTA</td>
+<td><code>article_id</code>、<code>cta_id(assess)</code></td>
+</tr>
+<tr>
+<td><code>content_share_click</code></td>
+<td>点顶栏分享</td>
+<td><code>content_type=article</code>、<code>content_id</code>、<code>method(system/copy)</code></td>
+</tr>
+</tbody></table>
 
   </main>
 </div>

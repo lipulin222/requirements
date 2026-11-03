@@ -142,7 +142,8 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
   <nav class="toc">
     <p class="toc__h">本单目录</p>
     <ol><li class="lv2"><a href="#1-展示准入">1. 展示准入</a></li>
-<li class="lv2"><a href="#2-减重卡的阶段-一期做-维持期放二期">2. 减重卡的阶段（一期做 ①②③④，⑤维持期放二期）</a></li></ol>
+<li class="lv2"><a href="#2-减重卡的阶段-一期做-维持期放二期">2. 减重卡的阶段（一期做 ①②③④，⑤维持期放二期）</a></li>
+<li class="lv2"><a href="#3-埋点-汇总见-req-wl-base-01-第-3-1-节">3. 埋点（汇总见 REQ-WL-BASE-01 第 3.1 节）</a></li></ol>
   </nav>
   <main class="doc">
     <h1>减重卡展示与阶段</h1>
@@ -213,6 +214,46 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/">健康�
 <li>各阶段的「AI减重助理」按钮一期不做，一期卡片底部只保留一个主按钮。</li>
 <li><strong>所有阶段的减重卡右上角固定显示一个「切换旧版」文字链，灰色字体</strong>；点击后切回旧版减重卡展示形态，切换的口径与能否再切回新版待产品确认。</li>
 </ul>
+<h2 id="3-埋点-汇总见-req-wl-base-01-第-3-1-节">3. 埋点（汇总见 <code>REQ-WL-BASE-01</code> 第 3.1 节）</h2>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>触发时机</th>
+<th>关键参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>wcard_pin_view</code></td>
+<td>健康订阅区置顶减重卡曝光</td>
+<td><code>position</code></td>
+</tr>
+<tr>
+<td><code>wcard_state_view</code></td>
+<td>卡片渲染（各阶段）</td>
+<td><code>stage</code></td>
+</tr>
+<tr>
+<td><code>wcard_cta_click</code></td>
+<td>各阶段主按钮点击</td>
+<td><code>stage</code>、<code>cta_id(assess/report/more/consult/book/return/reorder/weight_edit)</code></td>
+</tr>
+<tr>
+<td><code>wcard_old_switch_click</code></td>
+<td>点右上角「切换旧版」</td>
+<td><code>stage</code></td>
+</tr>
+<tr>
+<td><code>wcard_ai_click</code></td>
+<td>点「AI减重助理」按钮（功能上线后）</td>
+<td><code>stage</code>、<code>entry</code></td>
+</tr>
+<tr>
+<td><code>wcard_recap_click</code></td>
+<td>点结营回顾入口（二期，STATUS-08）</td>
+<td><code>stage</code></td>
+</tr>
+</tbody></table>
 
   </main>
 </div>

@@ -149,7 +149,8 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <li class="lv3"><a href="#1-5-月报详情">1.5 月报详情</a></li>
 <li class="lv3"><a href="#1-6-未到期次占位">1.6 未到期次占位</a></li>
 <li class="lv3"><a href="#1-7-空状态">1.7 空状态</a></li>
-<li class="lv2"><a href="#2-验收">2. 验收</a></li></ol>
+<li class="lv2"><a href="#2-验收">2. 验收</a></li>
+<li class="lv2"><a href="#3-埋点-汇总见-req-wl-base-01-第-3-6-节">3. 埋点（汇总见 REQ-WL-BASE-01 第 3.6 节）</a></li></ol>
   </nav>
   <main class="doc">
     <h1>减重月报</h1>
@@ -285,6 +286,41 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion
 <li><input disabled="" type="checkbox"> 顶栏「更多」提示 <code>月报暂不支持导出</code></li>
 <li><input disabled="" type="checkbox"> 无数据用户看到空状态（<code>第 1 份月报还在准备中</code>）</li>
 </ul>
+<h2 id="3-埋点-汇总见-req-wl-base-01-第-3-6-节">3. 埋点（汇总见 <code>REQ-WL-BASE-01</code> 第 3.6 节）</h2>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>触发时机</th>
+<th>关键参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>wcard_red_dot_click</code></td>
+<td>首页卡片「查看更多」红点被点击</td>
+<td><code>todo_type(生成月报/new)</code></td>
+</tr>
+<tr>
+<td><code>more_item_click</code></td>
+<td>月报列表点某一期进详情</td>
+<td><code>list_type=month</code>、<code>item_id</code></td>
+</tr>
+<tr>
+<td><code>month_report_generate_click</code></td>
+<td>点 <code>生成最新月报</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>month_report_generate_result</code></td>
+<td>快问快答提交生成月报成功 / 失败</td>
+<td><code>success</code>（不含答案内容）</td>
+</tr>
+<tr>
+<td><code>month_report_view</code></td>
+<td>月报详情曝光</td>
+<td><code>issue</code></td>
+</tr>
+</tbody></table>
 
   </main>
 </div>

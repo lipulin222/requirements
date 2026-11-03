@@ -56,3 +56,17 @@
 - [ ] 猜你想问文案从后台知识库对应分类随机拉取，点击进当前问题对应的文章
 - [ ] 右下角主按钮为 `查看更多`，点击进入含订单 / 评估报告 / 减重月报的聚合页；无 AI 减重助理按钮
 - [ ] App 与小程序一致
+
+## 6. 埋点（汇总见 `REQ-WL-BASE-01` 第 3.1、3.6 节）
+
+| 事件 | 触发时机 | 关键参数 |
+| --- | --- | --- |
+| `wcard_state_view` | 卡片渲染 | `stage=3` |
+| `wcard_faq_view` | 猜你想问每条问题轮播曝光 | `stage=3`、`article_id`、`seq` |
+| `wcard_faq_click` | 点猜你想问问题进文章 | `stage=3`、`article_id` |
+| `wcard_cta_click` | 点 `查看更多` | `stage=3`、`cta_id=more` |
+| `wcard_red_dot_click` | 点查看更多红点 | `todo_type(生成月报/new)` |
+| `wcard_data_click` | 点体重数据块（进趋势页） | — |
+| `weight_edit_click` | 点画笔进录入体重页 | `entry=card` |
+| `weight_submit_result` | 录入体重提交成功 / 失败 | `success`（不含数值） |
+| `trend_view` | 体重趋势页曝光 | — |

@@ -147,7 +147,8 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <li class="lv3"><a href="#1-3-历次评估结论建议汇总-列表页">1.3 历次评估结论建议汇总（列表页）</a></li>
 <li class="lv3"><a href="#1-4-每月减重小结及后续建议-列表页">1.4 每月减重小结及后续建议（列表页）</a></li>
 <li class="lv3"><a href="#1-5-套餐订单记录-列表页">1.5 套餐订单记录（列表页）</a></li>
-<li class="lv2"><a href="#2-验收">2. 验收</a></li></ol>
+<li class="lv2"><a href="#2-验收">2. 验收</a></li>
+<li class="lv2"><a href="#3-埋点-汇总见-req-wl-base-01-第-3-6-节">3. 埋点（汇总见 REQ-WL-BASE-01 第 3.6 节）</a></li></ol>
   </nav>
   <main class="doc">
     <h1>查看更多聚合页</h1>
@@ -221,6 +222,46 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion
 <li><input disabled="" type="checkbox"> 订单列表在现成订单页基础上改造，卡片结构、状态色与按钮按 demo</li>
 <li><input disabled="" type="checkbox"> 空列表有空态</li>
 </ul>
+<h2 id="3-埋点-汇总见-req-wl-base-01-第-3-6-节">3. 埋点（汇总见 <code>REQ-WL-BASE-01</code> 第 3.6 节）</h2>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>触发时机</th>
+<th>关键参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>more_view</code></td>
+<td>入口页曝光</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>more_entry_click</code></td>
+<td>点三入口</td>
+<td><code>entry(report/month/orders)</code></td>
+</tr>
+<tr>
+<td><code>more_list_view</code></td>
+<td>三个列表页曝光</td>
+<td><code>list_type(report/month/orders)</code></td>
+</tr>
+<tr>
+<td><code>more_item_click</code></td>
+<td>列表条目点击进明细</td>
+<td><code>list_type</code>、<code>item_id</code></td>
+</tr>
+<tr>
+<td><code>more_new_assess_click</code></td>
+<td>点报告列表吸底 <code>新增评估</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>order_list_btn_click</code></td>
+<td>订单列表点 <code>查看物流</code> / <code>再次续订</code> / <code>评价</code></td>
+<td><code>btn(logistics/reorder/review)</code>、<code>order_id</code></td>
+</tr>
+</tbody></table>
 
   </main>
 </div>
