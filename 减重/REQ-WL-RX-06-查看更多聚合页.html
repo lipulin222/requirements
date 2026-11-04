@@ -198,6 +198,7 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion
 <ul>
 <li>页面标题 <code>评估报告</code>；单列统一卡片：日期 + 标题 + 一句摘要 + 右下 <code>查看详情 ›</code>，无数据块、无标签，点击进对应报告。</li>
 <li>列表按报告生成时间倒序展示（最新在最上）。</li>
+<li><strong>空状态</strong>：还没有任何评估报告时，列表区居中显示一行灰字 <code>暂无内容</code>。</li>
 <li>每份报告一个独立链接；同一个月可生成多份，各自独立成条，不在同一条上迭代更新（时效规则见 <code>REQ-WL-PLAN-02</code> 第 1.4 节）。</li>
 <li>吸底常驻 <code>新增评估</code> → 随访问卷（PLAN-04）；仅本列表显示。</li>
 </ul>
@@ -220,7 +221,7 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion
 <li><input disabled="" type="checkbox"> 评估报告列表按生成时间倒序；同月多份报告各自独立成条、独立链接</li>
 <li><input disabled="" type="checkbox"> 评估 / 月报两个列表页统一样式，无数据块无标签</li>
 <li><input disabled="" type="checkbox"> 订单列表在现成订单页基础上改造，卡片结构、状态色与按钮按 demo</li>
-<li><input disabled="" type="checkbox"> 空列表有空态</li>
+<li><input disabled="" type="checkbox"> 空列表有空态：报告 / 月报列表空显示 <code>暂无内容</code>；订单列表用现成页的空态（插画 + <code>暂无记录</code>）</li>
 </ul>
 <h2 id="3-埋点-汇总见-req-wl-base-01-第-3-6-节">3. 埋点（汇总见 <code>REQ-WL-BASE-01</code> 第 3.6 节）</h2>
 <table>
