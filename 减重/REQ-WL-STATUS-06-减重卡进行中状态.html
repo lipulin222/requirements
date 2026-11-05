@@ -146,7 +146,8 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <li class="lv2"><a href="#3-猜你想问-本阶段">3. 猜你想问（本阶段）</a></li>
 <li class="lv2"><a href="#4-点击与跳转">4. 点击与跳转</a></li>
 <li class="lv2"><a href="#5-验收">5. 验收</a></li>
-<li class="lv2"><a href="#6-埋点-汇总见-req-wl-base-01-第-3-1-3-6-节">6. 埋点（汇总见 REQ-WL-BASE-01 第 3.1、3.6 节）</a></li></ol>
+<li class="lv2"><a href="#6-开启日-stage-进入-的前置仪式屏">6. 开启日（stage⑥，进入③的前置仪式屏）</a></li>
+<li class="lv2"><a href="#7-埋点-汇总见-req-wl-base-01-第-3-1-3-6-节">7. 埋点（汇总见 REQ-WL-BASE-01 第 3.1、3.6 节）</a></li></ol>
   </nav>
   <main class="doc">
     <h1>减重卡 · 阶段③ 进行中（用药陪跑）</h1>
@@ -168,7 +169,7 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/online-ser
 <li>第二行：<code>猜你想问</code>（青色）+ <code>· </code> + 当前问题（深灰）+ 右侧箭头 <code>›</code></li>
 </ul>
 </li>
-<li>第二行的问题每 2.2 秒换一条，共 5 条，循环播放，前缀不动；具体文案由 @望时 提供后填入。</li>
+<li>第二行的问题每 2.6 秒换一条，循环播放，前缀不动；条数与文案由后台知识库对应分类下发，端上不写死。</li>
 </ul>
 </li>
 <li><strong>体重数据块</strong>，分两种情况：<ul>
@@ -178,10 +179,7 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/online-ser
 <li>两种情况都不显示 <code>−0kg</code> 这类没有意义的数字。</li>
 </ul>
 </li>
-<li><strong>底部一个通栏按钮</strong>：<code>查看更多</code>（青色实底 + 白字，大圆角）；有待办（生成月报 / 新月报）时按钮右上角挂红色角标，规则见 <code>REQ-WL-RECORD-01</code>。<ul>
-<li>「AI减重助理」按钮一期不做。</li>
-</ul>
-</li>
+<li><strong>底部按钮组</strong>：左 <code>询问护士</code>（浅色次按钮）+ 右 <code>查看更多</code>（青色实底 + 白字，大圆角）；有待办（生成月报 / 新月报）时 <code>查看更多</code> 按钮右上角挂红色角标，规则见 <code>REQ-WL-RECORD-01</code>。</li>
 </ol>
 <h2 id="3-猜你想问-本阶段">3. 猜你想问（本阶段）</h2>
 <p>轮播的问题文案<strong>从后台知识库对应的分类里随机拉取</strong>，不在端上写死：</p>
@@ -224,10 +222,19 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/online-ser
 <li><input disabled="" type="checkbox"> 点击体重数据块跳到现有的体重趋势页面；右侧圆形画笔按钮跳到录入体重页面</li>
 <li><input disabled="" type="checkbox"> 有月报待办时 <code>查看更多</code> 按钮挂红点，文案与 RECORD-01 一致</li>
 <li><input disabled="" type="checkbox"> 猜你想问文案从后台知识库对应分类随机拉取，点击进当前问题对应的文章</li>
-<li><input disabled="" type="checkbox"> 右下角主按钮为 <code>查看更多</code>，点击进入含订单 / 评估报告 / 减重月报的聚合页；无 AI 减重助理按钮</li>
+<li><input disabled="" type="checkbox"> 右下角主按钮为 <code>查看更多</code>，点击进入含订单 / 评估报告 / 减重月报的聚合页</li>
 <li><input disabled="" type="checkbox"> App 与小程序一致</li>
 </ul>
-<h2 id="6-埋点-汇总见-req-wl-base-01-第-3-1-3-6-节">6. 埋点（汇总见 <code>REQ-WL-BASE-01</code> 第 3.1、3.6 节）</h2>
+<h2 id="6-开启日-stage-进入-的前置仪式屏">6. 开启日（stage⑥，进入③的前置仪式屏）</h2>
+<p>已支付、已拿药，但还没记录减重第一天的用户，首次进入时先显示本仪式屏（服务端判定，见 <code>REQ-WL-STATUS-01</code> 阶段表）：</p>
+<ul>
+<li>卡头标题改为 <code>减重旅程开启！</code>，猜你想问沿用阶段①的轮播内容。</li>
+<li>4 段进度轨道：<code>适应期 → 剂量调整 → 优化期 → 维持期</code>，点亮第 1 段。</li>
+<li>陪伴句：<code>很高兴你关注自己的健康。接下来 24 周，卓正会用专业和关怀，陪你顺利实现减重目标。</code></li>
+<li>全宽通栏按钮 <code>记录第一天</code>，下方灰字 <code>建议以第一次打针日期作为减重第一天</code>。</li>
+<li>点按钮呼起系统日期选择器；选定后 toast <code>已记录，{日期} 为你的减重第 1 天</code>，卡片进入③的「还没有体重记录」初始态（见第 2 节），此后不再出现本仪式屏。</li>
+</ul>
+<h2 id="7-埋点-汇总见-req-wl-base-01-第-3-1-3-6-节">7. 埋点（汇总见 <code>REQ-WL-BASE-01</code> 第 3.1、3.6 节）</h2>
 <table>
 <thead>
 <tr>
@@ -255,6 +262,11 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/online-ser
 <td><code>wcard_cta_click</code></td>
 <td>点 <code>查看更多</code></td>
 <td><code>stage=3</code>、<code>cta_id=more</code></td>
+</tr>
+<tr>
+<td><code>wcard_cta_click</code></td>
+<td>开启日点 <code>记录第一天</code></td>
+<td><code>stage=6</code>、<code>cta_id=rit_start</code></td>
 </tr>
 <tr>
 <td><code>wcard_red_dot_click</code></td>

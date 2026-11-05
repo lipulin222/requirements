@@ -322,8 +322,8 @@ const WL_DOCS = [
   },
   {
     md: '减重/REQ-WL-STATUS-08-减重卡维持期状态.md',
-    module: 'STATUS', code: 'REQ-WL-STATUS-08', pri: 'P0', status: '二期（暂缓）',
-    desc: '阶段⑤维持期：插画 + 恭喜减重成功！+ 通栏「打开回顾」进结营回顾页，置顶 1 个月',
+    module: 'STATUS', code: 'REQ-WL-STATUS-08', pri: 'P0', status: '待评审',
+    desc: '阶段⑤维持期（一期）：插画 + 恭喜减重成功！+ 通栏「打开回顾」进结营回顾页，置顶 1 个月',
     demos: [['Demo · 阶段⑤', 'https://lipulin222.github.io/health-subscription-demo/online-service.html?stage=5']],
   },
   {

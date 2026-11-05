@@ -152,13 +152,10 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
     <h1>减重卡 · 阶段⑤ 维持期（一个疗程结束）</h1>
     <p class="subtitle">需求单 · 科学减重（WL） · 交付目标：可上线面向用户使用（H5 + 微信小程序）</p>
     <blockquote>
-<p>编号 <code>REQ-WL-STATUS-08</code> ｜ 项目：科学减重（WL）｜ 模块：服务状态与卡片 ｜ 优先级 P0 ｜ 状态：<strong>二期 · 暂缓（一期不做）</strong>
+<p>编号 <code>REQ-WL-STATUS-08</code> ｜ 项目：科学减重（WL）｜ 模块：服务状态与卡片 ｜ 优先级 P0 ｜ 状态：<strong>待评审（一期）</strong>
 Demo：<a href="https://lipulin222.github.io/health-subscription-demo/online-service.html?stage=5">健康订阅区 Demo（阶段⑤）</a> ｜ 埋点：<code>REQ-WL-BASE-01</code></p>
 </blockquote>
 <hr>
-<blockquote>
-<p><strong>本阶段一期不做</strong>：一期来不及做维持期卡片（含结营回顾入口），整体放二期；本单保留作为二期开发依据。一期用药结束后，减重卡不出现维持期形态。</p>
-</blockquote>
 <h2 id="1-这张卡什么时候出现">1. 这张卡什么时候出现</h2>
 <p>用药结束（支付成功日 + 处方药程）满 1 周，且后台数据没有更新（见 <code>REQ-WL-STATUS-01</code>）。</p>
 <p>维持期卡片置顶 1 个月，1 个月后卡片回到阶段 ① 购前科普。</p>
@@ -171,10 +168,7 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/online-ser
 <li>屏内不出现体重数字、起止体重、打卡 / 腰围 / 复查等任何数据。</li>
 </ul>
 </li>
-<li><strong>底部一个通栏按钮</strong>：<code>打开回顾</code>（品牌青色实底 + 白字，高 40px、大圆角）。<ul>
-<li>「AI减重助理」按钮一期不做。</li>
-</ul>
-</li>
+<li><strong>底部一个通栏按钮</strong>：<code>打开回顾</code>（品牌青色实底 + 白字，高 40px、大圆角），进结营回顾页（现成页面）。本阶段卡内无 <code>询问护士</code> 按钮，仅保留页面级 AI 浮钮。</li>
 </ol>
 <h2 id="3-猜你想问-本阶段">3. 猜你想问（本阶段）</h2>
 <p>轮播的问题文案<strong>从后台知识库对应的分类里随机拉取</strong>，不在端上写死：</p>

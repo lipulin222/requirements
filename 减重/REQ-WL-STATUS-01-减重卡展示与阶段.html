@@ -142,7 +142,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
   <nav class="toc">
     <p class="toc__h">本单目录</p>
     <ol><li class="lv2"><a href="#1-展示准入">1. 展示准入</a></li>
-<li class="lv2"><a href="#2-减重卡的阶段-一期做-维持期放二期">2. 减重卡的阶段（一期做 ①②③④，⑤维持期放二期）</a></li>
+<li class="lv2"><a href="#2-减重卡的阶段-一期-全做">2. 减重卡的阶段（一期 ①~⑥ 全做）</a></li>
 <li class="lv2"><a href="#3-埋点-汇总见-req-wl-base-01-第-3-1-节">3. 埋点（汇总见 REQ-WL-BASE-01 第 3.1 节）</a></li></ol>
   </nav>
   <main class="doc">
@@ -164,8 +164,8 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/">健康�
 <ul>
 <li>指定区域范围待医生团队确认，@望时 回填。</li>
 </ul>
-<h2 id="2-减重卡的阶段-一期做-维持期放二期">2. 减重卡的阶段（一期做 ①②③④，⑤维持期放二期）</h2>
-<p>减重卡按用户所处阶段显示不同内容。<strong>一期上线 ①购前科普、②评估完成、③进行中、④提醒/续费 四个阶段</strong>；⑤维持期卡片放二期，一期不做。</p>
+<h2 id="2-减重卡的阶段-一期-全做">2. 减重卡的阶段（一期 ①~⑥ 全做）</h2>
+<p>减重卡按用户所处阶段显示不同内容。<strong>一期上线 ①购前科普、②评估完成、③进行中、④提醒/续费、⑤维持期、⑥开启日 全部六个阶段</strong>。</p>
 <table>
 <thead>
 <tr>
@@ -178,7 +178,7 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/">健康�
 <tbody><tr>
 <td>1</td>
 <td>⑤ 维持期</td>
-<td>品牌青色数据带 + 回顾入口（STATUS-08，<strong>二期</strong>）</td>
+<td>插画 + 恭喜 + 打开回顾（STATUS-08）</td>
 <td>用药结束（支付成功日 + 处方药程）满 1 周，且后台数据无更新；<strong>置顶 1 个月</strong>，之后转回阶段 ①</td>
 </tr>
 <tr>
@@ -189,18 +189,24 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/">健康�
 </tr>
 <tr>
 <td>3</td>
+<td>⑥ 开启日</td>
+<td>仪式屏：记录减重第一天（STATUS-06 第 6 节）</td>
+<td>已支付、已拿药，但还没记录减重第一天；记录后进入③</td>
+</tr>
+<tr>
+<td>4</td>
 <td>③ 进行中</td>
 <td>体重数据区 + 查看更多（STATUS-06）</td>
 <td>后台有首诊套餐支付记录，且有拿药 / 收货记录，且在药程内</td>
 </tr>
 <tr>
-<td>4</td>
+<td>5</td>
 <td>② 评估完成</td>
 <td>评估结论 + 刻度条（STATUS-05）</td>
 <td>已完成问卷、评估报告已生成，未支付首诊套餐，且报告生成后未满 30 天；<strong>报告生成满 30 天仍未支付首诊套餐的，退回①购前科普</strong></td>
 </tr>
 <tr>
-<td>5</td>
+<td>6</td>
 <td>① 购前科普</td>
 <td>四分类入口 + 快速评估（STATUS-04，兜底）</td>
 <td>以上均不满足</td>
@@ -209,9 +215,9 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/">健康�
 <ul>
 <li><strong style="color:#D5493A">处方药程、发货时间、发货地点字段需 DMS 后台新增，并与门诊等其他团队对齐口径。</strong></li>
 <li>阶段由服务端判定并下发，端上不自行推断。</li>
-<li>开启日（支付 + 面诊 + 取药完成后的仪式屏）为二期功能，一期不做。</li>
-<li>维持期卡片（含其中的结营回顾入口）为二期功能，一期不做——一期用药结束后，减重卡不出现维持期形态。</li>
-<li>各阶段的「AI减重助理」按钮一期不做，一期卡片底部只保留一个主按钮。</li>
+<li>维持期卡片含结营回顾入口，见 <code>REQ-WL-STATUS-08</code>。</li>
+<li>各阶段按钮组为「左 <code>询问护士</code>（浅色次按钮，跳 AI 减重助理对话页）+ 右主按钮」；另有页面级 AI 浮钮常驻（TabBar 上方）。</li>
+<li>卡头右上角的阶段状态标签（未开始 / 第 N 天 / 维持期）为演示辅助，一期不上线。</li>
 <li><strong>所有阶段的减重卡右上角固定显示一个「切换旧版」文字链，灰色字体</strong>；点击后切回旧版减重卡展示形态，切换的口径与能否再切回新版待产品确认。</li>
 </ul>
 <h2 id="3-埋点-汇总见-req-wl-base-01-第-3-1-节">3. 埋点（汇总见 <code>REQ-WL-BASE-01</code> 第 3.1 节）</h2>
@@ -250,7 +256,7 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/">健康�
 </tr>
 <tr>
 <td><code>wcard_recap_click</code></td>
-<td>点结营回顾入口（二期，STATUS-08）</td>
+<td>点结营回顾入口（STATUS-08）</td>
 <td><code>stage</code></td>
 </tr>
 </tbody></table>
