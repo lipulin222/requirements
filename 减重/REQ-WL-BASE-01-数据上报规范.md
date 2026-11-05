@@ -36,7 +36,7 @@
 | --- | --- | --- | --- | --- |
 | `wcard_pin_view` | 健康订阅区置顶减重卡曝光 | `position` | 置顶触达 | STATUS-01 |
 | `wcard_state_view` | 卡片渲染（各阶段） | `stage`、`month_index` | 状态一致性 | STATUS-01 |
-| `wcard_cta_click` | 主按钮点击（`cta_id`：assess 查看评估报告 / report 查看用药方案 / more 查看更多 / consult 线上咨询 / book 预约面诊 / return 返回 / reorder 再次续订 / weight_edit 录体重） | `stage`、`cta_id` | 转化 | STATUS-01 |
+| `wcard_cta_click` | 主按钮点击（`cta_id`：assess 快速评估 / report 查看评估报告 / more 查看更多 / consult 线上咨询 / book 预约面诊 / return 返回 / reorder 再次续订 / weight_edit 录体重） | `stage`、`cta_id` | 转化 | STATUS-01 |
 | `wcard_category_click` | 阶段① 四分类科普入口点击 | `category_id` | 分类入口效果 | STATUS-04 |
 | `wcard_faq_view` | 猜你想问每条问题轮播曝光（自动换条逐次记） | `stage`、`article_id`、`seq` | 问题触达 | STATUS-04~07 |
 | `wcard_faq_click` | 点猜你想问问题进文章 | `stage`、`article_id` | 深链点击 | STATUS-04~07 |
@@ -72,6 +72,7 @@
 | `report_buy_click` | 报告内点购药 | `report_id`、`branch` | 购药意愿 |
 | `report_buy_block` | 报告过时效被拦截并 toast | `report_id`、`reason(converted/expired)` | 时效拦截量 |
 | `report_reassess_click` | toast 后点引导重新评估 | `report_id` | 拦截→重评挽回率 |
+| `report_share_click` | 报告页点亲友分享类按钮（adapt「推荐给亲友做评估」/ normal「邀请亲友评估」） | `report_id`、`branch`、`share_type(native/copy)` | 亲友裂变 |
 
 就诊人浮层（PLAN-05）前端不上报，由服务端记录。
 

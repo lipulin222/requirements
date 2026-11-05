@@ -146,6 +146,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <li class="lv3"><a href="#1-2-结论头">1.2 结论头</a></li>
 <li class="lv3"><a href="#1-3-吸底分流">1.3 吸底分流</a></li>
 <li class="lv3"><a href="#1-4-报告时效与购药拦截">1.4 报告时效与购药拦截</a></li>
+<li class="lv3"><a href="#1-5-亲友评估-分享链路">1.5 亲友评估（分享链路）</a></li>
 <li class="lv2"><a href="#2-验收">2. 验收</a></li>
 <li class="lv2"><a href="#3-埋点-汇总见-req-wl-base-01-第-3-3-节">3. 埋点（汇总见 REQ-WL-BASE-01 第 3.3 节）</a></li></ol>
   </nav>
@@ -154,7 +155,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
     <p class="subtitle">需求单 · 科学减重（WL） · 交付目标：可上线面向用户使用（H5 + 微信小程序）</p>
     <blockquote>
 <p>编号 <code>REQ-WL-PLAN-02</code> ｜ 项目：科学减重（WL）｜ 模块：方案·评估·随访 ｜ 优先级 P0 ｜ 状态：待评审
-Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion-ui/weight-management/Assessment-report/index.html">评估报告</a> ｜ 埋点：<code>REQ-WL-BASE-01</code></p>
+Demo：<a href="https://lipulin222.github.io/health-subscription-demo/weight-management/Assessment-report/index.html">评估报告</a>（顶栏「⋯」可切换 14 位样例患者） ｜ 埋点：<code>REQ-WL-BASE-01</code></p>
 </blockquote>
 <hr>
 <h2 id="1-规则">1. 规则</h2>
@@ -209,13 +210,13 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion
 </tr>
 <tr>
 <td>normal</td>
-<td><code>查看用药方案</code></td>
-<td>首诊套餐页（RX-01）</td>
+<td><code>邀请亲友评估</code>（左）、<code>了解用药详情</code>（右），并列两个按钮</td>
+<td><code>邀请亲友评估</code>：分享 / 复制评估入口链接给亲友（行为同 adapt 分支的「推荐给亲友做评估」）；<code>了解用药详情</code>：首诊套餐页（RX-01），过时效拦截规则不变</td>
 </tr>
 <tr>
 <td>adapt</td>
-<td><code>返回</code></td>
-<td>回 Portal</td>
+<td><code>推荐给亲友做评估</code></td>
+<td>点击后把评估入口分享出去，规则见 1.5</td>
 </tr>
 </tbody></table>
 <p>页脚固定声明：<code>本页内容基于你填写的问卷与已关联的健康数据生成，为初步评估建议，不构成诊断和处方。</code></p>
@@ -226,6 +227,29 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion
 <li>已过时效的报告仍可查看，但<strong>点击购药时阻拦进入支付，并 toast 提示：<code>评估报告已过时效，请重新评估。</code></strong>；toast 后引导用户跳转重新评估，去向为随访问卷（<code>REQ-WL-PLAN-04</code>）。</li>
 <li>用户重新完成评估生成新报告后，可正常购药。</li>
 </ul>
+<h3 id="1-5-亲友评估-分享链路">1.5 亲友评估（分享链路）</h3>
+<p>走通「老用户把评估推荐给亲友 → 亲友免登录做完评估拿到报告 → 想留下成果再引导登录」的完整链路，分三段：</p>
+<p><strong>① 报告页发起分享（本页，无需减重分支）</strong></p>
+<ul>
+<li>吸底按钮 <code>推荐给亲友做评估</code>：点击后调起系统分享，把评估问卷入口链接分享出去；设备不支持系统分享时，自动复制链接并 toast <code>评估链接已复制，发给亲友即可开始评估</code>。</li>
+<li>分享出去的链接自带「亲友」标记（URL 参数），亲友打开后直达评估问卷（PLAN-01），不需要登录。</li>
+</ul>
+<p><strong>② 亲友免登录做完评估</strong></p>
+<ul>
+<li>亲友从分享链接进入问卷，答题流程与普通用户完全一致。</li>
+<li>问卷提交时，系统先为这位亲友建立一个临时档案（临时 UIN），再把评估报告挂在这个临时档案下生成；报告页继续带着亲友标记。</li>
+</ul>
+<p><strong>③ 亲友在报告页的登录引导（带亲友标记时）</strong></p>
+<ul>
+<li>进入报告页时 toast 提示一次：<code>亲友评估模式：已使用临时档案，登录后可长期保存</code>。</li>
+<li>点返回 / 退出时，弹出居中对话框，不直接退出：<ul>
+<li>标题 <code>建议先登录保存</code>；说明 <code>登录后，本次评估与报告会保存到你的账户；不登录的话，退出后内容将永久丢失。</code></li>
+<li>按钮 <code>登录保存</code>：走登录流程（登录方式待技术确认），登录成功后临时档案并入用户账户；</li>
+<li>按钮 <code>仍要退出</code>：正常退出返回。</li>
+</ul>
+</li>
+<li>点 <code>了解用药详情</code>（原查看用药方案）时不出报告、不进套餐页，toast 提示 <code>请先登录后再查看用药方案</code>（toast 文案是否随按钮改名同步调整，待产品确认）。</li>
+</ul>
 <h2 id="2-验收">2. 验收</h2>
 <ul>
 <li><input disabled="" type="checkbox"> 四分支与 1.1 条件一一对应，同一问卷结果重复进入结果稳定</li>
@@ -233,6 +257,11 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion
 <li><input disabled="" type="checkbox"> 同一个月生成多份报告时，每份报告链接独立，互不覆盖</li>
 <li><input disabled="" type="checkbox"> 吸底按分支正确分流，无 404</li>
 <li><input disabled="" type="checkbox"> 刻度、总结、匹配度按分支正确渲染</li>
+<li><input disabled="" type="checkbox"> 无需减重分支吸底按钮为「推荐给亲友做评估」，点击可分享 / 复制评估入口链接，toast 原文一致</li>
+<li><input disabled="" type="checkbox"> 亲友从分享链接打开问卷无需登录，提交后系统建立临时档案并生成报告，报告页带亲友标记</li>
+<li><input disabled="" type="checkbox"> 亲友态报告页：进入有一次「已使用临时档案」toast；点退出弹「建议先登录保存」对话框，「仍要退出」正常退出、「登录保存」走登录流程</li>
+<li><input disabled="" type="checkbox"> normal 分支吸底为两个按钮：左 <code>邀请亲友评估</code>（分享 / 复制评估入口链接）、右 <code>了解用药详情</code>（进首诊套餐页）</li>
+<li><input disabled="" type="checkbox"> 亲友态点「了解用药详情」被拦截，toast「请先登录后再查看用药方案」，不进入套餐页</li>
 </ul>
 <h2 id="3-埋点-汇总见-req-wl-base-01-第-3-3-节">3. 埋点（汇总见 <code>REQ-WL-BASE-01</code> 第 3.3 节）</h2>
 <table>
@@ -261,6 +290,21 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion
 <tr>
 <td><code>report_reassess_click</code></td>
 <td>toast 后点引导重新评估</td>
+<td><code>report_id</code></td>
+</tr>
+<tr>
+<td><code>report_share_click</code></td>
+<td>adapt 分支点「推荐给亲友做评估」/ normal 分支点「邀请亲友评估」</td>
+<td><code>report_id</code>、<code>branch</code>、<code>share_type(native/copy)</code></td>
+</tr>
+<tr>
+<td><code>guest_exit_prompt</code></td>
+<td>亲友态点退出弹出登录保存提示</td>
+<td><code>report_id</code></td>
+</tr>
+<tr>
+<td><code>guest_save_login</code></td>
+<td>亲友态在提示框点「登录保存」</td>
 <td><code>report_id</code></td>
 </tr>
 </tbody></table>

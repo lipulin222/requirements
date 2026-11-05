@@ -148,6 +148,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <li class="lv3"><a href="#1-4-答题交互">1.4 答题交互</a></li>
 <li class="lv3"><a href="#1-5-安全题-不中断">1.5 安全题（不中断）</a></li>
 <li class="lv3"><a href="#1-6-汇总与中转">1.6 汇总与中转</a></li>
+<li class="lv3"><a href="#1-7-亲友提交-分享链路">1.7 亲友提交（分享链路）</a></li>
 <li class="lv2"><a href="#2-验收">2. 验收</a></li>
 <li class="lv2"><a href="#3-埋点-汇总见-req-wl-base-01-第-3-3-节">3. 埋点（汇总见 REQ-WL-BASE-01 第 3.3 节）</a></li></ol>
   </nav>
@@ -163,6 +164,7 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion
 <h3 id="1-1-路径">1.1 路径</h3>
 <ul>
 <li>入口：Portal 减重卡〔快速评估〕；新老客共用本页，进入时按用户状态自动分流（新客 <code>?state=new</code>，老客为缺省或 <code>?state=old</code>）。</li>
+<li>亲友入口：从评估报告「推荐给亲友做评估」的分享链接进入（链接自带亲友标记），无需登录，答题流程与普通用户一致；提交与跳转规则见 1.7。</li>
 <li>出口：提交确认 → 中转页 → 评估报告（PLAN-02）。</li>
 <li>只做用药适应性判断，不下诊断。</li>
 <li>页面 UI 直接用现有的问卷组件实现，不做额外 UI 开发。</li>
@@ -261,6 +263,13 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion
 <li>确认提交 → 中转页三步：<code>已收到你的问卷</code> → <code>正在核对用药安全</code> → <code>正在生成你的评估报告</code>，步进 800ms，末步停 600ms 进报告页。</li>
 <li>页面固定声明：<code>本页内容基于你填写的问卷与已关联的健康数据生成，为初步评估建议，不构成诊断和处方。</code></li>
 </ul>
+<h3 id="1-7-亲友提交-分享链路">1.7 亲友提交（分享链路）</h3>
+<ul>
+<li>从分享链接进入（带亲友标记）的用户不需要登录，答题、汇总与普通用户完全一致。</li>
+<li>点确认提交后，系统先为这位亲友建立一个临时档案（临时 UIN），把本次问卷答案挂在这个临时档案下，再生成评估报告。</li>
+<li>中转页第二步文案在亲友态改为 <code>正在创建临时健康档案</code>，其余两步不变。</li>
+<li>跳转评估报告时继续带着亲友标记，报告页据此做登录引导（规则见 <code>REQ-WL-PLAN-02</code> 第 1.5 节）。</li>
+</ul>
 <h2 id="2-验收">2. 验收</h2>
 <ul>
 <li><input disabled="" type="checkbox"> 老客进入先见「确认你的信息」，字段值来自健康档案；每行可修改（BMI 只读），副文案原文一致</li>
@@ -272,6 +281,8 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion
 <li><input disabled="" type="checkbox"> 安全题选到有风险的选项不中断问卷，10 题全部答完进汇总与报告，不出现「需要医生先确认」拦截页</li>
 <li><input disabled="" type="checkbox"> 汇总页每行可修改回跳；BMI 行不可改</li>
 <li><input disabled="" type="checkbox"> 中转页无操作入口，必达报告页</li>
+<li><input disabled="" type="checkbox"> 亲友从分享链接打开问卷无需登录，答题与汇总流程与普通用户一致</li>
+<li><input disabled="" type="checkbox"> 亲友提交后系统建立临时档案，中转页第二步显示「正在创建临时健康档案」，跳转报告页带亲友标记</li>
 </ul>
 <h2 id="3-埋点-汇总见-req-wl-base-01-第-3-3-节">3. 埋点（汇总见 <code>REQ-WL-BASE-01</code> 第 3.3 节）</h2>
 <table>
@@ -285,7 +296,7 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion
 <tbody><tr>
 <td><code>assess_start</code></td>
 <td>进入评估问卷</td>
-<td><code>assess_type(first/followup)</code>、<code>entry(card/list)</code>、<code>state(new/old)</code></td>
+<td><code>assess_type(first/followup)</code>、<code>entry(card/list/share)</code>、<code>state(new/old)</code>、<code>is_guest</code></td>
 </tr>
 <tr>
 <td><code>assess_step</code></td>
@@ -295,7 +306,7 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion
 <tr>
 <td><code>assess_complete</code></td>
 <td>提交评估</td>
-<td><code>duration</code>、<code>result_code</code></td>
+<td><code>duration</code>、<code>result_code</code>、<code>is_guest</code></td>
 </tr>
 </tbody></table>
 

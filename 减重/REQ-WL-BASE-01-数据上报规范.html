@@ -231,7 +231,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </tr>
 <tr>
 <td><code>wcard_cta_click</code></td>
-<td>主按钮点击（<code>cta_id</code>：assess 查看评估报告 / report 查看用药方案 / more 查看更多 / consult 线上咨询 / book 预约面诊 / return 返回 / reorder 再次续订 / weight_edit 录体重）</td>
+<td>主按钮点击（<code>cta_id</code>：assess 快速评估 / report 查看评估报告 / more 查看更多 / consult 线上咨询 / book 预约面诊 / return 返回 / reorder 再次续订 / weight_edit 录体重）</td>
 <td><code>stage</code>、<code>cta_id</code></td>
 <td>转化</td>
 <td>STATUS-01</td>
@@ -417,6 +417,12 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <td>toast 后点引导重新评估</td>
 <td><code>report_id</code></td>
 <td>拦截→重评挽回率</td>
+</tr>
+<tr>
+<td><code>report_share_click</code></td>
+<td>报告页点亲友分享类按钮（adapt「推荐给亲友做评估」/ normal「邀请亲友评估」）</td>
+<td><code>report_id</code>、<code>branch</code>、<code>share_type(native/copy)</code></td>
+<td>亲友裂变</td>
 </tr>
 </tbody></table>
 <p>就诊人浮层（PLAN-05）前端不上报，由服务端记录。</p>
