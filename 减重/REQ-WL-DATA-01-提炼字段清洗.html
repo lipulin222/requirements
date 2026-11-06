@@ -160,12 +160,12 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
     <p class="subtitle">需求单 · 科学减重（WL） · 交付目标：可上线面向用户使用（H5 + 微信小程序）</p>
     <blockquote>
 <p>编号 <code>REQ-WL-DATA-01</code> ｜ 项目：科学减重（WL）｜ 模块：数据清洗 ｜ 状态：制定中
-一句话：把 6 张业务表合并成「每人一份、按 9 个数据域组织」的提炼数据集（所有明细带时间戳与来源），供减重问卷分流判定和医生端「患者身体状况 AI 总结」使用。效果可看 <a href="https://lipulin222.github.io/health-subscription-demo/patient-ai-summary/">医生速览页</a>。</p>
+一句话：把 6 张业务表和企业微信沟通记录合并成「每人一份、按 10 个数据域组织」的提炼数据集（所有明细带时间戳与来源），供减重问卷分流判定和医生端「患者身体状况 AI 总结」使用。效果可看 <a href="https://lipulin222.github.io/health-subscription-demo/patient-ai-summary/">医生速览页</a>。</p>
 </blockquote>
 <hr>
 <h2 id="1-做什么">1. 做什么</h2>
-<p>系统里关于一个患者的信息分散在 6 张表里，很多内容重复记录、有的是自由文本，不能直接拿来用。本需求要求把这 6 张表洗成 <strong>每个就诊人一份、按 9 个数据域组织</strong> 的数据集。</p>
-<p><strong>输入表（6 张）</strong></p>
+<p>系统里关于一个患者的信息分散在 6 张业务表和企业微信沟通记录里，很多内容重复记录、有的是自由文本，不能直接拿来用。本需求要求把这些数据洗成 <strong>每个就诊人一份、按 10 个数据域组织</strong> 的数据集。</p>
+<p><strong>输入数据（6 张表 + 企微记录）</strong></p>
 <table>
 <thead>
 <tr>
@@ -197,8 +197,12 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <td>问卷答案</td>
 <td>10 道题的逐题回答</td>
 </tr>
+<tr>
+<td>企业微信沟通记录</td>
+<td>患者与顾问 / 医生的聊天内容、消息时间（感受反馈与副作用线索的来源）</td>
+</tr>
 </tbody></table>
-<p><strong>输出的 9 个数据域</strong></p>
+<p><strong>输出的 10 个数据域</strong></p>
 <table>
 <thead>
 <tr>
@@ -223,6 +227,10 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <td>药品名称、剂量（从病历与订单商品里提取，每条带来源）</td>
 </tr>
 <tr>
+<td>副作用情况</td>
+<td>用药过程中出现的不适 / 副作用描述（从病历与企业微信聊天记录提取，每条带时间与来源）</td>
+</tr>
+<tr>
 <td>基础指标</td>
 <td>身高、体重、心率、腰围的<strong>全部测量明细</strong>（数值 + 测量时间 + 来源），体重另带新鲜度</td>
 </tr>
@@ -236,7 +244,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </tr>
 <tr>
 <td>心态相关</td>
-<td>减重目标、原因自评、治疗目标（除体重数字外的目标）</td>
+<td>减重目标、原因自评、治疗目标（除体重数字外的目标）、感受反馈（从企业微信聊天记录提取）</td>
 </tr>
 <tr>
 <td>分流标签</td>
@@ -378,6 +386,35 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <td>来源</td>
 </tr>
 </tbody></table>
+<p><strong>副作用情况 side_effects（数组）</strong></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>item</td>
+<td>文本</td>
+<td>副作用 / 不适描述（如「恶心，饭后明显」「注射部位红肿」）</td>
+</tr>
+<tr>
+<td>recorded_at</td>
+<td>日期时间</td>
+<td>病历记录时间或企微消息时间</td>
+</tr>
+<tr>
+<td>source</td>
+<td>枚举：<code>visit</code> 病历 / <code>wecom</code> 企业微信聊天记录</td>
+<td>来源</td>
+</tr>
+</tbody></table>
+<ul>
+<li>从病历文本和企业微信聊天记录中提取患者描述的不适与副作用；提到具体药物的一并注明（写在 item 里，如「注射替尔泊肽后恶心」）。</li>
+<li>顾问 / 医生回复的安抚内容不算副作用，不提取；同一不适多次反馈逐条保留，不合并。</li>
+</ul>
 <p><strong>基础指标 body_metrics（数组）</strong></p>
 <table>
 <thead>
@@ -523,9 +560,14 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <td>除体重数字外的治疗目标（问卷第⑩题）</td>
 </tr>
 <tr>
+<td>feedback</td>
+<td>对象数组 <code>{text, recorded_at}</code></td>
+<td>感受反馈：从企业微信聊天记录里提取的患者主观感受（如「这周不容易饿了」「晚上睡得好了」），每条带消息时间；顾问回复不提取</td>
+</tr>
+<tr>
 <td>recorded_at</td>
 <td>日期时间</td>
-<td>问卷提交时间</td>
+<td>问卷提交时间（feedback 的各条时间在条目内）</td>
 </tr>
 </tbody></table>
 <p><strong>分流标签 triage（单对象）</strong></p>
@@ -570,6 +612,10 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <td>提取依据那条病历 / 订单的时间</td>
 </tr>
 <tr>
+<td>副作用情况</td>
+<td>病历记录时间或企微消息时间（按来源）</td>
+</tr>
+<tr>
 <td>基础指标</td>
 <td>该次测量时间</td>
 </tr>
@@ -578,8 +624,12 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <td>检验 / 报告时间</td>
 </tr>
 <tr>
-<td>安全筛查、心态相关</td>
+<td>安全筛查</td>
 <td>问卷提交时间</td>
+</tr>
+<tr>
+<td>心态相关</td>
+<td>问卷字段用问卷提交时间；感受反馈各条用企微消息时间</td>
 </tr>
 </tbody></table>
 <ul>
@@ -602,6 +652,9 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
     { &quot;recorded_at&quot;: &quot;2026-11-05 09:15&quot;, &quot;doctor_name&quot;: &quot;李医生&quot;, &quot;record_text&quot;: &quot;患者自述体重增加 2 年，饮食不规律……（病历原文，仅医生端可见）&quot; }
   ],
   &quot;medications&quot;: [],
+  &quot;side_effects&quot;: [
+    { &quot;item&quot;: &quot;注射替尔泊肽后轻度恶心，饭后明显&quot;, &quot;recorded_at&quot;: &quot;2026-11-05 20:41&quot;, &quot;source&quot;: &quot;wecom&quot; }
+  ],
   &quot;body_metrics&quot;: [
     { &quot;metric&quot;: &quot;身高&quot;, &quot;value&quot;: 162.0, &quot;unit&quot;: &quot;cm&quot;, &quot;recorded_at&quot;: &quot;2026-05-18&quot;, &quot;source&quot;: &quot;exam&quot; },
     { &quot;metric&quot;: &quot;体重&quot;, &quot;value&quot;: 85.0, &quot;unit&quot;: &quot;kg&quot;, &quot;recorded_at&quot;: &quot;2026-05-18&quot;, &quot;source&quot;: &quot;exam&quot; },
@@ -617,7 +670,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
     { &quot;item&quot;: &quot;肝脏超声&quot;, &quot;value&quot;: &quot;轻度脂肪肝&quot;, &quot;unit&quot;: &quot;&quot;, &quot;reference_range&quot;: &quot;&quot;, &quot;abnormal&quot;: &quot;是&quot;, &quot;recorded_at&quot;: &quot;2026-05-18&quot;, &quot;source&quot;: &quot;exam&quot; }
   ],
   &quot;safety_screening&quot;: { &quot;contraindication&quot;: &quot;无&quot;, &quot;contraindication_items&quot;: [], &quot;pregnancy_status&quot;: &quot;无&quot;, &quot;age_ok&quot;: true, &quot;recorded_at&quot;: &quot;2026-11-04 10:30&quot; },
-  &quot;psychology&quot;: { &quot;weight_goal&quot;: &quot;减重 10kg&quot;, &quot;gain_causes&quot;: [&quot;饮食不规律&quot;], &quot;treatment_goals&quot;: [&quot;改善脂肪肝&quot;], &quot;recorded_at&quot;: &quot;2026-11-04 10:30&quot; },
+  &quot;psychology&quot;: { &quot;weight_goal&quot;: &quot;减重 10kg&quot;, &quot;gain_causes&quot;: [&quot;饮食不规律&quot;], &quot;treatment_goals&quot;: [&quot;改善脂肪肝&quot;], &quot;feedback&quot;: [ { &quot;text&quot;: &quot;这周不容易饿了，晚上不再想吃东西&quot;, &quot;recorded_at&quot;: &quot;2026-11-05 20:38&quot; } ], &quot;recorded_at&quot;: &quot;2026-11-04 10:30&quot; },
   &quot;triage&quot;: { &quot;expected_tier&quot;: &quot;无慢病&quot;, &quot;trigger_reason&quot;: &quot;BMI 31.8（83.5kg ÷ 1.62m²）≥ 28；无排除项；无慢病与相关用药；检验异常仅轻度脂肪肝（进异常提示）&quot; }
 }
 </code></pre>
@@ -760,7 +813,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <hr>
 <h2 id="8-数据红线">8. 数据红线</h2>
 <ul>
-<li>病历原文、检验原值 <strong>只在医生端数据集与医生端页面</strong>出现，用户端一律不展示原值；</li>
+<li>病历原文、检验原值、企业微信聊天记录内容 <strong>只在医生端数据集与医生端页面</strong>出现，用户端一律不展示；</li>
 <li>输出数据里不得出现姓名之外的身份信息（手机号、身份证、地址等）；</li>
 <li>体检报告「体检建议」等建议类文本不进入数据集。</li>
 </ul>
