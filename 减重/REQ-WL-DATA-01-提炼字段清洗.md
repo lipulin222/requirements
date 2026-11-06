@@ -51,7 +51,7 @@
 | name | 文本 | 必填 | 姓名 |
 | gender | 枚举：M / F | 必填 | 只取就诊人表（第 3 节） |
 | birth_date | 日期 | 必填 | 出生日期 |
-| age | 整数 | 必填 | 按出生日期现算；问卷自填年龄只做对账，对不上在输出附注里提示 |
+| age | 数值（1 位小数） | 必填 | 按出生日期现算，精确到 0.1 岁；问卷自填年龄只做对账，对不上在输出附注里提示 |
 
 **消费记录 orders（数组）**
 
@@ -165,7 +165,7 @@
 
 ```json
 {
-  "patient_info": { "patient_id": "P0001", "name": "王雅静", "gender": "F", "birth_date": "1994-03-12", "age": 32 },
+  "patient_info": { "patient_id": "P0001", "name": "王雅静", "gender": "F", "birth_date": "1994-03-12", "age": 32.7 },
   "orders": [
     { "order_id": "SO20261104001", "recorded_at": "2026-11-04 10:32", "product_name": "体重管理首诊套餐（【穆峰达】替尔泊肽注射液）", "category": "医疗服务", "spec": "首诊套餐", "treatment_duration": "24 周" }
   ],

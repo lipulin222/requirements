@@ -283,9 +283,9 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </tr>
 <tr>
 <td>age</td>
-<td>整数</td>
+<td>数值（1 位小数）</td>
 <td>必填</td>
-<td>按出生日期现算；问卷自填年龄只做对账，对不上在输出附注里提示</td>
+<td>按出生日期现算，精确到 0.1 岁；问卷自填年龄只做对账，对不上在输出附注里提示</td>
 </tr>
 </tbody></table>
 <p><strong>消费记录 orders（数组）</strong></p>
@@ -619,7 +619,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </ul>
 <h3 id="2-4-输出示例-人设-王雅静">2.4 输出示例（人设：王雅静）</h3>
 <pre><code class="language-json">{
-  &quot;patient_info&quot;: { &quot;patient_id&quot;: &quot;P0001&quot;, &quot;name&quot;: &quot;王雅静&quot;, &quot;gender&quot;: &quot;F&quot;, &quot;birth_date&quot;: &quot;1994-03-12&quot;, &quot;age&quot;: 32 },
+  &quot;patient_info&quot;: { &quot;patient_id&quot;: &quot;P0001&quot;, &quot;name&quot;: &quot;王雅静&quot;, &quot;gender&quot;: &quot;F&quot;, &quot;birth_date&quot;: &quot;1994-03-12&quot;, &quot;age&quot;: 32.7 },
   &quot;orders&quot;: [
     { &quot;order_id&quot;: &quot;SO20261104001&quot;, &quot;recorded_at&quot;: &quot;2026-11-04 10:32&quot;, &quot;product_name&quot;: &quot;体重管理首诊套餐（【穆峰达】替尔泊肽注射液）&quot;, &quot;category&quot;: &quot;医疗服务&quot;, &quot;spec&quot;: &quot;首诊套餐&quot;, &quot;treatment_duration&quot;: &quot;24 周&quot; }
   ],
