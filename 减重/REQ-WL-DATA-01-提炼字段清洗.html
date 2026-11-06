@@ -148,11 +148,10 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <li class="lv3"><a href="#2-3-检验记录的指标清单-按首诊问卷与体检报告圈定">2.3 检验记录的指标清单（按首诊问卷与体检报告圈定）</a></li>
 <li class="lv3"><a href="#2-4-输出示例-人设-王雅静">2.4 输出示例（人设：王雅静）</a></li>
 <li class="lv2"><a href="#3-同一件事多处记录时-用哪一份">3. 同一件事多处记录时，用哪一份</a></li>
-<li class="lv2"><a href="#4-这些字段不要-用不到的都删掉">4. 这些字段不要（用不到的都删掉）</a></li>
-<li class="lv2"><a href="#5-体重新鲜度">5. 体重新鲜度</a></li>
-<li class="lv2"><a href="#6-特殊情况处理">6. 特殊情况处理</a></li>
-<li class="lv2"><a href="#7-数据红线">7. 数据红线</a></li>
-<li class="lv2"><a href="#8-验收-用-10-个测试人设逐个对">8. 验收（用 10 个测试人设逐个对）</a></li></ol>
+<li class="lv2"><a href="#4-体重新鲜度">4. 体重新鲜度</a></li>
+<li class="lv2"><a href="#5-特殊情况处理">5. 特殊情况处理</a></li>
+<li class="lv2"><a href="#6-数据红线">6. 数据红线</a></li>
+<li class="lv2"><a href="#7-验收-用-10-个测试人设逐个对">7. 验收（用 10 个测试人设逐个对）</a></li></ol>
   </nav>
   <main class="doc">
     <h1>提炼字段清洗（AI 诊断数据集）</h1>
@@ -364,7 +363,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <tr>
 <td>record_text</td>
 <td>文本</td>
-<td>病历内容原文（仅医生端可见，见第 7 节红线）</td>
+<td>病历内容原文（仅医生端可见，见第 6 节红线）</td>
 </tr>
 </tbody></table>
 <p><strong>用药信息 medications（数组）</strong></p>
@@ -743,7 +742,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 }
 </code></pre>
 <ul>
-<li><code>weight_freshness</code> 为主表级派生字段：按第 5 节对体重明细最近一条实测现算（枚举：新鲜 / 临界 / 过期 / 无数据）。</li>
+<li><code>weight_freshness</code> 为主表级派生字段：按第 4 节对体重明细最近一条实测现算（枚举：新鲜 / 临界 / 过期 / 无数据）。</li>
 </ul>
 <hr>
 <h2 id="3-同一件事多处记录时-用哪一份">3. 同一件事多处记录时，用哪一份</h2>
@@ -765,33 +764,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <li><strong>异常判断</strong>：检验记录、检查记录里 <code>abnormal = 是</code> 的就是异常项；「未见异常」类描述不输出。</li>
 </ul>
 <hr>
-<h2 id="4-这些字段不要-用不到的都删掉">4. 这些字段不要（用不到的都删掉）</h2>
-<table>
-<thead>
-<tr>
-<th>删掉的</th>
-<th>原因</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>问卷填写渠道、问卷初筛结果、问卷记录编号</td>
-<td>工程字段</td>
-</tr>
-<tr>
-<td>问卷第①②③题的答案</td>
-<td>和档案重复，只做对账</td>
-</tr>
-<tr>
-<td>体检报告「体检建议」原文</td>
-<td>是建议不是事实，异常情况已由检验记录承载</td>
-</tr>
-<tr>
-<td>各表的创建时间、更新时间、逻辑删除等工程字段</td>
-<td>工程字段</td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="5-体重新鲜度">5. 体重新鲜度</h2>
+<h2 id="4-体重新鲜度">4. 体重新鲜度</h2>
 <ul>
 <li>最近一次实测体重距今 <strong>超过 3 个月</strong> → 标「过期，需重填」；</li>
 <li>距今 <strong>2~3 个月</strong> → 标「临界，建议复测」；</li>
@@ -799,7 +772,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <li>没有任何实测体重（只有问卷自填）→ 标「无实测数据，需实测」。</li>
 </ul>
 <hr>
-<h2 id="6-特殊情况处理">6. 特殊情况处理</h2>
+<h2 id="5-特殊情况处理">5. 特殊情况处理</h2>
 <table>
 <thead>
 <tr>
@@ -829,14 +802,14 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </tr>
 </tbody></table>
 <hr>
-<h2 id="7-数据红线">7. 数据红线</h2>
+<h2 id="6-数据红线">6. 数据红线</h2>
 <ul>
 <li>病历原文、检验原值、企业微信聊天记录内容 <strong>只在医生端数据集与医生端页面</strong>出现，用户端一律不展示；</li>
 <li>输出数据里不得出现姓名之外的身份信息（手机号、身份证、地址等）；</li>
 <li>体检报告「体检建议」等建议类文本不进入数据集。</li>
 </ul>
 <hr>
-<h2 id="8-验收-用-10-个测试人设逐个对">8. 验收（用 10 个测试人设逐个对）</h2>
+<h2 id="7-验收-用-10-个测试人设逐个对">7. 验收（用 10 个测试人设逐个对）</h2>
 <table>
 <thead>
 <tr>
