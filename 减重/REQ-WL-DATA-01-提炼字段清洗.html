@@ -149,7 +149,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <li class="lv3"><a href="#2-4-输出示例-人设-王雅静">2.4 输出示例（人设：王雅静）</a></li>
 <li class="lv2"><a href="#3-同一件事多处记录时-用哪一份">3. 同一件事多处记录时，用哪一份</a></li>
 <li class="lv2"><a href="#4-这些字段不要-用不到的都删掉">4. 这些字段不要（用不到的都删掉）</a></li>
-<li class="lv2"><a href="#5-两个判定规则">5. 两个判定规则</a></li>
+<li class="lv2"><a href="#5-体重新鲜度">5. 体重新鲜度</a></li>
 <li class="lv2"><a href="#6-分流档位怎么定">6. 分流档位怎么定</a></li>
 <li class="lv2"><a href="#7-特殊情况处理">7. 特殊情况处理</a></li>
 <li class="lv2"><a href="#8-数据红线">8. 数据红线</a></li>
@@ -685,7 +685,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 }
 </code></pre>
 <ul>
-<li><code>weight_freshness</code> 为主表级派生字段：按 5.1 对体重明细最近一条实测现算（枚举：新鲜 / 临界 / 过期 / 无数据）。</li>
+<li><code>weight_freshness</code> 为主表级派生字段：按第 5 节对体重明细最近一条实测现算（枚举：新鲜 / 临界 / 过期 / 无数据）。</li>
 </ul>
 <hr>
 <h2 id="3-同一件事多处记录时-用哪一份">3. 同一件事多处记录时，用哪一份</h2>
@@ -764,20 +764,12 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </tr>
 </tbody></table>
 <hr>
-<h2 id="5-两个判定规则">5. 两个判定规则</h2>
-<p><strong>5.1 体重新鲜度</strong></p>
+<h2 id="5-体重新鲜度">5. 体重新鲜度</h2>
 <ul>
 <li>最近一次实测体重距今 <strong>超过 3 个月</strong> → 标「过期，需重填」；</li>
 <li>距今 <strong>2~3 个月</strong> → 标「临界，建议复测」；</li>
 <li>3 个月以内 → 标「新鲜」；</li>
 <li>没有任何实测体重（只有问卷自填）→ 标「无实测数据，需实测」。</li>
-</ul>
-<p><strong>5.2 反弹次数（溜溜球判定）</strong></p>
-<ul>
-<li>把近 24 个月内的就诊体重按时间排序；</li>
-<li>体重比上一次 <strong>下降 2kg 及以上</strong>，之后又 <strong>回升 2kg 及以上</strong>，记反弹 1 次；</li>
-<li>反弹 <strong>2 次及以上</strong> 即判定为「溜溜球体重」；</li>
-<li>反弹次数<strong>不单独输出</strong>，由基础指标体重明细现算，命中「线下优先（溜溜球）」时把反弹次数写进触发依据（如「体重明细显示反弹 3 次」）。</li>
 </ul>
 <hr>
 <h2 id="6-分流档位怎么定">6. 分流档位怎么定</h2>
@@ -785,7 +777,6 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <ol>
 <li><strong>先看排除</strong>：年龄不满 18 岁（<code>age_ok = false</code>）、孕产阶段是备孕 / 怀孕 / 哺乳、禁忌症答「有」——只要占一条，直接判「排除」（排除优先级最高，其他条件再符合也排除）；</li>
 <li><strong>再看需要医生把关的情形</strong>：确诊糖尿病（尤其正在打胰岛素）、确诊冠心病或中风、正在用糖皮质激素（可能是药物引起的增重）、严重肾脏疾病——判「线下优先」；</li>
-<li><strong>再看体重反复</strong>：没有确诊疾病，但反弹 2 次及以上——判「线下优先（溜溜球）」；</li>
 <li><strong>再看指标偏高</strong>：没有确诊疾病，但检验记录里 <code>abnormal = 是</code> 的条目（在有效期内）不为空——判「轻微异常」，触发依据带「建议复查××」；</li>
 <li><strong>最后看是否符合适应症</strong>：BMI ≥ 28，或 BMI ≥ 24 且有体重相关合并症——判「无慢病，直达订阅」。</li>
 </ol>
@@ -874,8 +865,8 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </tr>
 <tr>
 <td>周凯（男 36）</td>
-<td>体重明细含全部记录；反弹 3 次写入触发依据；1 条空病历不报错</td>
-<td>线下优先（溜溜球）</td>
+<td>体重明细含全部记录；1 条空病历不报错；反弹不再参与分流</td>
+<td>按其余条件判定</td>
 </tr>
 <tr>
 <td>沈佳怡（女 30）</td>
