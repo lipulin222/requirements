@@ -71,6 +71,7 @@
 | --- | --- | --- |
 | recorded_at | 日期时间 | 就诊到达时间 |
 | doctor_name | 文本 | 接诊医生 |
+| source | 枚举：线上 / 线下 | 就诊来源 |
 | record_text | 文本 | 病历内容原文（仅医生端可见，见第 8 节红线） |
 
 **用药信息 medications（数组）**
@@ -180,7 +181,7 @@
     { "order_id": "SO20261104001", "recorded_at": "2026-11-04 10:32", "product_name": "体重管理首诊套餐（【穆峰达】替尔泊肽注射液）", "category": "医疗服务", "spec": "首诊套餐", "treatment_duration": "24 周" }
   ],
   "visits": [
-    { "recorded_at": "2026-11-05 09:15", "doctor_name": "李医生", "record_text": "患者自述体重增加 2 年，饮食不规律……（病历原文，仅医生端可见）" }
+    { "recorded_at": "2026-11-05 09:15", "doctor_name": "李医生", "source": "线下", "record_text": "患者自述体重增加 2 年，饮食不规律……（病历原文，仅医生端可见）" }
   ],
   "medications": [],
   "side_effects": [
