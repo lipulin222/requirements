@@ -144,8 +144,10 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
     <ol><li class="lv2"><a href="#1-页面定位与整体结构">1. 页面定位与整体结构</a></li>
 <li class="lv2"><a href="#2-封面">2. 封面</a></li>
 <li class="lv2"><a href="#3-各屏内容-文案以页面原文为准">3. 各屏内容（文案以页面原文为准）</a></li>
+<li class="lv3"><a href="#3-1-分享卡-链接分享-分享海报">3.1 分享卡（链接分享 + 分享海报）</a></li>
 <li class="lv2"><a href="#4-减重人格判定-06-屏">4. 减重人格判定（06 屏）</a></li>
-<li class="lv2"><a href="#5-验收">5. 验收</a></li></ol>
+<li class="lv2"><a href="#5-验收">5. 验收</a></li>
+<li class="lv2"><a href="#6-埋点-汇总见-req-wl-base-01-第-3-6-节">6. 埋点（汇总见 REQ-WL-BASE-01 第 3.6 节）</a></li></ol>
   </nav>
   <main class="doc">
     <h1>旅程回顾（结营回顾）</h1>
@@ -212,8 +214,42 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/Journey-Recap/in
 </tr>
 </tbody></table>
 <ul>
-<li>06 屏点 <code>分享</code>：按钮变为 <code>分享卡已生成，可在相册查看</code> 并禁用。</li>
 <li>07 屏点 <code>开启健康管理</code>：弹出二维码半浮层（标题 <code>扫码添加专属健康管理助手</code>，副文 <code>微信扫一扫，添加你的专属健康管理助手</code>）。关闭浮层后：按钮变 <code>已开启</code> 并禁用，旁边出现 <code>查看二维码</code> 文字链，点击可再次打开浮层。</li>
+</ul>
+<h3 id="3-1-分享卡-链接分享-分享海报">3.1 分享卡（链接分享 + 分享海报）</h3>
+<p><strong>入口两处</strong>：06 屏的 <code>分享</code> 按钮 + 页面右上角固定的 <code>分享</code> 浮钮（品牌青色图标 + 文字，所有屏右上角都可见）。</p>
+<p>点击任一入口后，用 canvas 实时生成一张分享卡 PNG（375×667，2 倍图），生成中按钮显示 <code>正在生成分享卡…</code>，完成后弹出分享浮层：</p>
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>浮层标题 / 副文</td>
+<td><code>测测你的减重人格</code> / <code>追求健康与美丽，成为更好的自己</code></td>
+</tr>
+<tr>
+<td>分享卡预览图</td>
+<td>即 canvas 生成的 PNG</td>
+</tr>
+<tr>
+<td>隐私开关</td>
+<td>勾选 <code>隐藏头像、姓名及数据</code>：头像、昵称、减重数据都不绘制，二维码保留；切换时实时重绘</td>
+</tr>
+<tr>
+<td><code>保存图片</code></td>
+<td>下载 PNG（文件名 <code>减重人格-分享卡.png</code>），保存到相册即生成分享海报</td>
+</tr>
+</tbody></table>
+<p><strong>分享卡内容</strong>（链接分享与海报合在一张卡上）：</p>
+<ul>
+<li>人格插画封面（男 / 女版按档案性别取，同第 2 节配图规则）+ 白色渐隐。</li>
+<li>人格名两行大标题 + 该型固定分享文案（每型一条，如长期主义者 <code>不急于一时的结果，也不轻易否定当下的努力。相信时间的力量，让每一步都有意义。</code>；七型各一条，取自 <code>REQ-WL-BASE-01</code> 同步的人格文案库）。</li>
+<li>左下头像与昵称（昵称接真实用户资料；演示环境占位 <code>小美</code>，接资料时替换）。</li>
+<li>右下 AI 减重助理二维码（<code>qr-assistant.png</code>）——<strong>这是链接分享的载体</strong>：卡片转发出去，别人扫码即可进入 AI 减重助理。</li>
+<li>暂无系统分享面板 / 复制链接入口，是否需要补充待产品确认。</li>
 </ul>
 <h2 id="4-减重人格判定-06-屏">4. 减重人格判定（06 屏）</h2>
 <p><strong>内容数据源待确认</strong>：页面用到的全部数据（营期天数、每周体重记录、抽血与身体成分检测次数、用药与复查完成情况，以及各屏展示的曲线、成分、指标、服务统计数字）从哪里来——是服务端生成后下发、还是客户端按档案数据拼装——需要和开发确认后才能定；本单只约定页面展示结构与判定规则，不锁定数据来源方式。</p>
@@ -274,9 +310,32 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/Journey-Recap/in
 <li><input disabled="" type="checkbox"> 生产环境不保留演示辅助能力：无人格预览切换按钮，地址参数指定人格 / 性别不生效</li>
 <li><input disabled="" type="checkbox"> 页面全部数据由服务端下发，前台不写死（当前演示数据写死，待技术确认）</li>
 <li><input disabled="" type="checkbox"> 06 屏人格按第 4 节顺序判定命中即停；人格名、判据文案、插画三者对应</li>
-<li><input disabled="" type="checkbox"> <code>分享</code> 点击后文案变化并禁用；<code>开启健康管理</code> 弹二维码浮层，关闭后按钮变 <code>已开启</code>、出现 <code>查看二维码</code> 文字链</li>
+<li><input disabled="" type="checkbox"> <code>开启健康管理</code> 弹二维码浮层，关闭后按钮变 <code>已开启</code>、出现 <code>查看二维码</code> 文字链</li>
+<li><input disabled="" type="checkbox"> 06 屏 <code>分享</code> 按钮与右上角 <code>分享</code> 浮钮都能打开分享卡浮层，生成中显示 <code>正在生成分享卡…</code></li>
+<li><input disabled="" type="checkbox"> 分享卡含人格插画（男 / 女版）、人格名、固定分享文案、头像昵称、助理二维码；勾选 <code>隐藏头像、姓名及数据</code> 后头像、昵称、数据不绘制，二维码保留，实时重绘</li>
+<li><input disabled="" type="checkbox"> <code>保存图片</code> 下载 <code>减重人格-分享卡.png</code>，保存到相册</li>
 <li><input disabled="" type="checkbox"> 判定数据由服务端下发，页面不写死（当前演示数据写死，待技术确认）</li>
 </ul>
+<h2 id="6-埋点-汇总见-req-wl-base-01-第-3-6-节">6. 埋点（汇总见 <code>REQ-WL-BASE-01</code> 第 3.6 节）</h2>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>触发时机</th>
+<th>关键参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>recap_view</code></td>
+<td>结营回顾页曝光</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>content_share_click</code></td>
+<td>点 <code>分享</code>（06 屏按钮或右上角浮钮）</td>
+<td><code>content_type=recap</code>、<code>method(poster/link)</code>、<code>persona</code></td>
+</tr>
+</tbody></table>
 
   </main>
 </div>
