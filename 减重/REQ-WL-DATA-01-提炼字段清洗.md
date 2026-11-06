@@ -63,6 +63,7 @@
 | product_name | 文本 | 商品内容（商品名原文） |
 | category | 文本 | 类别 |
 | spec | 文本 | 规格 |
+| treatment_duration | 文本 | 药程：患者使用减重药物的持续时间（如「24 周」），来自订单 / DMS 处方信息 |
 
 **就诊记录 visits（数组）**
 
@@ -116,7 +117,7 @@
 | reference_range | 文本 | 参考范围，报告有就带 |
 | abnormal | 枚举：是 / 否 | 是否偏高 / 异常；「未见异常」类描述不输出 |
 | recorded_at | 日期 | 检验 / 报告时间 |
-| source | 枚举：`exam` 体检报告 / `visit` 病历 | 来源 |
+| source | 枚举：`院内检查` / `院内体检` / `院外体检` / `小程序记录` / `用户自述` / `其他` | 数据来源 |
 
 **安全筛查 safety_screening（单对象）**
 
@@ -126,7 +127,7 @@
 | contraindication_items | 文本数组 | 答「有」时的具体命中项 |
 | pregnancy_status | 枚举：备孕 / 怀孕 / 哺乳 / 无 / 未作答 | 孕产阶段；男性记「未作答」 |
 | age_ok | 布尔 | 是否满 18 周岁（按出生日期现算） |
-| recorded_at | 日期时间 | 问卷提交时间 |
+| recorded_at | 日期时间 | 数据录入时间（不等于问卷提交时间：后台补录、修改后以最近一次录入时间为准） |
 
 **心态相关 psychology（单对象）**
 
@@ -157,7 +158,7 @@
 | 副作用情况 | 病历记录时间或企微消息时间（按来源） |
 | 基础指标 | 该次测量时间 |
 | 检验记录 | 检验 / 报告时间 |
-| 安全筛查 | 问卷提交时间 |
+| 安全筛查 | 数据录入时间 |
 | 心态相关 | 问卷字段用问卷提交时间；感受反馈各条用企微消息时间 |
 
 - 时间戳原样输出到「日」；原始数据带时刻的（就诊到达时间、下单时间）保留到分。
@@ -176,7 +177,7 @@
 {
   "patient_info": { "patient_id": "P0001", "name": "王雅静", "gender": "F", "birth_date": "1994-03-12", "age": 32 },
   "orders": [
-    { "order_id": "SO20261104001", "recorded_at": "2026-11-04 10:32", "product_name": "体重管理首诊套餐（【穆峰达】替尔泊肽注射液）", "category": "医疗服务", "spec": "首诊套餐" }
+    { "order_id": "SO20261104001", "recorded_at": "2026-11-04 10:32", "product_name": "体重管理首诊套餐（【穆峰达】替尔泊肽注射液）", "category": "医疗服务", "spec": "首诊套餐", "treatment_duration": "24 周" }
   ],
   "visits": [
     { "recorded_at": "2026-11-05 09:15", "doctor_name": "李医生", "record_text": "患者自述体重增加 2 年，饮食不规律……（病历原文，仅医生端可见）" }
@@ -194,10 +195,10 @@
   ],
   "weight_freshness": "新鲜",
   "lab_results": [
-    { "item": "血压", "value": "118/76", "unit": "mmHg", "reference_range": "<140/90", "abnormal": "否", "recorded_at": "2026-05-18", "source": "exam" },
-    { "item": "空腹血糖", "value": 5.1, "unit": "mmol/L", "reference_range": "3.9-6.1", "abnormal": "否", "recorded_at": "2026-05-18", "source": "exam" },
-    { "item": "甘油三酯", "value": 1.3, "unit": "mmol/L", "reference_range": "<1.7", "abnormal": "否", "recorded_at": "2026-05-18", "source": "exam" },
-    { "item": "肝脏超声", "value": "轻度脂肪肝", "unit": "", "reference_range": "", "abnormal": "是", "recorded_at": "2026-05-18", "source": "exam" }
+    { "item": "血压", "value": "118/76", "unit": "mmHg", "reference_range": "<140/90", "abnormal": "否", "recorded_at": "2026-05-18", "source": "院内体检" },
+    { "item": "空腹血糖", "value": 5.1, "unit": "mmol/L", "reference_range": "3.9-6.1", "abnormal": "否", "recorded_at": "2026-05-18", "source": "院内检查" },
+    { "item": "甘油三酯", "value": 1.3, "unit": "mmol/L", "reference_range": "<1.7", "abnormal": "否", "recorded_at": "2026-05-18", "source": "院内检查" },
+    { "item": "肝脏超声", "value": "轻度脂肪肝", "unit": "", "reference_range": "", "abnormal": "是", "recorded_at": "2026-05-18", "source": "院内体检" }
   ],
   "safety_screening": { "contraindication": "无", "contraindication_items": [], "pregnancy_status": "无", "age_ok": true, "recorded_at": "2026-11-04 10:30" },
   "psychology": { "weight_goal": "减重 10kg", "gain_causes": ["饮食不规律"], "treatment_goals": ["改善脂肪肝"], "feedback": [ { "text": "这周不容易饿了，晚上不再想吃东西", "recorded_at": "2026-11-05 20:38" } ], "recorded_at": "2026-11-04 10:30" },
