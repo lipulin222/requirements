@@ -150,21 +150,21 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <li class="lv2"><a href="#3-同一件事多处记录时-用哪一份">3. 同一件事多处记录时，用哪一份</a></li>
 <li class="lv2"><a href="#4-这些字段不要-用不到的都删掉">4. 这些字段不要（用不到的都删掉）</a></li>
 <li class="lv2"><a href="#5-体重新鲜度">5. 体重新鲜度</a></li>
-<li class="lv2"><a href="#6-分流档位怎么定">6. 分流档位怎么定</a></li>
-<li class="lv2"><a href="#7-特殊情况处理">7. 特殊情况处理</a></li>
-<li class="lv2"><a href="#8-数据红线">8. 数据红线</a></li>
-<li class="lv2"><a href="#9-验收-用-10-个测试人设逐个对">9. 验收（用 10 个测试人设逐个对）</a></li></ol>
+<li class="lv2"><a href="#6-特殊情况处理">6. 特殊情况处理</a></li>
+<li class="lv2"><a href="#7-数据红线">7. 数据红线</a></li>
+<li class="lv2"><a href="#8-验收-用-10-个测试人设逐个对">8. 验收（用 10 个测试人设逐个对）</a></li></ol>
   </nav>
   <main class="doc">
     <h1>提炼字段清洗（AI 诊断数据集）</h1>
     <p class="subtitle">需求单 · 科学减重（WL） · 交付目标：可上线面向用户使用（H5 + 微信小程序）</p>
     <blockquote>
 <p>编号 <code>REQ-WL-DATA-01</code> ｜ 项目：科学减重（WL）｜ 模块：数据清洗 ｜ 状态：制定中
-一句话：把 6 张业务表和企业微信沟通记录合并成「每人一份、按 10 个数据域组织」的提炼数据集（所有明细带时间戳与来源），供减重问卷分流判定和医生端「患者身体状况 AI 总结」使用。效果可看 <a href="https://lipulin222.github.io/health-subscription-demo/patient-ai-summary/">医生速览页</a>。</p>
+一句话：把 6 张业务表和企业微信沟通记录合并成「每人一份、按 9 个数据域组织」的提炼数据集（所有明细带时间戳与来源），供医生端「患者身体状况 AI 总结」等场景使用。效果可看 <a href="https://lipulin222.github.io/health-subscription-demo/patient-ai-summary/">医生速览页</a>。
+<strong>本单只涉及数据维度与报表设计，不涉及分流等产品逻辑</strong>——档位判定等规则由对应需求单另行约定。</p>
 </blockquote>
 <hr>
 <h2 id="1-做什么">1. 做什么</h2>
-<p>系统里关于一个患者的信息分散在 6 张业务表和企业微信沟通记录里，很多内容重复记录、有的是自由文本，不能直接拿来用。本需求要求把这些数据洗成 <strong>每个就诊人一份、按 10 个数据域组织</strong> 的数据集。</p>
+<p>系统里关于一个患者的信息分散在 6 张业务表和企业微信沟通记录里，很多内容重复记录、有的是自由文本，不能直接拿来用。本需求要求把这些数据洗成 <strong>每个就诊人一份、按 9 个数据域组织</strong> 的数据集。</p>
 <p><strong>输入数据（6 张表 + 企微记录）</strong></p>
 <table>
 <thead>
@@ -202,7 +202,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <td>患者与顾问 / 医生的聊天内容、消息时间（感受反馈与副作用线索的来源）</td>
 </tr>
 </tbody></table>
-<p><strong>输出的 10 个数据域</strong></p>
+<p><strong>输出的 9 个数据域</strong></p>
 <table>
 <thead>
 <tr>
@@ -216,11 +216,11 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </tr>
 <tr>
 <td>消费记录</td>
-<td>订单编号、下单时间、商品内容（商品名）、类别、规格</td>
+<td>订单编号、下单时间、商品内容（商品名）、类别、规格、药程</td>
 </tr>
 <tr>
 <td>就诊记录</td>
-<td>就诊时间、接诊医生、病历内容原文</td>
+<td>就诊时间、来源（线上 / 线下）、接诊医生、病历内容原文</td>
 </tr>
 <tr>
 <td>用药信息</td>
@@ -240,20 +240,16 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </tr>
 <tr>
 <td>安全筛查</td>
-<td>禁忌症（有 / 无 / 不确定 + 命中项）、孕产阶段、年龄准入（是否满 18）</td>
+<td>禁忌症（有 / 无 / 不确定 + 命中项）、孕产阶段、年龄（是否满 18 由消费方按出生日期判定）</td>
 </tr>
 <tr>
 <td>心态相关</td>
 <td>减重目标、原因自评、治疗目标（除体重数字外的目标）、感受反馈（从企业微信聊天记录提取）</td>
 </tr>
-<tr>
-<td>分流标签</td>
-<td>预期分流档位（无慢病 / 轻微异常 / 线下优先 / 排除）+ 触发依据</td>
-</tr>
 </tbody></table>
 <hr>
 <h2 id="2-输出数据表结构设计">2. 输出数据表结构设计</h2>
-<p>输出为<strong>每就诊人一条主记录</strong>，主记录下按数据域组织（JSON 或关系表均可，开发照此建表 / 定接口）。所有明细条目带时间戳 <code>recorded_at</code> 和来源 <code>source</code>（约定见 2.4）。</p>
+<p>输出为<strong>每就诊人一条主记录</strong>，主记录下按数据域组织（JSON 或关系表均可，开发照此建表 / 定接口）。所有明细条目带时间戳 <code>recorded_at</code> 和来源 <code>source</code>（约定见 2.2）。</p>
 <h3 id="2-1-各数据域字段定义">2.1 各数据域字段定义</h3>
 <p><strong>基础信息 patient_info（单对象）</strong></p>
 <table>
@@ -293,7 +289,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <td>age</td>
 <td>整数</td>
 <td>必填</td>
-<td>按出生日期现算；问卷自填年龄只做对账，对不上在分流标签里提示</td>
+<td>按出生日期现算；问卷自填年龄只做对账，对不上在输出附注里提示</td>
 </tr>
 </tbody></table>
 <p><strong>消费记录 orders（数组）</strong></p>
@@ -363,7 +359,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <tr>
 <td>record_text</td>
 <td>文本</td>
-<td>病历内容原文（仅医生端可见，见第 8 节红线）</td>
+<td>病历内容原文（仅医生端可见，见第 7 节红线）</td>
 </tr>
 </tbody></table>
 <p><strong>用药信息 medications（数组）</strong></p>
@@ -408,7 +404,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <tbody><tr>
 <td>item</td>
 <td>文本</td>
-<td>副作用 / 不适描述（如「恶心，饭后明显」「注射部位红肿」）</td>
+<td>副作用 / 不适描述（如「恶心，饭后明显」「注射部位红肿」），提到具体药物的一并注明</td>
 </tr>
 <tr>
 <td>recorded_at</td>
@@ -422,8 +418,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </tr>
 </tbody></table>
 <ul>
-<li>从病历文本和企业微信聊天记录中提取患者描述的不适与副作用；提到具体药物的一并注明（写在 item 里，如「注射替尔泊肽后恶心」）。</li>
-<li>顾问 / 医生回复的安抚内容不算副作用，不提取；同一不适多次反馈逐条保留，不合并。</li>
+<li>从病历文本和企业微信聊天记录中提取患者描述的不适与副作用；顾问 / 医生回复的安抚内容不算副作用，不提取；同一不适多次反馈逐条保留，不合并。</li>
 </ul>
 <p><strong>基础指标 body_metrics（数组）</strong></p>
 <table>
@@ -463,7 +458,6 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <ul>
 <li>同一指标多条全部保留，按时间升序；同一天多条不合并。</li>
 <li>空值测量（测了没记数值）不入明细。</li>
-<li>体重明细单独支撑：新鲜度（5.1）与反弹判定（5.2）。</li>
 </ul>
 <p><strong>检验记录 lab_results（数组）</strong></p>
 <table>
@@ -535,11 +529,6 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <td>孕产阶段；男性记「未作答」</td>
 </tr>
 <tr>
-<td>age_ok</td>
-<td>布尔</td>
-<td>是否满 18 周岁（按出生日期现算）</td>
-</tr>
-<tr>
 <td>recorded_at</td>
 <td>日期时间</td>
 <td>数据录入时间（不等于问卷提交时间：后台补录、修改后以最近一次录入时间为准）</td>
@@ -580,28 +569,8 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <td>问卷提交时间（feedback 的各条时间在条目内）</td>
 </tr>
 </tbody></table>
-<p><strong>分流标签 triage（单对象）</strong></p>
-<table>
-<thead>
-<tr>
-<th>字段</th>
-<th>类型</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>expected_tier</td>
-<td>枚举：无慢病 / 轻微异常 / 线下优先 / 排除</td>
-<td>预期分流档位（规则见第 6 节）</td>
-</tr>
-<tr>
-<td>trigger_reason</td>
-<td>文本</td>
-<td>触发依据，指到具体字段值（如「就诊记录提及 2 型糖尿病 + 用药信息含胰岛素」），不允许只给档位不给原因</td>
-</tr>
-</tbody></table>
 <h3 id="2-2-时间戳约定-全字段">2.2 时间戳约定（全字段）</h3>
-<p><strong>除基础信息（patient_info）和分流标签（triage）外，其余每个数据域的每条明细都必须带时间戳 <code>recorded_at</code> 与来源 <code>source</code></strong>：</p>
+<p><strong>除基础信息（patient_info）外，其余每个数据域的每条明细都必须带时间戳 <code>recorded_at</code> 与来源 <code>source</code></strong>：</p>
 <table>
 <thead>
 <tr>
@@ -643,8 +612,8 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </tr>
 </tbody></table>
 <ul>
-<li>时间戳原样输出到「日」；原始数据带时刻的（就诊到达时间、下单时间）保留到分。</li>
-<li>同一条内容多处记录时输出一条、取最近一次的时间，差异在分流标签触发依据里说明。</li>
+<li>时间戳原样输出到「日」；原始数据带时刻的（就诊到达时间、下单时间、消息时间）保留到分。</li>
+<li>同一条内容多处记录时输出一条、取最近一次的时间，差异在输出附注里说明。</li>
 </ul>
 <h3 id="2-3-检验记录的指标清单-按首诊问卷与体检报告圈定">2.3 检验记录的指标清单（按首诊问卷与体检报告圈定）</h3>
 <p>血压、空腹血糖、糖化血红蛋白（HbA1c）、总胆固醇、甘油三酯、低密度脂蛋白胆固醇（LDL-C）、高密度脂蛋白胆固醇（HDL-C）、尿酸、丙氨酸转氨酶（ALT）、天冬氨酸转氨酶（AST）、空腹胰岛素、肝脏超声（脂肪肝）。</p>
@@ -679,9 +648,8 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
     { &quot;item&quot;: &quot;甘油三酯&quot;, &quot;value&quot;: 1.3, &quot;unit&quot;: &quot;mmol/L&quot;, &quot;reference_range&quot;: &quot;&lt;1.7&quot;, &quot;abnormal&quot;: &quot;否&quot;, &quot;recorded_at&quot;: &quot;2026-05-18&quot;, &quot;source&quot;: &quot;院内检查&quot; },
     { &quot;item&quot;: &quot;肝脏超声&quot;, &quot;value&quot;: &quot;轻度脂肪肝&quot;, &quot;unit&quot;: &quot;&quot;, &quot;reference_range&quot;: &quot;&quot;, &quot;abnormal&quot;: &quot;是&quot;, &quot;recorded_at&quot;: &quot;2026-05-18&quot;, &quot;source&quot;: &quot;院内体检&quot; }
   ],
-  &quot;safety_screening&quot;: { &quot;contraindication&quot;: &quot;无&quot;, &quot;contraindication_items&quot;: [], &quot;pregnancy_status&quot;: &quot;无&quot;, &quot;age_ok&quot;: true, &quot;recorded_at&quot;: &quot;2026-11-04 10:30&quot; },
-  &quot;psychology&quot;: { &quot;weight_goal&quot;: &quot;减重 10kg&quot;, &quot;gain_causes&quot;: [&quot;饮食不规律&quot;], &quot;treatment_goals&quot;: [&quot;改善脂肪肝&quot;], &quot;feedback&quot;: [ { &quot;text&quot;: &quot;这周不容易饿了，晚上不再想吃东西&quot;, &quot;recorded_at&quot;: &quot;2026-11-05 20:38&quot; } ], &quot;recorded_at&quot;: &quot;2026-11-04 10:30&quot; },
-  &quot;triage&quot;: { &quot;expected_tier&quot;: &quot;无慢病&quot;, &quot;trigger_reason&quot;: &quot;BMI 31.8（83.5kg ÷ 1.62m²）≥ 28；无排除项；无慢病与相关用药；检验异常仅轻度脂肪肝（进异常提示）&quot; }
+  &quot;safety_screening&quot;: { &quot;contraindication&quot;: &quot;无&quot;, &quot;contraindication_items&quot;: [], &quot;pregnancy_status&quot;: &quot;无&quot;, &quot;recorded_at&quot;: &quot;2026-11-04 10:30&quot; },
+  &quot;psychology&quot;: { &quot;weight_goal&quot;: &quot;减重 10kg&quot;, &quot;gain_causes&quot;: [&quot;饮食不规律&quot;], &quot;treatment_goals&quot;: [&quot;改善脂肪肝&quot;], &quot;feedback&quot;: [ { &quot;text&quot;: &quot;这周不容易饿了，晚上不再想吃东西&quot;, &quot;recorded_at&quot;: &quot;2026-11-05 20:38&quot; } ], &quot;recorded_at&quot;: &quot;2026-11-04 10:30&quot; }
 }
 </code></pre>
 <ul>
@@ -698,7 +666,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </thead>
 <tbody><tr>
 <td>体重</td>
-<td>就诊记录、体检报告、问卷第③题都可能有。<strong>所有来源的体重记录全部输出</strong>（数值、测量时间、来源），不去重、不汇总、不取「最新一条」；问卷自填的体重照常输出，来源标「问卷」。问卷填的数和实测对不上时，把差异记进分流标签触发依据（例：问卷填 84.4kg，最近实测 83.5kg）。</td>
+<td>就诊记录、体检报告、问卷第③题都可能有。<strong>所有来源的体重记录全部输出</strong>（数值、测量时间、来源），不去重、不汇总、不取「最新一条」；问卷自填的体重照常输出，来源标「问卷」。</td>
 </tr>
 <tr>
 <td>身高</td>
@@ -706,11 +674,11 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </tr>
 <tr>
 <td>BMI</td>
-<td>不照抄报告里的数，用「最新实测体重 ÷ 身高²」现算，保留 1 位小数，写在分流标签触发依据里。</td>
+<td>数据集不单独输出；消费方用「最新实测体重 ÷ 身高²」现算，保留 1 位小数。</td>
 </tr>
 <tr>
 <td>年龄</td>
-<td>用出生日期算。问卷里自己填的年龄只用来对账，对不上要在分流标签里提示。</td>
+<td>用出生日期算。问卷里自己填的年龄只用来对账，对不上在输出附注里提示。</td>
 </tr>
 <tr>
 <td>性别</td>
@@ -718,19 +686,19 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </tr>
 <tr>
 <td>疾病</td>
-<td>体检报告「既往病史」+ 问卷第⑤题 + 病历里写到的诊断，三处合并去重；同一种病的不同叫法统一成一种说法（以病历写法为准）。<strong>不单独设疾病清单字段</strong>，归类结果直接写进分流标签触发依据。</td>
+<td>病历原文、体检报告「既往病史」、问卷第⑤题原文各自保留在对应域里（就诊记录 / 检验记录 / 安全筛查），<strong>不做合并归类</strong>，统一命名与归口由消费方（AI 总结）处理。</td>
 </tr>
 <tr>
 <td>用药</td>
-<td>药品名称、剂量逐条进用药信息；分流所需的类别归类（胰岛素 / 口服降糖药 / 降压药 / 他汀或抗凝 / 糖皮质激素 / 其他处方药 / 无）<strong>宁可多归不可漏归</strong>，写在触发依据里。</td>
+<td>药品名称、剂量逐条进用药信息；不做治疗类别归类。</td>
 </tr>
 <tr>
 <td>家族史</td>
-<td>不单独输出（分流规则用不到）；原文保留在体检报告与病历内容里，医生端可查。</td>
+<td>不单独输出（数据集用不到）；原文保留在体检报告与病历内容里，医生端可查。</td>
 </tr>
 <tr>
-<td>异常指标</td>
-<td>检验记录里 <code>abnormal = 是</code> 的条目；「未见异常」之类的描述全部丢掉。</td>
+<td>异常标记</td>
+<td>检验记录里 <code>abnormal = 是</code> 的条目即异常项；「未见异常」之类的描述全部丢掉。</td>
 </tr>
 <tr>
 <td>各种时间</td>
@@ -772,17 +740,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <li>没有任何实测体重（只有问卷自填）→ 标「无实测数据，需实测」。</li>
 </ul>
 <hr>
-<h2 id="6-分流档位怎么定">6. 分流档位怎么定</h2>
-<p>按下面的顺序判断，<strong>排在前面的先看，命中就定档</strong>：</p>
-<ol>
-<li><strong>先看排除</strong>：年龄不满 18 岁（<code>age_ok = false</code>）、孕产阶段是备孕 / 怀孕 / 哺乳、禁忌症答「有」——只要占一条，直接判「排除」（排除优先级最高，其他条件再符合也排除）；</li>
-<li><strong>再看需要医生把关的情形</strong>：确诊糖尿病（尤其正在打胰岛素）、确诊冠心病或中风、正在用糖皮质激素（可能是药物引起的增重）、严重肾脏疾病——判「线下优先」；</li>
-<li><strong>再看指标偏高</strong>：没有确诊疾病，但检验记录里 <code>abnormal = 是</code> 的条目（在有效期内）不为空——判「轻微异常」，触发依据带「建议复查××」；</li>
-<li><strong>最后看是否符合适应症</strong>：BMI ≥ 28，或 BMI ≥ 24 且有体重相关合并症——判「无慢病，直达订阅」。</li>
-</ol>
-<p>体检报告已过有效期时，其检验条目不得作为第 4 条的判定现状（见第 7 节）。</p>
-<hr>
-<h2 id="7-特殊情况处理">7. 特殊情况处理</h2>
+<h2 id="6-特殊情况处理">6. 特殊情况处理</h2>
 <table>
 <thead>
 <tr>
@@ -792,11 +750,11 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </thead>
 <tbody><tr>
 <td>病在问卷选项里找不到（如肾病综合征）</td>
-<td>以病历和问卷第⑧题「其他病史」为准定档，并在触发依据里标注「问卷选项未覆盖」。只看问卷第⑤题会漏判</td>
+<td>病历与问卷第⑧题原文照常进数据集，不强行归到问卷选项</td>
 </tr>
 <tr>
 <td>患者在「指标偏高」题勾了其实已经确诊的项目</td>
-<td>属于常见误选，<strong>保留原样</strong>并在触发依据里说明，不要擅自清洗掉</td>
+<td>属于常见误选，<strong>保留原样</strong>，不擅自清洗掉</td>
 </tr>
 <tr>
 <td>男性跳过「备孕怀孕哺乳」题</td>
@@ -808,79 +766,68 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </tr>
 <tr>
 <td>体检报告太旧（如 2 年前、当时体重还正常）</td>
-<td>报告已过有效期：其检验记录条目标「过期」，不得当现状参与分流；基础指标里的历史测量值照常保留（体重明细、反弹判定要用）</td>
+<td>报告已过有效期：其检验记录条目标「过期」，不当现状展示；基础指标里的历史测量值照常保留</td>
 </tr>
 </tbody></table>
 <hr>
-<h2 id="8-数据红线">8. 数据红线</h2>
+<h2 id="7-数据红线">7. 数据红线</h2>
 <ul>
 <li>病历原文、检验原值、企业微信聊天记录内容 <strong>只在医生端数据集与医生端页面</strong>出现，用户端一律不展示；</li>
 <li>输出数据里不得出现姓名之外的身份信息（手机号、身份证、地址等）；</li>
 <li>体检报告「体检建议」等建议类文本不进入数据集。</li>
 </ul>
 <hr>
-<h2 id="9-验收-用-10-个测试人设逐个对">9. 验收（用 10 个测试人设逐个对）</h2>
+<h2 id="8-验收-用-10-个测试人设逐个对">8. 验收（用 10 个测试人设逐个对）</h2>
 <table>
 <thead>
 <tr>
 <th>人设</th>
-<th>验收要点</th>
-<th>预期档位</th>
+<th>数据验收要点</th>
 </tr>
 </thead>
 <tbody><tr>
 <td>王雅静（女 32）</td>
-<td>体重明细含问卷 84.4 与实测 83.5 两条；轻度脂肪肝在检验记录标异常</td>
-<td>无慢病</td>
+<td>体重明细含问卷 84.4 与实测 83.5 两条；轻度脂肪肝在检验记录标异常；订单含药程「24 周」</td>
 </tr>
 <tr>
 <td>李婷（女 28）</td>
 <td>基础指标只有问卷自填体重，新鲜度标「无实测数据，需重填」；无订单无就诊不报错</td>
-<td>无慢病（重填后确认）</td>
 </tr>
 <tr>
 <td>许雯（女 35）</td>
 <td>血脂偏高在检验记录标异常；腰围缺失不报错</td>
-<td>轻微异常</td>
 </tr>
 <tr>
 <td>张建国（男 52）</td>
-<td>用药信息含具体药名与剂量；触发依据归类「口服降糖药 + 降压药」；问卷误选保留；孕产记「未作答」</td>
-<td>线下优先</td>
+<td>用药信息含具体药名与剂量；孕产记「未作答」</td>
 </tr>
 <tr>
 <td>刘桂芳（女 45）</td>
-<td>用药信息含胰岛素及剂量；胆囊切除保留在病历原文里并在触发依据引用</td>
-<td>线下优先</td>
+<td>用药信息含胰岛素及剂量；胆囊切除保留在病历原文里</td>
 </tr>
 <tr>
 <td>赵德海（男 58）</td>
 <td>体重新鲜度标「临界」</td>
-<td>线下优先</td>
 </tr>
 <tr>
 <td>孙梦琪（女 29）</td>
-<td>第⑤题「以上都没有」但第⑧题「严重肾脏疾病」+ 用药「糖皮质激素」，仍判线下优先并标「问卷选项未覆盖」；过期报告的检验条目标「过期」</td>
-<td>线下优先</td>
+<td>第⑤题「以上都没有」但第⑧题原文照常保留；过期报告的检验条目标「过期」</td>
 </tr>
 <tr>
 <td>周凯（男 36）</td>
-<td>体重明细含全部记录；1 条空病历不报错；反弹不再参与分流</td>
-<td>按其余条件判定</td>
+<td>体重明细含全部记录；1 条空病历不报错</td>
 </tr>
 <tr>
 <td>沈佳怡（女 30）</td>
-<td>备孕「是」→ 排除，即使 BMI、疾病等条件都满足</td>
-<td>排除</td>
+<td>孕产阶段「备孕」原样输出</td>
 </tr>
 <tr>
 <td>唐子睿（男 17）</td>
-<td>17 岁 → 排除</td>
-<td>排除</td>
+<td>出生日期原样输出（是否满 18 由消费方判定）</td>
 </tr>
 </tbody></table>
-<p><strong>通用验收（所有人设）</strong>：除基础信息与分流标签外，每条明细都带时间戳 <code>recorded_at</code> 与来源 <code>source</code>，取值口径符合第 2.2 节；任意一条缺时间戳或来源即验收不通过。</p>
-<p>交付物：① 字段字典（即第 2 节各数据域字段定义）；② 清洗程序或服务；③ 上述 10 人设跑出的输出与预期档位的对照报告。</p>
+<p><strong>通用验收（所有人设）</strong>：除基础信息外，每条明细都带时间戳 <code>recorded_at</code> 与来源 <code>source</code>，取值口径符合第 2.2 节；任意一条缺时间戳或来源即验收不通过。</p>
+<p>交付物：① 字段字典（即第 2 节各数据域字段定义）；② 清洗程序或服务；③ 上述 10 人设跑出的输出对照报告。</p>
 
   </main>
 </div>
