@@ -149,9 +149,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <li class="lv3"><a href="#2-4-输出示例-人设-王雅静">2.4 输出示例（人设：王雅静）</a></li>
 <li class="lv2"><a href="#3-同一件事多处记录时-用哪一份">3. 同一件事多处记录时，用哪一份</a></li>
 <li class="lv2"><a href="#4-体重新鲜度">4. 体重新鲜度</a></li>
-<li class="lv2"><a href="#5-特殊情况处理">5. 特殊情况处理</a></li>
-<li class="lv2"><a href="#6-数据红线">6. 数据红线</a></li>
-<li class="lv2"><a href="#7-验收-用-10-个测试人设逐个对">7. 验收（用 10 个测试人设逐个对）</a></li></ol>
+<li class="lv2"><a href="#5-验收-用-10-个测试人设逐个对">5. 验收（用 10 个测试人设逐个对）</a></li></ol>
   </nav>
   <main class="doc">
     <h1>提炼字段清洗（AI 诊断数据集）</h1>
@@ -363,7 +361,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <tr>
 <td>record_text</td>
 <td>文本</td>
-<td>病历内容原文（仅医生端可见，见第 6 节红线）</td>
+<td>病历内容原文（仅医生端可见）</td>
 </tr>
 </tbody></table>
 <p><strong>用药信息 medications（数组）</strong></p>
@@ -772,44 +770,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <li>没有任何实测体重（只有问卷自填）→ 标「无实测数据，需实测」。</li>
 </ul>
 <hr>
-<h2 id="5-特殊情况处理">5. 特殊情况处理</h2>
-<table>
-<thead>
-<tr>
-<th>情况</th>
-<th>处理</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>病在问卷选项里找不到（如肾病综合征）</td>
-<td>病历与问卷第⑧题原文照常进数据集，不强行归到问卷选项</td>
-</tr>
-<tr>
-<td>患者在「指标偏高」题勾了其实已经确诊的项目</td>
-<td>属于常见误选，<strong>保留原样</strong>，不擅自清洗掉</td>
-</tr>
-<tr>
-<td>男性跳过「备孕怀孕哺乳」题</td>
-<td>孕产阶段记「未作答」，不算缺失</td>
-</tr>
-<tr>
-<td>某次就诊只测了体重、医生没写病历</td>
-<td>就诊记录照常输出（病历内容为空），该次体重照常进基础指标，不报错</td>
-</tr>
-<tr>
-<td>体检报告太旧（如 2 年前、当时体重还正常）</td>
-<td>报告已过有效期：其检验记录条目标「过期」，不当现状展示；基础指标里的历史测量值照常保留</td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="6-数据红线">6. 数据红线</h2>
-<ul>
-<li>病历原文、检验原值、企业微信聊天记录内容 <strong>只在医生端数据集与医生端页面</strong>出现，用户端一律不展示；</li>
-<li>输出数据里不得出现姓名之外的身份信息（手机号、身份证、地址等）；</li>
-<li>体检报告「体检建议」等建议类文本不进入数据集。</li>
-</ul>
-<hr>
-<h2 id="7-验收-用-10-个测试人设逐个对">7. 验收（用 10 个测试人设逐个对）</h2>
+<h2 id="5-验收-用-10-个测试人设逐个对">5. 验收（用 10 个测试人设逐个对）</h2>
 <table>
 <thead>
 <tr>
