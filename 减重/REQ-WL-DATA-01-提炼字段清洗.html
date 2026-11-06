@@ -148,8 +148,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <li class="lv3"><a href="#2-3-检验记录的指标清单-按首诊问卷与体检报告圈定">2.3 检验记录的指标清单（按首诊问卷与体检报告圈定）</a></li>
 <li class="lv3"><a href="#2-4-输出示例-人设-王雅静">2.4 输出示例（人设：王雅静）</a></li>
 <li class="lv2"><a href="#3-同一件事多处记录时-用哪一份">3. 同一件事多处记录时，用哪一份</a></li>
-<li class="lv2"><a href="#4-体重新鲜度">4. 体重新鲜度</a></li>
-<li class="lv2"><a href="#5-验收-用-10-个测试人设逐个对">5. 验收（用 10 个测试人设逐个对）</a></li></ol>
+<li class="lv2"><a href="#4-验收-用-10-个测试人设逐个对">4. 验收（用 10 个测试人设逐个对）</a></li></ol>
   </nav>
   <main class="doc">
     <h1>提炼字段清洗（AI 诊断数据集）</h1>
@@ -740,7 +739,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 }
 </code></pre>
 <ul>
-<li><code>weight_freshness</code> 为主表级派生字段：按第 4 节对体重明细最近一条实测现算（枚举：新鲜 / 临界 / 过期 / 无数据）。</li>
+<li><code>weight_freshness</code> 为主表级派生字段：对体重明细最近一条实测标注新鲜度（枚举：新鲜 / 临界 / 过期，需重填 / 无实测数据）。</li>
 </ul>
 <hr>
 <h2 id="3-同一件事多处记录时-用哪一份">3. 同一件事多处记录时，用哪一份</h2>
@@ -753,15 +752,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <li>优先级低的记录不丢弃，仍保留在各明细里（体重趋势、新鲜度要用）。</li>
 </ul>
 <hr>
-<h2 id="4-体重新鲜度">4. 体重新鲜度</h2>
-<ul>
-<li>最近一次实测体重距今 <strong>超过 3 个月</strong> → 标「过期，需重填」；</li>
-<li>距今 <strong>2~3 个月</strong> → 标「临界，建议复测」；</li>
-<li>3 个月以内 → 标「新鲜」；</li>
-<li>没有任何实测体重（只有问卷自填）→ 标「无实测数据，需实测」。</li>
-</ul>
-<hr>
-<h2 id="5-验收-用-10-个测试人设逐个对">5. 验收（用 10 个测试人设逐个对）</h2>
+<h2 id="4-验收-用-10-个测试人设逐个对">4. 验收（用 10 个测试人设逐个对）</h2>
 <table>
 <thead>
 <tr>
