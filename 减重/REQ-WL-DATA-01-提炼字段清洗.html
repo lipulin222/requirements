@@ -155,11 +155,11 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
     <p class="subtitle">需求单 · 科学减重（WL） · 交付目标：可上线面向用户使用（H5 + 微信小程序）</p>
     <blockquote>
 <p>编号 <code>REQ-WL-DATA-01</code> ｜ 项目：科学减重（WL）｜ 模块：数据清洗 ｜ 状态：制定中
-一句话：把 6 张业务表合并成「每人一份、17 个字段」的提炼数据集，供减重问卷分流判定和医生端「患者身体状况 AI 总结」使用。效果可看 <a href="https://lipulin222.github.io/health-subscription-demo/patient-ai-summary/">医生速览页</a>。</p>
+一句话：把 6 张业务表合并成「每人一份、16 个字段」的提炼数据集，供减重问卷分流判定和医生端「患者身体状况 AI 总结」使用。效果可看 <a href="https://lipulin222.github.io/health-subscription-demo/patient-ai-summary/">医生速览页</a>。</p>
 </blockquote>
 <hr>
 <h2 id="1-做什么">1. 做什么</h2>
-<p>系统里关于一个患者的信息分散在 6 张表里，很多内容重复记录、有的是自由文本，不能直接用来做分流判定。本需求要求把这 6 张表洗成 <strong>每个就诊人一份、固定 17 个字段</strong> 的数据集。</p>
+<p>系统里关于一个患者的信息分散在 6 张表里，很多内容重复记录、有的是自由文本，不能直接用来做分流判定。本需求要求把这 6 张表洗成 <strong>每个就诊人一份、固定 16 个字段</strong> 的数据集。</p>
 <p><strong>输入表（6 张）</strong></p>
 <table>
 <thead>
@@ -206,8 +206,8 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <td>就诊人 ID、姓名、性别、出生日期</td>
 </tr>
 <tr>
-<td>B 体重与轨迹（2）</td>
-<td>当前体重（附测量时间和新鲜度）、近 24 个月体重轨迹（起始→…→当前、反弹次数）</td>
+<td>B 体重记录（1）</td>
+<td><strong>全部体重记录明细</strong>：每条含体重数值、记录时间、记录来源（就诊记录 / 体检报告 / 问卷自填），按时间排序输出；并对最近一次实测标注新鲜度（规则见 4.1）</td>
 </tr>
 <tr>
 <td>C 疾病与用药（4）</td>
@@ -241,7 +241,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </thead>
 <tbody><tr>
 <td>体重</td>
-<td>就诊记录、体检报告、问卷第③题都可能有。<strong>取时间最新的那次实际测量值</strong>，并带上测量时间。问卷里自己填的数和实测对不上时，以实测为准，同时把差异记进触发依据（例：问卷填 84.4kg，最近实测 83.5kg）。</td>
+<td>就诊记录、体检报告、问卷第③题都可能有。<strong>所有来源的体重记录全部输出</strong>（数值、记录时间、记录来源），不去重、不汇总、不取「最新一条」；问卷自填的体重照常输出，来源标「问卷」。问卷填的数和实测对不上时，把差异记进触发依据（例：问卷填 84.4kg，最近实测 83.5kg）。</td>
 </tr>
 <tr>
 <td>身高</td>
@@ -326,7 +326,8 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <ul>
 <li>把近 24 个月内的就诊体重按时间排序；</li>
 <li>体重比上一次 <strong>下降 2kg 及以上</strong>，之后又 <strong>回升 2kg 及以上</strong>，记反弹 1 次；</li>
-<li>反弹 <strong>2 次及以上</strong> 即判定为「溜溜球体重」。</li>
+<li>反弹 <strong>2 次及以上</strong> 即判定为「溜溜球体重」；</li>
+<li>反弹次数<strong>不再作为独立字段输出</strong>，由体重明细现算，命中「线下优先（溜溜球）」时把反弹次数写进触发依据（如「体重明细显示反弹 3 次」）。</li>
 </ul>
 <hr>
 <h2 id="5-分流档位怎么定">5. 分流档位怎么定</h2>
@@ -362,7 +363,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </tr>
 <tr>
 <td>某次就诊只测了体重、医生没写病历</td>
-<td>病历为空不报错，该次记录照常参与体重轨迹</td>
+<td>病历为空不报错，该次体重照常进体重明细</td>
 </tr>
 <tr>
 <td>体检报告太旧（如 2 年前、当时体重还正常）</td>
@@ -423,7 +424,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </tr>
 <tr>
 <td>周凯（男 36）</td>
-<td>反弹计数 = 3；1 条空病历不报错</td>
+<td>体重明细含全部记录；反弹 3 次写入触发依据；1 条空病历不报错</td>
 <td>线下优先（溜溜球）</td>
 </tr>
 <tr>
@@ -437,7 +438,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <td>排除</td>
 </tr>
 </tbody></table>
-<p>交付物：① 字段字典（17 字段名、类型、来源表）；② 清洗程序或服务；③ 上述 10 人设跑出的输出与预期档位的对照报告。</p>
+<p>交付物：① 字段字典（16 字段名、类型、来源表）；② 清洗程序或服务；③ 上述 10 人设跑出的输出与预期档位的对照报告。</p>
 
   </main>
 </div>
