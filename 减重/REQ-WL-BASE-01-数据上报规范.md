@@ -84,7 +84,7 @@
 | `edu_list_view` | 科普列表曝光 | `stage`、`entry` | 内容入口 |
 | `article_read` | 阅读文章 | `article_id`、`duration`、`progress`、`finished` | 内容质量 |
 | `article_cta` | 文章内 CTA | `article_id`、`cta_id(assess)` | 内容转化 |
-| `content_share_click` | 点分享（文章 / 评估报告 / 减重月报 / 结营回顾） | `content_type(article/report/month_report/recap)`、`content_id`、`method(poster 海报 / link 链接 / native 系统分享 / copy 复制)` | 分享行为与方式占比 |
+| `content_share_click` | 点分享（文章 / 评估报告 / 减重月报 / 结营回顾，功能陆续上线） | `content_type(article/report/month_report/recap)`、`content_id`、`method(system/copy)` | 分享行为与方式占比 |
 
 ### 3.5 通用技术事件
 
@@ -113,7 +113,6 @@
 | `month_report_generate_click` | 点「生成最新月报」 | — | 生成意愿 | RECORD-01 |
 | `month_report_generate_result` | 月报生成成功 / 失败 | `success`（不含报告内容） | 生成成功率 | RECORD-01 |
 | `month_report_view` | 月报详情曝光 | `issue` | 阅读触达 | RECORD-01 |
-| `recap_view` | 结营回顾页曝光 | — | 回顾触达 | RECORD-02 |
 
 ---
 

@@ -411,8 +411,8 @@ const WL_DOCS = [
   },
   {
     md: '减重/REQ-WL-RECORD-02-旅程回顾.md',
-    module: 'RECORD', code: 'REQ-WL-RECORD-02', pri: 'P1', status: '待评审（一期）',
-    desc: '结营回顾长页（7 屏）：序章数字滚动 + 执行/体格/代谢/生活方式/随访/建议 + 分享成就（海报与链接）',
+    module: 'RECORD', code: 'REQ-WL-RECORD-02', pri: 'P1', status: '二期（暂缓）',
+    desc: '结营回顾长页：封面数字滚动 + 体重曲线/成分/指标 + 七型减重人格判定 + 开启健康管理',
     demos: [
       ['结营回顾', 'https://lipulin222.github.io/online-health-care/Journey-Recap/index.html'],
     ],
