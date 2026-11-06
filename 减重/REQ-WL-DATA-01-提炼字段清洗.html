@@ -752,15 +752,6 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <li>同一个指标多处都有时，<strong>以优先级最高的来源为准</strong>；同级有多条的，取<strong>时间最新</strong>的一条。</li>
 <li>优先级低的记录不丢弃，仍保留在各明细里（体重趋势、新鲜度要用）。</li>
 </ul>
-<p>几条具体口径：</p>
-<ul>
-<li><strong>体重</strong>：全部记录照常进明细；对外展示的「当前体重」按上面的优先级取值。</li>
-<li><strong>身高</strong>：只认体检（院内 / 院外体检）里的；就诊记录和问卷自填的不用。</li>
-<li><strong>性别、年龄</strong>：性别用就诊人表，年龄按出生日期现算；问卷里填的只做对账。</li>
-<li><strong>BMI</strong>：不照抄报告，用「最新实测体重 ÷ 身高²」现算，保留 1 位小数。</li>
-<li><strong>疾病、用药</strong>：不做归类清洗，病历原文进数据集，归类由消费方（AI 总结）处理。</li>
-<li><strong>异常判断</strong>：检验记录、检查记录里 <code>abnormal = 是</code> 的就是异常项；「未见异常」类描述不输出。</li>
-</ul>
 <hr>
 <h2 id="4-体重新鲜度">4. 体重新鲜度</h2>
 <ul>
