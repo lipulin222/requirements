@@ -142,24 +142,28 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
   <nav class="toc">
     <p class="toc__h">本单目录</p>
     <ol><li class="lv2"><a href="#1-做什么">1. 做什么</a></li>
-<li class="lv2"><a href="#2-同一件事多处记录时-用哪一份">2. 同一件事多处记录时，用哪一份</a></li>
-<li class="lv2"><a href="#3-这些字段不要-用不到的都删掉">3. 这些字段不要（用不到的都删掉）</a></li>
-<li class="lv2"><a href="#4-两个判定规则">4. 两个判定规则</a></li>
-<li class="lv2"><a href="#5-分流档位怎么定">5. 分流档位怎么定</a></li>
-<li class="lv2"><a href="#6-特殊情况处理">6. 特殊情况处理</a></li>
-<li class="lv2"><a href="#7-数据红线">7. 数据红线</a></li>
-<li class="lv2"><a href="#8-验收-用-10-个测试人设逐个对">8. 验收（用 10 个测试人设逐个对）</a></li></ol>
+<li class="lv2"><a href="#2-输出数据表结构设计">2. 输出数据表结构设计</a></li>
+<li class="lv3"><a href="#2-1-主表字段字典-17-字段">2.1 主表字段字典（17 字段）</a></li>
+<li class="lv3"><a href="#2-2-体重明细子表-weight_records">2.2 体重明细子表 weight_records</a></li>
+<li class="lv3"><a href="#2-3-输出示例-人设-王雅静">2.3 输出示例（人设：王雅静）</a></li>
+<li class="lv2"><a href="#3-同一件事多处记录时-用哪一份">3. 同一件事多处记录时，用哪一份</a></li>
+<li class="lv2"><a href="#4-这些字段不要-用不到的都删掉">4. 这些字段不要（用不到的都删掉）</a></li>
+<li class="lv2"><a href="#5-两个判定规则">5. 两个判定规则</a></li>
+<li class="lv2"><a href="#6-分流档位怎么定">6. 分流档位怎么定</a></li>
+<li class="lv2"><a href="#7-特殊情况处理">7. 特殊情况处理</a></li>
+<li class="lv2"><a href="#8-数据红线">8. 数据红线</a></li>
+<li class="lv2"><a href="#9-验收-用-10-个测试人设逐个对">9. 验收（用 10 个测试人设逐个对）</a></li></ol>
   </nav>
   <main class="doc">
     <h1>提炼字段清洗（AI 诊断数据集）</h1>
     <p class="subtitle">需求单 · 科学减重（WL） · 交付目标：可上线面向用户使用（H5 + 微信小程序）</p>
     <blockquote>
 <p>编号 <code>REQ-WL-DATA-01</code> ｜ 项目：科学减重（WL）｜ 模块：数据清洗 ｜ 状态：制定中
-一句话：把 6 张业务表合并成「每人一份、16 个字段」的提炼数据集，供减重问卷分流判定和医生端「患者身体状况 AI 总结」使用。效果可看 <a href="https://lipulin222.github.io/health-subscription-demo/patient-ai-summary/">医生速览页</a>。</p>
+一句话：把 6 张业务表合并成「每人一份、17 个字段」的提炼数据集，供减重问卷分流判定和医生端「患者身体状况 AI 总结」使用。效果可看 <a href="https://lipulin222.github.io/health-subscription-demo/patient-ai-summary/">医生速览页</a>。</p>
 </blockquote>
 <hr>
 <h2 id="1-做什么">1. 做什么</h2>
-<p>系统里关于一个患者的信息分散在 6 张表里，很多内容重复记录、有的是自由文本，不能直接用来做分流判定。本需求要求把这 6 张表洗成 <strong>每个就诊人一份、固定 16 个字段</strong> 的数据集。</p>
+<p>系统里关于一个患者的信息分散在 6 张表里，很多内容重复记录、有的是自由文本，不能直接用来做分流判定。本需求要求把这 6 张表洗成 <strong>每个就诊人一份、固定 17 个字段</strong> 的数据集。</p>
 <p><strong>输入表（6 张）</strong></p>
 <table>
 <thead>
@@ -207,7 +211,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </tr>
 <tr>
 <td>B 体重记录（1）</td>
-<td><strong>全部体重记录明细</strong>：每条含体重数值、记录时间、记录来源（就诊记录 / 体检报告 / 问卷自填），按时间排序输出；并对最近一次实测标注新鲜度（规则见 4.1）</td>
+<td><strong>全部体重记录明细</strong>：每条含体重数值、记录时间、记录来源（就诊记录 / 体检报告 / 问卷自填），按时间排序输出；并对最近一次实测标注新鲜度（规则见 5.1）</td>
 </tr>
 <tr>
 <td>C 疾病与用药（4）</td>
@@ -231,7 +235,205 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </tr>
 </tbody></table>
 <hr>
-<h2 id="2-同一件事多处记录时-用哪一份">2. 同一件事多处记录时，用哪一份</h2>
+<h2 id="2-输出数据表结构设计">2. 输出数据表结构设计</h2>
+<p>输出为<strong>每就诊人一条主记录 + 一张体重明细子表</strong>（JSON 或关系表均可，字段与类型如下，开发照此建表 / 定接口）。</p>
+<h3 id="2-1-主表字段字典-17-字段">2.1 主表字段字典（17 字段）</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>字段名</th>
+<th>类型</th>
+<th>必填</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>patient_id</td>
+<td>文本</td>
+<td>必填</td>
+<td>就诊人 ID，来自就诊人基本信息表</td>
+</tr>
+<tr>
+<td>2</td>
+<td>name</td>
+<td>文本</td>
+<td>必填</td>
+<td>姓名</td>
+</tr>
+<tr>
+<td>3</td>
+<td>gender</td>
+<td>枚举：M / F</td>
+<td>必填</td>
+<td>只取就诊人表（第 3 节）</td>
+</tr>
+<tr>
+<td>4</td>
+<td>birth_date</td>
+<td>日期</td>
+<td>必填</td>
+<td>出生日期，年龄由它现算</td>
+</tr>
+<tr>
+<td>5</td>
+<td>weight_data</td>
+<td>对象（见 2.2）</td>
+<td>必填（records 可为空数组）</td>
+<td>全部体重明细 + 新鲜度</td>
+</tr>
+<tr>
+<td>6</td>
+<td>diagnosed_diseases</td>
+<td>文本数组</td>
+<td>必填（可为空）</td>
+<td>确诊疾病清单，统一命名后去重</td>
+</tr>
+<tr>
+<td>7</td>
+<td>medication_categories</td>
+<td>枚举数组</td>
+<td>必填</td>
+<td><code>胰岛素 / 口服降糖药 / 降压药 / 他汀或抗凝 / 糖皮质激素 / 其他处方药 / 无</code>，多选</td>
+</tr>
+<tr>
+<td>8</td>
+<td>family_history</td>
+<td>文本数组</td>
+<td>必填（可为空）</td>
+<td>家族史，合并去重</td>
+</tr>
+<tr>
+<td>9</td>
+<td>other_history</td>
+<td>文本数组</td>
+<td>必填（可为空）</td>
+<td>其他重要病史</td>
+</tr>
+<tr>
+<td>10</td>
+<td>blood_pressure</td>
+<td>对象</td>
+<td>必填（可为空）</td>
+<td><code>{systolic:int, diastolic:int, on_medication:bool}</code>，缺测整体置空</td>
+</tr>
+<tr>
+<td>11</td>
+<td>abnormal_indicators</td>
+<td>文本数组</td>
+<td>必填（可为空）</td>
+<td>异常指标清单（只收「偏高 / 异常」项）</td>
+</tr>
+<tr>
+<td>12</td>
+<td>waist_cm</td>
+<td>数值（1 位小数）</td>
+<td>否</td>
+<td>腰围，缺失输出「缺失」</td>
+</tr>
+<tr>
+<td>13</td>
+<td>contraindication</td>
+<td>枚举：有 / 无 / 不确定</td>
+<td>必填</td>
+<td>禁忌症</td>
+</tr>
+<tr>
+<td>14</td>
+<td>pregnancy_status</td>
+<td>枚举：备孕 / 怀孕 / 哺乳 / 无 / 未作答</td>
+<td>必填</td>
+<td>男性记「未作答」</td>
+</tr>
+<tr>
+<td>15</td>
+<td>weight_gain_causes</td>
+<td>文本数组</td>
+<td>必填</td>
+<td>体重增加自评原因（多选原文）</td>
+</tr>
+<tr>
+<td>16</td>
+<td>weight_goal</td>
+<td>文本</td>
+<td>必填</td>
+<td>减重目标</td>
+</tr>
+<tr>
+<td>17</td>
+<td>expected_tier</td>
+<td>枚举：无慢病 / 轻微异常 / 线下优先 / 排除</td>
+<td>必填</td>
+<td>预期分流档位，<code>trigger_reason</code>（文本）随同输出，写明触发依据与对应字段值</td>
+</tr>
+</tbody></table>
+<h3 id="2-2-体重明细子表-weight_records">2.2 体重明细子表 weight_records</h3>
+<table>
+<thead>
+<tr>
+<th>列</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>patient_id</td>
+<td>文本</td>
+<td>关联主表</td>
+</tr>
+<tr>
+<td>value_kg</td>
+<td>数值（1 位小数）</td>
+<td>体重值，原样输出不换算</td>
+</tr>
+<tr>
+<td>measured_at</td>
+<td>日期时间</td>
+<td>记录时间（无时刻的只落日期）</td>
+</tr>
+<tr>
+<td>source</td>
+<td>枚举：<code>visit</code> 就诊记录 / <code>exam</code> 体检报告 / <code>questionnaire</code> 问卷自填</td>
+<td>记录来源</td>
+</tr>
+</tbody></table>
+<ul>
+<li>明细按 <code>measured_at</code> 升序输出；同一天多条全部保留。</li>
+<li>空值体重（测了但没记数值）不入明细。</li>
+<li>新鲜度不落子表，按 5.1 对最近一次实测现算，输出在主表 <code>weight_data.freshness</code>。</li>
+</ul>
+<h3 id="2-3-输出示例-人设-王雅静">2.3 输出示例（人设：王雅静）</h3>
+<pre><code class="language-json">{
+  &quot;patient_id&quot;: &quot;P0001&quot;,
+  &quot;name&quot;: &quot;王雅静&quot;,
+  &quot;gender&quot;: &quot;F&quot;,
+  &quot;birth_date&quot;: &quot;1994-03-12&quot;,
+  &quot;weight_data&quot;: {
+    &quot;records&quot;: [
+      { &quot;value_kg&quot;: 85.0, &quot;measured_at&quot;: &quot;2026-05-18&quot;, &quot;source&quot;: &quot;exam&quot; },
+      { &quot;value_kg&quot;: 84.4, &quot;measured_at&quot;: &quot;2026-11-04 10:30&quot;, &quot;source&quot;: &quot;questionnaire&quot; },
+      { &quot;value_kg&quot;: 83.5, &quot;measured_at&quot;: &quot;2026-11-05 09:15&quot;, &quot;source&quot;: &quot;visit&quot; }
+    ],
+    &quot;freshness&quot;: &quot;新鲜&quot;
+  },
+  &quot;diagnosed_diseases&quot;: [],
+  &quot;medication_categories&quot;: [&quot;无&quot;],
+  &quot;family_history&quot;: [],
+  &quot;other_history&quot;: [],
+  &quot;blood_pressure&quot;: { &quot;systolic&quot;: 118, &quot;diastolic&quot;: 76, &quot;on_medication&quot;: false },
+  &quot;abnormal_indicators&quot;: [&quot;轻度脂肪肝&quot;],
+  &quot;waist_cm&quot;: 88.0,
+  &quot;contraindication&quot;: &quot;无&quot;,
+  &quot;pregnancy_status&quot;: &quot;无&quot;,
+  &quot;weight_gain_causes&quot;: [&quot;饮食不规律&quot;],
+  &quot;weight_goal&quot;: &quot;减重 10kg&quot;,
+  &quot;expected_tier&quot;: &quot;无慢病&quot;,
+  &quot;trigger_reason&quot;: &quot;BMI 30.7（83.5kg ÷ 1.62m²）≥ 28；无排除项、无慢病与相关用药；异常指标仅轻度脂肪肝&quot;
+}
+</code></pre>
+<hr>
+<h2 id="3-同一件事多处记录时-用哪一份">3. 同一件事多处记录时，用哪一份</h2>
 <table>
 <thead>
 <tr>
@@ -277,11 +479,11 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </tr>
 <tr>
 <td>各种时间</td>
-<td>就诊、报告、问卷、订单的时间都不单独输出，只用来算下面第 4 节的「新鲜度」。</td>
+<td>就诊、报告、问卷、订单的时间都不单独输出，只用来算下面第 5 节的「新鲜度」。</td>
 </tr>
 </tbody></table>
 <hr>
-<h2 id="3-这些字段不要-用不到的都删掉">3. 这些字段不要（用不到的都删掉）</h2>
+<h2 id="4-这些字段不要-用不到的都删掉">4. 这些字段不要（用不到的都删掉）</h2>
 <table>
 <thead>
 <tr>
@@ -315,14 +517,14 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </tr>
 </tbody></table>
 <hr>
-<h2 id="4-两个判定规则">4. 两个判定规则</h2>
-<p><strong>4.1 体重新鲜度</strong></p>
+<h2 id="5-两个判定规则">5. 两个判定规则</h2>
+<p><strong>5.1 体重新鲜度</strong></p>
 <ul>
 <li>最近一次实测体重距今 <strong>超过 3 个月</strong> → 标「过期，需重填」；</li>
 <li>距今 <strong>2~3 个月</strong> → 标「临界，建议复测」；</li>
 <li>3 个月以内 → 标「新鲜」。</li>
 </ul>
-<p><strong>4.2 反弹次数（溜溜球判定）</strong></p>
+<p><strong>5.2 反弹次数（溜溜球判定）</strong></p>
 <ul>
 <li>把近 24 个月内的就诊体重按时间排序；</li>
 <li>体重比上一次 <strong>下降 2kg 及以上</strong>，之后又 <strong>回升 2kg 及以上</strong>，记反弹 1 次；</li>
@@ -330,7 +532,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <li>反弹次数<strong>不再作为独立字段输出</strong>，由体重明细现算，命中「线下优先（溜溜球）」时把反弹次数写进触发依据（如「体重明细显示反弹 3 次」）。</li>
 </ul>
 <hr>
-<h2 id="5-分流档位怎么定">5. 分流档位怎么定</h2>
+<h2 id="6-分流档位怎么定">6. 分流档位怎么定</h2>
 <p>按下面的顺序判断，<strong>排在前面的先看，命中就定档</strong>：</p>
 <ol>
 <li><strong>先看排除</strong>：年龄不满 18 岁、孕产状态是备孕 / 怀孕 / 哺乳、禁忌症答「有」——只要占一条，直接判「排除」（排除优先级最高，其他条件再符合也排除）；</li>
@@ -341,7 +543,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </ol>
 <p>每条分档结论都必须写清「触发依据」，指到具体字段值（如「确诊 2 型糖尿病 + 当前用药含胰岛素」），不允许只给档位不给原因。</p>
 <hr>
-<h2 id="6-特殊情况处理">6. 特殊情况处理</h2>
+<h2 id="7-特殊情况处理">7. 特殊情况处理</h2>
 <table>
 <thead>
 <tr>
@@ -371,14 +573,14 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </tr>
 </tbody></table>
 <hr>
-<h2 id="7-数据红线">7. 数据红线</h2>
+<h2 id="8-数据红线">8. 数据红线</h2>
 <ul>
 <li>血压、血糖、血脂等指标原值 <strong>只在医生端展示</strong>，用户端不展示原值；</li>
 <li>输出数据里不得出现姓名之外的身份信息（手机号、身份证、地址等）；</li>
 <li>病历原文、报告原文不直接输出，一律按第 2 节归类成结构化字段。</li>
 </ul>
 <hr>
-<h2 id="8-验收-用-10-个测试人设逐个对">8. 验收（用 10 个测试人设逐个对）</h2>
+<h2 id="9-验收-用-10-个测试人设逐个对">9. 验收（用 10 个测试人设逐个对）</h2>
 <table>
 <thead>
 <tr>
@@ -438,7 +640,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <td>排除</td>
 </tr>
 </tbody></table>
-<p>交付物：① 字段字典（16 字段名、类型、来源表）；② 清洗程序或服务；③ 上述 10 人设跑出的输出与预期档位的对照报告。</p>
+<p>交付物：① 字段字典（17 字段名、类型、来源表，即第 2 节主表字段字典）；② 清洗程序或服务；③ 上述 10 人设跑出的输出与预期档位的对照报告。</p>
 
   </main>
 </div>
