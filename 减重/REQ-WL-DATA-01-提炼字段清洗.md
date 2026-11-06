@@ -47,17 +47,17 @@
 | 3 | gender | 枚举：M / F | 必填 | 只取就诊人表（第 3 节） |
 | 4 | birth_date | 日期 | 必填 | 出生日期，年龄由它现算 |
 | 5 | weight_data | 对象（见 2.2） | 必填（records 可为空数组） | 全部体重明细 + 新鲜度 |
-| 6 | diagnosed_diseases | 文本数组 | 必填（可为空） | 确诊疾病清单，统一命名后去重 |
-| 7 | medication_categories | 枚举数组 | 必填 | `胰岛素 / 口服降糖药 / 降压药 / 他汀或抗凝 / 糖皮质激素 / 其他处方药 / 无`，多选 |
-| 8 | family_history | 文本数组 | 必填（可为空） | 家族史，合并去重 |
-| 9 | other_history | 文本数组 | 必填（可为空） | 其他重要病史 |
-| 10 | blood_pressure | 对象 | 必填（可为空） | `{systolic:int, diastolic:int, on_medication:bool}`，缺测整体置空 |
-| 11 | abnormal_indicators | 文本数组 | 必填（可为空） | 异常指标清单（只收「偏高 / 异常」项） |
-| 12 | waist_cm | 数值（1 位小数） | 否 | 腰围，缺失输出「缺失」 |
-| 13 | contraindication | 枚举：有 / 无 / 不确定 | 必填 | 禁忌症 |
-| 14 | pregnancy_status | 枚举：备孕 / 怀孕 / 哺乳 / 无 / 未作答 | 必填 | 男性记「未作答」 |
-| 15 | weight_gain_causes | 文本数组 | 必填 | 体重增加自评原因（多选原文） |
-| 16 | weight_goal | 文本 | 必填 | 减重目标 |
+| 6 | diagnosed_diseases | 对象数组 `{item, recorded_at}` | 必填（可为空） | 确诊疾病清单，统一命名后去重；每条带该条记录的时间戳 |
+| 7 | medication_categories | 对象数组 `{category, recorded_at}` | 必填 | `胰岛素 / 口服降糖药 / 降压药 / 他汀或抗凝 / 糖皮质激素 / 其他处方药 / 无`，多选；每类带发现该药的病历 / 订单时间 |
+| 8 | family_history | 对象数组 `{item, recorded_at}` | 必填（可为空） | 家族史，合并去重，每条带时间戳 |
+| 9 | other_history | 对象数组 `{item, recorded_at}` | 必填（可为空） | 其他重要病史，每条带时间戳 |
+| 10 | blood_pressure | 对象 | 必填（可为空） | `{systolic:int, diastolic:int, on_medication:bool, recorded_at}`，缺测整体置空 |
+| 11 | abnormal_indicators | 对象数组 `{item, recorded_at}` | 必填（可为空） | 异常指标清单（只收「偏高 / 异常」项），每条带报告时间 |
+| 12 | waist_cm | 对象 `{value_cm, recorded_at}` | 否 | 腰围值 + 测量时间，缺失输出「缺失」 |
+| 13 | contraindication | 对象 `{value, recorded_at}` | 必填 | 禁忌症（枚举：有 / 无 / 不确定），带问卷提交时间 |
+| 14 | pregnancy_status | 对象 `{value, recorded_at}` | 必填 | 枚举：备孕 / 怀孕 / 哺乳 / 无 / 未作答（男性记「未作答」），带问卷提交时间 |
+| 15 | weight_gain_causes | 对象数组 `{item, recorded_at}` | 必填 | 体重增加自评原因（多选），带问卷提交时间 |
+| 16 | weight_goal | 对象 `{text, recorded_at}` | 必填 | 减重目标，带问卷提交时间 |
 | 17 | expected_tier | 枚举：无慢病 / 轻微异常 / 线下优先 / 排除 | 必填 | 预期分流档位，`trigger_reason`（文本）随同输出，写明触发依据与对应字段值 |
 
 ### 2.2 体重明细子表 weight_records
@@ -72,6 +72,19 @@
 - 明细按 `measured_at` 升序输出；同一天多条全部保留。
 - 空值体重（测了但没记数值）不入明细。
 - 新鲜度不落子表，按 5.1 对最近一次实测现算，输出在主表 `weight_data.freshness`。
+
+### 2.4 时间戳约定（全字段）
+
+**除 A 组基础身份（1~4）和 expected_tier（17）外，其余所有字段的每条内容都必须带时间戳 `recorded_at`**，口径如下：
+
+| 数据类别 | 时间戳取值 |
+| --- | --- |
+| 体重明细（weight_data.records） | 该次测量的时间 |
+| 就诊 / 病历 / 检查 / 身体测量类条目（疾病、用药、家族史、其他病史、血压、异常指标、腰围） | 该条业务记录的时间（就诊到达时间 / 报告创建时间） |
+| 问卷类字段（禁忌症、孕产状态、自评原因、减重目标） | 问卷提交时间 |
+
+- 同一条内容被多处记录（如疾病同时出现在病历和问卷）时，输出一条，`recorded_at` 取**最近一次**记录的时间；差异仍在触发依据里说明。
+- 时间戳一律原样输出到「日」；原始数据带时刻的（如就诊到达时间）保留到分。
 
 ### 2.3 输出示例（人设：王雅静）
 
@@ -90,16 +103,16 @@
     "freshness": "新鲜"
   },
   "diagnosed_diseases": [],
-  "medication_categories": ["无"],
+  "medication_categories": [ { "category": "无", "recorded_at": "2026-11-04" } ],
   "family_history": [],
   "other_history": [],
-  "blood_pressure": { "systolic": 118, "diastolic": 76, "on_medication": false },
-  "abnormal_indicators": ["轻度脂肪肝"],
-  "waist_cm": 88.0,
-  "contraindication": "无",
-  "pregnancy_status": "无",
-  "weight_gain_causes": ["饮食不规律"],
-  "weight_goal": "减重 10kg",
+  "blood_pressure": { "systolic": 118, "diastolic": 76, "on_medication": false, "recorded_at": "2026-05-18" },
+  "abnormal_indicators": [ { "item": "轻度脂肪肝", "recorded_at": "2026-05-18" } ],
+  "waist_cm": { "value_cm": 88.0, "recorded_at": "2026-05-18" },
+  "contraindication": { "value": "无", "recorded_at": "2026-11-04" },
+  "pregnancy_status": { "value": "无", "recorded_at": "2026-11-04" },
+  "weight_gain_causes": [ { "item": "饮食不规律", "recorded_at": "2026-11-04" } ],
+  "weight_goal": { "text": "减重 10kg", "recorded_at": "2026-11-04" },
   "expected_tier": "无慢病",
   "trigger_reason": "BMI 30.7（83.5kg ÷ 1.62m²）≥ 28；无排除项、无慢病与相关用药；异常指标仅轻度脂肪肝"
 }
@@ -202,5 +215,7 @@
 | 周凯（男 36） | 体重明细含全部记录；反弹 3 次写入触发依据；1 条空病历不报错 | 线下优先（溜溜球） |
 | 沈佳怡（女 30） | 备孕「是」→ 排除，即使 BMI、疾病等条件都满足 | 排除 |
 | 唐子睿（男 17） | 17 岁 → 排除 | 排除 |
+
+**通用验收（所有人设）**：除基础身份（1~4）与预期档位（17）外，输出里每条内容都带时间戳 `recorded_at`，取值口径符合第 2.4 节约定；任意一条缺时间戳即验收不通过。
 
 交付物：① 字段字典（17 字段名、类型、来源表，即第 2 节主表字段字典）；② 清洗程序或服务；③ 上述 10 人设跑出的输出与预期档位的对照报告。

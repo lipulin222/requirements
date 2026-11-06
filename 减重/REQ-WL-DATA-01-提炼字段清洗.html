@@ -145,6 +145,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <li class="lv2"><a href="#2-输出数据表结构设计">2. 输出数据表结构设计</a></li>
 <li class="lv3"><a href="#2-1-主表字段字典-17-字段">2.1 主表字段字典（17 字段）</a></li>
 <li class="lv3"><a href="#2-2-体重明细子表-weight_records">2.2 体重明细子表 weight_records</a></li>
+<li class="lv3"><a href="#2-4-时间戳约定-全字段">2.4 时间戳约定（全字段）</a></li>
 <li class="lv3"><a href="#2-3-输出示例-人设-王雅静">2.3 输出示例（人设：王雅静）</a></li>
 <li class="lv2"><a href="#3-同一件事多处记录时-用哪一份">3. 同一件事多处记录时，用哪一份</a></li>
 <li class="lv2"><a href="#4-这些字段不要-用不到的都删掉">4. 这些字段不要（用不到的都删掉）</a></li>
@@ -286,79 +287,79 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <tr>
 <td>6</td>
 <td>diagnosed_diseases</td>
-<td>文本数组</td>
+<td>对象数组 <code>{item, recorded_at}</code></td>
 <td>必填（可为空）</td>
-<td>确诊疾病清单，统一命名后去重</td>
+<td>确诊疾病清单，统一命名后去重；每条带该条记录的时间戳</td>
 </tr>
 <tr>
 <td>7</td>
 <td>medication_categories</td>
-<td>枚举数组</td>
+<td>对象数组 <code>{category, recorded_at}</code></td>
 <td>必填</td>
-<td><code>胰岛素 / 口服降糖药 / 降压药 / 他汀或抗凝 / 糖皮质激素 / 其他处方药 / 无</code>，多选</td>
+<td><code>胰岛素 / 口服降糖药 / 降压药 / 他汀或抗凝 / 糖皮质激素 / 其他处方药 / 无</code>，多选；每类带发现该药的病历 / 订单时间</td>
 </tr>
 <tr>
 <td>8</td>
 <td>family_history</td>
-<td>文本数组</td>
+<td>对象数组 <code>{item, recorded_at}</code></td>
 <td>必填（可为空）</td>
-<td>家族史，合并去重</td>
+<td>家族史，合并去重，每条带时间戳</td>
 </tr>
 <tr>
 <td>9</td>
 <td>other_history</td>
-<td>文本数组</td>
+<td>对象数组 <code>{item, recorded_at}</code></td>
 <td>必填（可为空）</td>
-<td>其他重要病史</td>
+<td>其他重要病史，每条带时间戳</td>
 </tr>
 <tr>
 <td>10</td>
 <td>blood_pressure</td>
 <td>对象</td>
 <td>必填（可为空）</td>
-<td><code>{systolic:int, diastolic:int, on_medication:bool}</code>，缺测整体置空</td>
+<td><code>{systolic:int, diastolic:int, on_medication:bool, recorded_at}</code>，缺测整体置空</td>
 </tr>
 <tr>
 <td>11</td>
 <td>abnormal_indicators</td>
-<td>文本数组</td>
+<td>对象数组 <code>{item, recorded_at}</code></td>
 <td>必填（可为空）</td>
-<td>异常指标清单（只收「偏高 / 异常」项）</td>
+<td>异常指标清单（只收「偏高 / 异常」项），每条带报告时间</td>
 </tr>
 <tr>
 <td>12</td>
 <td>waist_cm</td>
-<td>数值（1 位小数）</td>
+<td>对象 <code>{value_cm, recorded_at}</code></td>
 <td>否</td>
-<td>腰围，缺失输出「缺失」</td>
+<td>腰围值 + 测量时间，缺失输出「缺失」</td>
 </tr>
 <tr>
 <td>13</td>
 <td>contraindication</td>
-<td>枚举：有 / 无 / 不确定</td>
+<td>对象 <code>{value, recorded_at}</code></td>
 <td>必填</td>
-<td>禁忌症</td>
+<td>禁忌症（枚举：有 / 无 / 不确定），带问卷提交时间</td>
 </tr>
 <tr>
 <td>14</td>
 <td>pregnancy_status</td>
-<td>枚举：备孕 / 怀孕 / 哺乳 / 无 / 未作答</td>
+<td>对象 <code>{value, recorded_at}</code></td>
 <td>必填</td>
-<td>男性记「未作答」</td>
+<td>枚举：备孕 / 怀孕 / 哺乳 / 无 / 未作答（男性记「未作答」），带问卷提交时间</td>
 </tr>
 <tr>
 <td>15</td>
 <td>weight_gain_causes</td>
-<td>文本数组</td>
+<td>对象数组 <code>{item, recorded_at}</code></td>
 <td>必填</td>
-<td>体重增加自评原因（多选原文）</td>
+<td>体重增加自评原因（多选），带问卷提交时间</td>
 </tr>
 <tr>
 <td>16</td>
 <td>weight_goal</td>
-<td>文本</td>
+<td>对象 <code>{text, recorded_at}</code></td>
 <td>必填</td>
-<td>减重目标</td>
+<td>减重目标，带问卷提交时间</td>
 </tr>
 <tr>
 <td>17</td>
@@ -403,6 +404,32 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <li>空值体重（测了但没记数值）不入明细。</li>
 <li>新鲜度不落子表，按 5.1 对最近一次实测现算，输出在主表 <code>weight_data.freshness</code>。</li>
 </ul>
+<h3 id="2-4-时间戳约定-全字段">2.4 时间戳约定（全字段）</h3>
+<p><strong>除 A 组基础身份（1~4）和 expected_tier（17）外，其余所有字段的每条内容都必须带时间戳 <code>recorded_at</code></strong>，口径如下：</p>
+<table>
+<thead>
+<tr>
+<th>数据类别</th>
+<th>时间戳取值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>体重明细（weight_data.records）</td>
+<td>该次测量的时间</td>
+</tr>
+<tr>
+<td>就诊 / 病历 / 检查 / 身体测量类条目（疾病、用药、家族史、其他病史、血压、异常指标、腰围）</td>
+<td>该条业务记录的时间（就诊到达时间 / 报告创建时间）</td>
+</tr>
+<tr>
+<td>问卷类字段（禁忌症、孕产状态、自评原因、减重目标）</td>
+<td>问卷提交时间</td>
+</tr>
+</tbody></table>
+<ul>
+<li>同一条内容被多处记录（如疾病同时出现在病历和问卷）时，输出一条，<code>recorded_at</code> 取<strong>最近一次</strong>记录的时间；差异仍在触发依据里说明。</li>
+<li>时间戳一律原样输出到「日」；原始数据带时刻的（如就诊到达时间）保留到分。</li>
+</ul>
 <h3 id="2-3-输出示例-人设-王雅静">2.3 输出示例（人设：王雅静）</h3>
 <pre><code class="language-json">{
   &quot;patient_id&quot;: &quot;P0001&quot;,
@@ -418,16 +445,16 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
     &quot;freshness&quot;: &quot;新鲜&quot;
   },
   &quot;diagnosed_diseases&quot;: [],
-  &quot;medication_categories&quot;: [&quot;无&quot;],
+  &quot;medication_categories&quot;: [ { &quot;category&quot;: &quot;无&quot;, &quot;recorded_at&quot;: &quot;2026-11-04&quot; } ],
   &quot;family_history&quot;: [],
   &quot;other_history&quot;: [],
-  &quot;blood_pressure&quot;: { &quot;systolic&quot;: 118, &quot;diastolic&quot;: 76, &quot;on_medication&quot;: false },
-  &quot;abnormal_indicators&quot;: [&quot;轻度脂肪肝&quot;],
-  &quot;waist_cm&quot;: 88.0,
-  &quot;contraindication&quot;: &quot;无&quot;,
-  &quot;pregnancy_status&quot;: &quot;无&quot;,
-  &quot;weight_gain_causes&quot;: [&quot;饮食不规律&quot;],
-  &quot;weight_goal&quot;: &quot;减重 10kg&quot;,
+  &quot;blood_pressure&quot;: { &quot;systolic&quot;: 118, &quot;diastolic&quot;: 76, &quot;on_medication&quot;: false, &quot;recorded_at&quot;: &quot;2026-05-18&quot; },
+  &quot;abnormal_indicators&quot;: [ { &quot;item&quot;: &quot;轻度脂肪肝&quot;, &quot;recorded_at&quot;: &quot;2026-05-18&quot; } ],
+  &quot;waist_cm&quot;: { &quot;value_cm&quot;: 88.0, &quot;recorded_at&quot;: &quot;2026-05-18&quot; },
+  &quot;contraindication&quot;: { &quot;value&quot;: &quot;无&quot;, &quot;recorded_at&quot;: &quot;2026-11-04&quot; },
+  &quot;pregnancy_status&quot;: { &quot;value&quot;: &quot;无&quot;, &quot;recorded_at&quot;: &quot;2026-11-04&quot; },
+  &quot;weight_gain_causes&quot;: [ { &quot;item&quot;: &quot;饮食不规律&quot;, &quot;recorded_at&quot;: &quot;2026-11-04&quot; } ],
+  &quot;weight_goal&quot;: { &quot;text&quot;: &quot;减重 10kg&quot;, &quot;recorded_at&quot;: &quot;2026-11-04&quot; },
   &quot;expected_tier&quot;: &quot;无慢病&quot;,
   &quot;trigger_reason&quot;: &quot;BMI 30.7（83.5kg ÷ 1.62m²）≥ 28；无排除项、无慢病与相关用药；异常指标仅轻度脂肪肝&quot;
 }
@@ -640,6 +667,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <td>排除</td>
 </tr>
 </tbody></table>
+<p><strong>通用验收（所有人设）</strong>：除基础身份（1~4）与预期档位（17）外，输出里每条内容都带时间戳 <code>recorded_at</code>，取值口径符合第 2.4 节约定；任意一条缺时间戳即验收不通过。</p>
 <p>交付物：① 字段字典（17 字段名、类型、来源表，即第 2 节主表字段字典）；② 清洗程序或服务；③ 上述 10 人设跑出的输出与预期档位的对照报告。</p>
 
   </main>
