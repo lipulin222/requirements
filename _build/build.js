@@ -339,6 +339,12 @@ const WL_DOCS = [
     demos: [['医生速览页（产出效果）', 'https://lipulin222.github.io/health-subscription-demo/patient-ai-summary/']],
   },
   {
+    md: '减重/REQ-WL-DATA-02-减重月报提示词.md',
+    module: 'DATA', code: 'REQ-WL-DATA-02', pri: 'P0', status: '待评审',
+    desc: '减重月报正文生成提示词原文与五条文案判断标准；数据分析、饮食、运动的唯一措辞依据',
+    demos: [['11 位样例患者月报', 'https://lipulin222.github.io/health-subscription-demo/Monthly-Report/patients-monthly.html']],
+  },
+  {
     md: '减重/REQ-WL-PLAN-05-选择就诊人.md',
     module: 'PLAN', code: 'REQ-WL-PLAN-05', pri: 'P0', status: '待评审',
     desc: '首诊评估前置：复用现网半屏浮层组件选就诊人（单选 + 详情只读），不新开发页面，主要做组件拉取与联调',
