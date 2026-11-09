@@ -389,7 +389,7 @@ const WL_DOCS = [
     ],
   },
   {
-    md: '减重/REQ-WL-PLAN-06-用户数据生成评估报告.md',
+    md: '减重/REQ-WL-PLAN-06-减重评估报告提示词.md',
     module: 'DATA', code: 'REQ-WL-PLAN-06', pri: 'P0', status: '待评审',
     desc: '用户健康数据 → 17 诊断字段 → AI 生成评估报告：三档分档、结论头、固定五模块与用药建议约定',
     demos: [

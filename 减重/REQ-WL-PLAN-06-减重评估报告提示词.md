@@ -1,4 +1,4 @@
-# 从用户数据生成评估报告
+# 减重评估报告提示词
 
 > 编号 `REQ-WL-PLAN-06` ｜ 项目：科学减重（WL）｜ 模块：方案·评估·随访 ｜ 优先级 P0 ｜ 状态：待评审
 > Demo：[评估报告（14 位样例患者，顶栏 ⋯ 切换）](https://lipulin222.github.io/health-subscription-demo/weight-management/Assessment-report/index.html)
