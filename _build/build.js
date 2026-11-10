@@ -889,7 +889,7 @@ function renderWLIndex() {
   const secs = groups.map((m) => {
     const rows = WL_DOCS.filter((d) => d.module === m).map((d) => {
       const id = idOf(d);
-      const t = fs.readFileSync(path.join(ROOT, d.md), 'utf8').split('\n')[0].replace(/^#\s+/, '').trim();
+      const t = fs.readFileSync(path.join(ROOT, d.md), 'utf8').replace(/^\uFEFF/, '').split('\n')[0].replace(/^#\s+/, '').trim();
       const demos = (d.demos || []).length
         ? `<div class="wl__demos">${d.demos.map(([n2, u]) => `<a class="wl__demo" href="${esc(u)}" target="_blank" rel="noopener">${esc(n2)} ↗</a>`).join('')}</div>`
         : '';
