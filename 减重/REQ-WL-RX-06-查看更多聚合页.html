@@ -145,7 +145,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <li class="lv3"><a href="#1-1-层级与返回">1.1 层级与返回</a></li>
 <li class="lv3"><a href="#1-2-入口页">1.2 入口页</a></li>
 <li class="lv3"><a href="#1-3-历次评估结论建议汇总-列表页">1.3 历次评估结论建议汇总（列表页）</a></li>
-<li class="lv3"><a href="#1-4-每月减重小结及后续建议-列表页">1.4 每月减重小结及后续建议（列表页）</a></li>
+<li class="lv3"><a href="#1-4-减重月报-列表页">1.4 减重月报（列表页）</a></li>
 <li class="lv3"><a href="#1-5-套餐订单记录-列表页">1.5 套餐订单记录（列表页）</a></li>
 <li class="lv2"><a href="#2-验收">2. 验收</a></li>
 <li class="lv2"><a href="#3-埋点-汇总见-req-wl-base-01-第-3-6-节">3. 埋点（汇总见 REQ-WL-BASE-01 第 3.6 节）</a></li></ol>
@@ -155,7 +155,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
     <p class="subtitle">需求单 · 科学减重（WL） · 交付目标：可上线面向用户使用（H5 + 微信小程序）</p>
     <blockquote>
 <p>编号 <code>REQ-WL-RX-06</code> ｜ 项目：科学减重（WL）｜ 模块：记录沉淀 ｜ 优先级 P1 ｜ 状态：待评审
-Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion-ui/weight-management/More/index.html">入口页</a> ｜ <a href="https://lipulin222.github.io/online-health-care/weight-companion-ui/weight-management/More/index.html?type=orders">订单列表</a> ｜ 埋点：<code>REQ-WL-BASE-01</code></p>
+Demo：<a href="https://lipulin222.github.io/health-subscription-demo/weight-management/More/index.html">入口页</a> ｜ <a href="https://lipulin222.github.io/health-subscription-demo/weight-management/More/index.html?type=orders">订单列表</a> ｜ 埋点：<code>REQ-WL-BASE-01</code></p>
 </blockquote>
 <hr>
 <h2 id="1-规则">1. 规则</h2>
@@ -188,7 +188,7 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion
 </tr>
 </tbody></table>
 <p>角标数量与列表条数一致。</p>
-<p>「每月减重小结及后续建议」一栏在有待办时右上角显示红色角标（详见 RECORD-01 的红点联动规则）：</p>
+<p>「减重月报」条目在有待办时右上角显示红色角标（详见 <code>REQ-WL-RECORD-01</code> 的红点联动规则）：</p>
 <ul>
 <li>待办为「生成月报」时：角标文字「生成月报」，点击这一栏进入月报的列表页，再点列表下方 <code>生成最新月报</code> 进入快问快答。</li>
 <li>待办为「新月报」时：角标文字「new」，点击这一栏直接进入最新一期月报内容。</li>
@@ -202,15 +202,15 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion
 <li>每份报告一个独立链接；同一个月可生成多份，各自独立成条，不在同一条上迭代更新（时效规则见 <code>REQ-WL-PLAN-02</code> 第 1.4 节）。</li>
 <li>吸底常驻 <code>新增评估</code> → 随访问卷（PLAN-04）；仅本列表显示。</li>
 </ul>
-<h3 id="1-4-每月减重小结及后续建议-列表页">1.4 每月减重小结及后续建议（列表页）</h3>
+<h3 id="1-4-减重月报-列表页">1.4 减重月报（列表页）</h3>
 <ul>
-<li>页面标题 <code>减重月报</code>；与 1.3 同款卡片结构（每期标题形如 <code>第 N 个月月报</code>），点击进月报详情（RECORD-01）。</li>
+<li>页面标题 <code>减重月报</code>；与 1.3 同款卡片结构（每期标题形如 <code>第 N 个月月报</code>），点卡片进月报列表页（<code>REQ-WL-RECORD-01</code>）。</li>
 <li>本页底部没有吸底按钮。</li>
 </ul>
 <h3 id="1-5-套餐订单记录-列表页">1.5 套餐订单记录（列表页）</h3>
 <ul>
-<li><strong>在现成的订单页（Order-Records「已购套餐」）基础上改成 demo 的样子，不是新做页面</strong>：入口页点「相关订单」进入，页面交互与内容按 demo。</li>
-<li>订单卡结构（按 demo）：卡头 <code>订单编号：O…</code> + 状态（<code>已完成</code> 青色 / <code>配送中</code> 橙色 / <code>已取消</code> 灰色）；商品行 = 封面图 + 商品名 + 单价 + 规格 + <code>× 1</code>；底部右对齐 <code>共 1 件，合计:¥X.00</code>（金额橙色加粗）+ 操作按钮 <code>查看物流</code>（进订单详情，见 RX-03）/ <code>再次续订</code>（进 RX-02）/ <code>评价</code>（一期占位）。</li>
+<li>入口页点「相关订单」进订单汇总页（<code>More/index.html?type=orders</code>），不是「已购套餐」页。</li>
+<li>订单卡结构（按 demo）：卡头 <code>订单编号：O…</code> + 状态（<code>已完成</code> 青色 / <code>配送中</code> 橙色 / <code>已取消</code> 灰色）；商品行 = 封面图 + 商品名 + 单价 + 规格 + <code>× 1</code>；底部右对齐 <code>共 1 件，合计:¥X.00</code>（金额橙色加粗）+ 操作按钮 <code>查看物流</code>（进订单详情，见 RX-03）/ <code>再次续订</code>（进 RX-02）/ <code>评价</code>（一期只弹提示）。</li>
 <li>列表为空显示空态。</li>
 </ul>
 <h2 id="2-验收">2. 验收</h2>
@@ -220,8 +220,8 @@ Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion
 <li><input disabled="" type="checkbox"> 评估报告列表页吸底 <code>新增评估</code> 进随访问卷；月报列表页无吸底按钮</li>
 <li><input disabled="" type="checkbox"> 评估报告列表按生成时间倒序；同月多份报告各自独立成条、独立链接</li>
 <li><input disabled="" type="checkbox"> 评估 / 月报两个列表页统一样式，无数据块无标签</li>
-<li><input disabled="" type="checkbox"> 订单列表在现成订单页基础上改造，卡片结构、状态色与按钮按 demo</li>
-<li><input disabled="" type="checkbox"> 空列表有空态：报告 / 月报列表空显示 <code>暂无内容</code>；订单列表用现成页的空态（插画 + <code>暂无记录</code>）</li>
+<li><input disabled="" type="checkbox"> 订单汇总页卡片结构、状态色与按钮按 demo</li>
+<li><input disabled="" type="checkbox"> 三个列表为空时都显示 <code>暂无内容</code></li>
 </ul>
 <h2 id="3-埋点-汇总见-req-wl-base-01-第-3-6-节">3. 埋点（汇总见 <code>REQ-WL-BASE-01</code> 第 3.6 节）</h2>
 <table>

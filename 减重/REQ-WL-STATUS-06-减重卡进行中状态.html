@@ -158,7 +158,7 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/online-ser
 </blockquote>
 <hr>
 <h2 id="1-这张卡什么时候出现">1. 这张卡什么时候出现</h2>
-<p>用户有首诊套餐支付记录，并且有拿药 / 收货记录，还在处方药程内（见 <code>REQ-WL-STATUS-01</code>），由服务端判定进入本阶段。</p>
+<p>用户有首诊套餐支付记录，并且有拿药 / 收货记录，还在处方药程内（见 <code>REQ-WL-STATUS-01</code>），由后台判定进入本阶段。</p>
 <h2 id="2-卡片上显示什么-自上而下">2. 卡片上显示什么（自上而下）</h2>
 <p>健康订阅区的头图区与专项标签行见 <code>REQ-WL-STATUS-02</code>。</p>
 <ol>
@@ -169,7 +169,7 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/online-ser
 <li>第二行：<code>猜你想问</code>（青色）+ <code>· </code> + 当前问题（深灰）+ 右侧箭头 <code>›</code></li>
 </ul>
 </li>
-<li>第二行的问题每 2.6 秒换一条，循环播放，前缀不动；条数与文案由后台知识库对应分类下发，端上不写死。</li>
+<li>第二行的问题每 2.6 秒换一条，循环播放，前缀不动。</li>
 </ul>
 </li>
 <li><strong>体重数据块</strong>，分两种情况：<ul>
@@ -182,13 +182,7 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/online-ser
 <li><strong>底部按钮组</strong>：左 <code>询问护士</code>（浅色次按钮）+ 右 <code>查看更多</code>（青色实底 + 白字，大圆角）；有待办（生成月报 / 新月报）时 <code>查看更多</code> 按钮右上角挂红色角标，规则见 <code>REQ-WL-RECORD-01</code>。</li>
 </ol>
 <h2 id="3-猜你想问-本阶段">3. 猜你想问（本阶段）</h2>
-<p>轮播的问题文案<strong>从后台知识库对应的分类里随机拉取</strong>，不在端上写死：</p>
-<ul>
-<li>本阶段对应知识库中的相应分类，分类与文章的对应关系由后台配置。</li>
-<li>运营在知识库里增删文章后，轮播内容随之更新。</li>
-<li>每条问题与其对应文章的链接一并下发，点击进当前这条问题对应的文章。</li>
-</ul>
-<p>卡头与猜你想问的共用规则（图标 + <code>体重管理</code> + 2.6 秒轮播 + 深链文章）见 <code>REQ-WL-STATUS-04</code> 第 4 节。</p>
+<p>本阶段轮播 4 条（Demo 里直接写在页面）：<code>没明显副作用，是不是药没效果</code> / <code>漏服了一次怎么办</code> / <code>平台期怎么判断，要紧吗</code> / <code>减重期间怎么吃才不掉肌肉</code>。正式上线时问题与文章链接一起从知识库取，运营增删文章后轮播跟着变。卡头与 2.6 秒轮播的共用规则见 <code>REQ-WL-STATUS-04</code> 第 4 节。</p>
 <h2 id="4-点击与跳转">4. 点击与跳转</h2>
 <table>
 <thead>
@@ -199,19 +193,19 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/online-ser
 </thead>
 <tbody><tr>
 <td>卡头第二行（<code>猜你想问 · 问题 ›</code>）</td>
-<td>科普知识库，定位到当前这条问题对应的文章</td>
+<td>科普知识库里当前这条问题对应的文章（<code>patient-education/index.html?stage=3#/a/{文章标识}</code>）</td>
 </tr>
 <tr>
 <td>体重数据块（大号数字与下方一行，整体可点）</td>
-<td>现有的体重趋势页面</td>
+<td>Demo 里提示 <code>正在打开数据记录</code>；正式上线进体重趋势页</td>
 </tr>
 <tr>
 <td>体重块右侧圆形画笔按钮</td>
-<td>跳到现有的录入体重页面</td>
+<td>Demo 里提示 <code>正在打开数据记录</code>；正式上线进录入体重页</td>
 </tr>
 <tr>
 <td><code>查看更多</code></td>
-<td>查看更多聚合页——里面有相关订单、评估报告、减重月报三个入口（见 <code>REQ-WL-RX-06</code>）</td>
+<td>查看更多聚合页：评估报告、减重月报、相关订单三个入口（见 <code>REQ-WL-RX-06</code>）</td>
 </tr>
 </tbody></table>
 <h2 id="5-验收">5. 验收</h2>
@@ -219,10 +213,10 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/online-ser
 <li><input disabled="" type="checkbox"> 已减重量的起点为首诊问卷登记的体重（基线），展示值为最新体重减基线的差值（形如 <code>−3.2kg</code>）</li>
 <li><input disabled="" type="checkbox"> 下方一行为 <code>已坚持 N 天 · 体重 基线 → 最新</code>，天数与数值取真实数据</li>
 <li><input disabled="" type="checkbox"> 无体重更新记录时显示基线体重与引导文案，不出现 <code>−0kg</code></li>
-<li><input disabled="" type="checkbox"> 点击体重数据块跳到现有的体重趋势页面；右侧圆形画笔按钮跳到录入体重页面</li>
-<li><input disabled="" type="checkbox"> 有月报待办时 <code>查看更多</code> 按钮挂红点，文案与 RECORD-01 一致</li>
-<li><input disabled="" type="checkbox"> 猜你想问文案从后台知识库对应分类随机拉取，点击进当前问题对应的文章</li>
-<li><input disabled="" type="checkbox"> 右下角主按钮为 <code>查看更多</code>，点击进入含订单 / 评估报告 / 减重月报的聚合页</li>
+<li><input disabled="" type="checkbox"> Demo 里点体重数据块和画笔都提示 <code>正在打开数据记录</code>；正式上线分别进体重趋势页和录入体重页</li>
+<li><input disabled="" type="checkbox"> 有月报待办时 <code>查看更多</code> 按钮挂红点，文案与 <code>REQ-WL-RECORD-01</code> 一致</li>
+<li><input disabled="" type="checkbox"> 猜你想问 4 条问题与单内一致，点击进当前问题对应的文章</li>
+<li><input disabled="" type="checkbox"> 右下角主按钮为 <code>查看更多</code>，进含评估报告 / 减重月报 / 相关订单的聚合页</li>
 <li><input disabled="" type="checkbox"> App 与小程序一致</li>
 </ul>
 <h2 id="6-开启日-stage-进入-的前置仪式屏">6. 开启日（stage⑥，进入③的前置仪式屏）</h2>
@@ -271,7 +265,7 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/online-ser
 <tr>
 <td><code>wcard_red_dot_click</code></td>
 <td>点查看更多红点</td>
-<td><code>todo_type(生成月报/new)</code></td>
+<td><code>todo_type(生成月报/新月报)</code></td>
 </tr>
 <tr>
 <td><code>wcard_data_click</code></td>

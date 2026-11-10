@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>减重评估报告：页面结构与正文接口 · 需求单</title>
+<title>减重评估报告：页面结构与正文 · 需求单</title>
 <style>
 :root{
   --ink:#1B2733; --ink-2:#48596A; --ink-3:#7A8A99; --line:#E4E9EE; --line-2:#EFF3F6;
@@ -135,79 +135,48 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
     <a class="topbar__back" href="../index.html">← 需求单索引</a>
     <span class="badge">科学减重（WL）</span>
     <span class="badge badge--p0">优先级 P0</span>
-    <span class="topbar__title">减重评估报告：页面结构与正文接口</span>
+    <span class="topbar__title">减重评估报告：页面结构与正文</span>
   </div>
 </header>
 <div class="wrap">
   <nav class="toc">
     <p class="toc__h">本单目录</p>
-    <ol><li class="lv2"><a href="#1-本单管什么">1. 本单管什么</a></li>
-<li class="lv2"><a href="#2-页面结构-自上而下">2. 页面结构（自上而下）</a></li>
-<li class="lv2"><a href="#3-正文内容的接口与调用逻辑-冠成-张林-对齐">3. 正文内容的接口与调用逻辑（@冠成 @张林 对齐）</a></li>
-<li class="lv2"><a href="#4-排版">4. 排版</a></li>
-<li class="lv2"><a href="#5-验收">5. 验收</a></li></ol>
+    <ol><li class="lv2"><a href="#1-规则">1. 规则</a></li>
+<li class="lv2"><a href="#2-验收">2. 验收</a></li></ol>
   </nav>
   <main class="doc">
-    <h1>减重评估报告：页面结构与正文接口</h1>
+    <h1>减重评估报告：页面结构与正文</h1>
     <p class="subtitle">需求单 · 科学减重（WL） · 交付目标：可上线面向用户使用（H5 + 微信小程序）</p>
     <blockquote>
 <p>编号 <code>REQ-WL-PLAN-03</code> ｜ 项目：科学减重（WL）｜ 模块：方案·评估·随访 ｜ 优先级 P0 ｜ 状态：待评审
-Demo：<a href="https://lipulin222.github.io/online-health-care/weight-companion-ui/weight-management/Assessment-report/index.html">评估报告</a> ｜ 埋点：<code>REQ-WL-BASE-01</code></p>
+Demo：<a href="https://lipulin222.github.io/health-subscription-demo/weight-management/Assessment-report/index.html">评估报告</a> ｜ 埋点：<code>REQ-WL-BASE-01</code></p>
 </blockquote>
 <hr>
-<h2 id="1-本单管什么">1. 本单管什么</h2>
-<ul>
-<li>本单只负责评估报告页面的<strong>展示、结构和逻辑</strong>：模块构成、出现与排序规则、排版、正文内容的获取方式。</li>
-<li><strong>正文文案待定</strong>：各分支具体话术由产品 / 医疗后续打磨后另行回填，本单不展开。</li>
-</ul>
-<h2 id="2-页面结构-自上而下">2. 页面结构（自上而下）</h2>
+<h2 id="1-规则">1. 规则</h2>
+<p>本单只定报告的页面结构。结论头与吸底分流见 <code>REQ-WL-PLAN-02</code>，正文文案怎么写见 <code>REQ-WL-PLAN-06</code>。</p>
+<p>页面从上到下：</p>
 <ol>
-<li>结论头：档案行 + 三档刻度 + 一句话总结（分支判定与结论头规则见 <code>REQ-WL-PLAN-02</code>）。</li>
-<li>正文模块，共 4 个：<code>饮食建议</code> / <code>运动建议</code> / <code>慢病管理建议</code> / <code>用药建议</code>，编号按实际渲染顺序重排。各分支的模块构成与顺序：</li>
-</ol>
-<table>
-<thead>
-<tr>
-<th>分支</th>
-<th>模块顺序</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>chronic</td>
-<td>慢病管理建议 → 饮食建议 → 运动建议 → 用药建议</td>
-</tr>
-<tr>
-<td>mild / normal</td>
-<td>饮食建议 → 运动建议 → 用药建议</td>
-</tr>
-<tr>
-<td>adapt</td>
-<td>饮食建议 → 运动建议 → 用药建议（只讲为什么不用药）</td>
-</tr>
-</tbody></table>
-<ol start="3">
-<li>页脚固定声明：<code>本页内容基于你填写的问卷与已关联的健康数据生成，为初步评估建议，不构成诊断和处方。</code></li>
-</ol>
-<h2 id="3-正文内容的接口与调用逻辑-冠成-张林-对齐">3. 正文内容的接口与调用逻辑（@冠成 @张林 对齐）</h2>
-<ul>
-<li>四个模块的正文文案由<strong>服务端下发</strong>，前端不写死；后续文案打磨只改服务端内容，页面无需发版。</li>
-<li>请求逻辑：<ol>
-<li>进入页面时，携带用户 / 问卷结果标识（分支结果与问卷勾选），请求一次正文内容；</li>
-<li>服务端按分支返回各模块的标题、编号、正文段落与展示顺序；</li>
-<li>加载中显示骨架占位；请求失败显示错误态并提供重试，不白屏。</li>
-</ol>
-</li>
-<li>接口契约（路径、入参、出参字段、错误码）由开发对齐定稿后回填本节（@罗兑、@冠成、@张林）。</li>
+<li><strong>结论头</strong>：姓名、<code>性别 · 年龄 岁 · 身高cm / 体重kg · BMI X</code>，右侧「查看用户资料详情」图标；主标题 <code>减重建议</code>；三档刻度 <code>无需减重</code> / <code>需要减重管理</code> / <code>需要减重与慢病结合管理</code>；一句话结论。</li>
+<li><strong>正文模块</strong>：标题只用 <code>整体建议</code> / <code>饮食建议</code> / <code>运动建议</code> / <code>用药建议</code> / <code>就诊建议</code> 这五个，按结论选用，编号从 <code>01</code> 起按实际顺序排。<ul>
+<li><code>整体建议</code> 固定四层：一段阶段描述 → 影响链图（生活方式 → 体重增加 → 指标异常 → 慢性疾病）→ 结论段 → 有依据的发现条目。影响链图是页面固定组件。</li>
+<li><code>用药建议</code> 默认收起，点 <code>查看详情</code> 展开；匹配度条在前、分析在后。</li>
+<li>模块之间还有一张 <code>体重管理小百科</code> 科普卡，页面固定组件。</li>
 </ul>
-<h2 id="4-排版">4. 排版</h2>
-<p>模块内相邻块 10px，行高 21px；正文里的病名 / 指标用用户问卷勾选原文替换。</p>
-<h2 id="5-验收">5. 验收</h2>
+</li>
+<li><strong>页脚固定声明</strong>：<code>本页内容基于你填写的问卷与已关联的健康数据生成，为初步评估建议，不构成诊断和处方。</code></li>
+</ol>
 <ul>
-<li><input disabled="" type="checkbox"> 四分支 × 模块矩阵与第 2 节一致，无缺无多</li>
-<li><input disabled="" type="checkbox"> 正文文案全部来自接口，前端无写死文案</li>
-<li><input disabled="" type="checkbox"> 接口失败显示错误态并可重试，不白屏</li>
-<li><input disabled="" type="checkbox"> 正文里的病名 / 指标与问卷勾选原文一致</li>
-<li><input disabled="" type="checkbox"> 接口契约已在开发间对齐（@罗兑、@冠成、@张林）并回填第 3 节</li>
+<li>正文文案由接口提供，页面只负责显示；加载中显示占位，请求失败显示错误态并能重试，不白屏。</li>
+<li>模块内相邻块间距 10px，行高 21px；病名、指标用问卷勾选的原文。</li>
+<li>顶栏「⋯」可切换患者、重新评估；返回回线上服务首页。Demo 里 14 位样例患者的内容直接写在页面里，正式上线换成接口数据。</li>
+</ul>
+<h2 id="2-验收">2. 验收</h2>
+<ul>
+<li><input disabled="" type="checkbox"> 结论头、三档刻度、一句话结论齐全；三档名称与单内一致</li>
+<li><input disabled="" type="checkbox"> 模块标题只用固定五个，编号按实际顺序排，没有自创标题</li>
+<li><input disabled="" type="checkbox"> <code>整体建议</code> 为四层结构；<code>用药建议</code> 默认收起、可展开</li>
+<li><input disabled="" type="checkbox"> 正文文案来自接口，页面没有固定文案；失败有错误态和重试</li>
+<li><input disabled="" type="checkbox"> 页脚声明原文一致</li>
 </ul>
 
   </main>

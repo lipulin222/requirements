@@ -157,7 +157,7 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/online-ser
 </blockquote>
 <hr>
 <h2 id="1-这张卡什么时候出现">1. 这张卡什么时候出现</h2>
-<p>用户被灰度到减重卡，已经做完首诊评估问卷、评估报告已生成，但还没支付首诊套餐（没有拿药 / 收货记录）。</p>
+<p>能看到减重卡的用户，已经做完首诊评估问卷、评估报告已生成，但还没支付首诊套餐（没有拿药 / 收货记录）。</p>
 <p><strong>30 天转化窗口</strong>：自评估报告生成之日起，30 天内仍未支付首诊套餐的，本卡片退回①购前科普状态（<code>REQ-WL-STATUS-04</code>）；期间完成支付则正常进入③进行中。</p>
 <h2 id="2-卡片上显示什么-自上而下">2. 卡片上显示什么（自上而下）</h2>
 <p>卡头与猜你想问的共用规则见 <code>REQ-WL-STATUS-04</code> 第 4 节；本阶段轮播 4 条（见第 3 节）。</p>
@@ -173,12 +173,7 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/online-ser
 <li><strong>底部按钮组</strong>：左 <code>询问护士</code>（浅色次按钮）+ 右 <code>查看评估报告</code>（青色实底 + 白字，大圆角）。</li>
 </ol>
 <h2 id="3-猜你想问-本阶段">3. 猜你想问（本阶段）</h2>
-<p>轮播的问题文案<strong>从后台知识库对应的分类里随机拉取</strong>，不在端上写死：</p>
-<ul>
-<li>本阶段对应知识库中的相应分类，分类与文章的对应关系由后台配置。</li>
-<li>运营在知识库里增删文章后，轮播内容随之更新。</li>
-<li>每条问题与其对应文章的链接一并下发，点击进当前这条问题对应的文章。</li>
-</ul>
+<p>本阶段轮播 4 条（Demo 里直接写在页面）：<code>什么样的人适合医疗级减重</code> / <code>效果怎么看，多久算有变化</code> / <code>一个完整疗程是怎么进行的</code> / <code>GLP-1 是怎么帮你减重的</code>。正式上线时问题与文章链接一起从知识库取，运营增删文章后轮播跟着变。</p>
 <h2 id="4-点击与跳转">4. 点击与跳转</h2>
 <table>
 <thead>
@@ -189,7 +184,7 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/online-ser
 </thead>
 <tbody><tr>
 <td>卡头第二行（<code>猜你想问 · 问题 ›</code>）</td>
-<td>科普知识库，定位到当前这条问题对应的文章</td>
+<td>科普知识库里当前这条问题对应的文章（<code>patient-education/index.html?stage=2#/a/{文章标识}</code>）</td>
 </tr>
 <tr>
 <td><code>查看评估报告</code></td>
@@ -201,8 +196,8 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/online-ser
 <li><input disabled="" type="checkbox"> 结论句为固定文案 <code>你的减重评估报告已生成</code></li>
 <li><input disabled="" type="checkbox"> 刻度条三段颜色为 青 / 绿 / 橙，当前档位段高亮、其余两段弱化</li>
 <li><input disabled="" type="checkbox"> 三档文字为 <code>无需减重</code> / <code>需要减重管理</code> / <code>立即减重</code>，与档位对应正确</li>
-<li><input disabled="" type="checkbox"> 猜你想问文案从后台知识库对应分类随机拉取，点击进当前问题对应的文章</li>
-<li><input disabled="" type="checkbox"> 底部只有一个通栏按钮 <code>查看评估报告</code>，点击进评估报告；无 AI 减重助理按钮</li>
+<li><input disabled="" type="checkbox"> 猜你想问 4 条问题与单内一致，点击进当前问题对应的文章</li>
+<li><input disabled="" type="checkbox"> 底部两个按钮：左 <code>询问护士</code>、右 <code>查看评估报告</code>，点击进评估报告</li>
 <li><input disabled="" type="checkbox"> 报告生成满 30 天仍未支付首诊套餐，卡片退回购前科普状态；30 天内完成支付正常进入进行中状态</li>
 <li><input disabled="" type="checkbox"> 卡片右上角有灰色「切换旧版」文字链（通用规则见 <code>REQ-WL-STATUS-01</code> 第 2 节）</li>
 <li><input disabled="" type="checkbox"> App 与小程序一致</li>

@@ -146,7 +146,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <li class="lv2"><a href="#3-猜你想问-本阶段">3. 猜你想问（本阶段）</a></li>
 <li class="lv2"><a href="#4-点击与跳转">4. 点击与跳转</a></li>
 <li class="lv2"><a href="#5-验收">5. 验收</a></li>
-<li class="lv2"><a href="#6-埋点-二期上线时启用-汇总见-req-wl-base-01-第-3-1-节">6. 埋点（二期上线时启用，汇总见 REQ-WL-BASE-01 第 3.1 节）</a></li></ol>
+<li class="lv2"><a href="#6-埋点-汇总见-req-wl-base-01-第-3-1-节">6. 埋点（汇总见 REQ-WL-BASE-01 第 3.1 节）</a></li></ol>
   </nav>
   <main class="doc">
     <h1>减重卡 · 阶段⑤ 维持期（一个疗程结束）</h1>
@@ -171,12 +171,7 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/online-ser
 <li><strong>底部一个通栏按钮</strong>：<code>打开回顾</code>（品牌青色实底 + 白字，高 40px、大圆角），进结营回顾页（现成页面）。本阶段卡内无 <code>询问护士</code> 按钮，仅保留页面级 AI 浮钮。</li>
 </ol>
 <h2 id="3-猜你想问-本阶段">3. 猜你想问（本阶段）</h2>
-<p>轮播的问题文案<strong>从后台知识库对应的分类里随机拉取</strong>，不在端上写死：</p>
-<ul>
-<li>本阶段对应知识库中的相应分类，分类与文章的对应关系由后台配置。</li>
-<li>运营在知识库里增删文章后，轮播内容随之更新。</li>
-<li>每条问题与其对应文章的链接一并下发，点击进当前这条问题对应的文章。</li>
-</ul>
+<p>本阶段轮播沿用阶段④的 4 条（Demo 里直接写在页面）：<code>什么时候可以停药</code> / <code>结束之后怎么维持住</code> / <code>复查都看哪些指标</code> / <code>哪些情况要马上联系医生</code>。正式上线时问题与文章链接一起从知识库取。</p>
 <h2 id="4-点击与跳转">4. 点击与跳转</h2>
 <table>
 <thead>
@@ -198,11 +193,11 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/online-ser
 <ul>
 <li><input disabled="" type="checkbox"> 恭喜区为左侧插画 + 右侧品牌青色 <code>恭喜减重成功！</code>，屏内无体重等数据</li>
 <li><input disabled="" type="checkbox"> 底部通栏按钮 <code>打开回顾</code> 进结营回顾页；无 AI 减重助理按钮、无查看更多按钮</li>
-<li><input disabled="" type="checkbox"> 猜你想问文案从后台知识库对应分类随机拉取，点击进当前问题对应的文章</li>
+<li><input disabled="" type="checkbox"> 猜你想问 4 条问题与单内一致，点击进当前问题对应的文章</li>
 <li><input disabled="" type="checkbox"> 置顶 1 个月后卡片回到阶段①</li>
 <li><input disabled="" type="checkbox"> App 与小程序一致</li>
 </ul>
-<h2 id="6-埋点-二期上线时启用-汇总见-req-wl-base-01-第-3-1-节">6. 埋点（二期上线时启用，汇总见 <code>REQ-WL-BASE-01</code> 第 3.1 节）</h2>
+<h2 id="6-埋点-汇总见-req-wl-base-01-第-3-1-节">6. 埋点（汇总见 <code>REQ-WL-BASE-01</code> 第 3.1 节）</h2>
 <table>
 <thead>
 <tr>

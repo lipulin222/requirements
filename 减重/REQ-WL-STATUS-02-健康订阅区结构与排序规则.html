@@ -161,7 +161,7 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/">健康�
 <li>顶部：渐变头部背景 + 左对齐大标题 <code>线上服务</code> + 搜索按钮 + 健康助手按钮 + 右上角胶囊。</li>
 <li><strong>健康订阅区块</strong>（本单范围，见下）。</li>
 <li>线上问诊（头像 + 名称 + 科室横滑行：儿科 / 皮肤科 / 耳鼻喉科 / 内全科 / 全部）。</li>
-<li>视频心理咨询、家庭私人医生（金刚位）。</li>
+<li>视频心理咨询、家庭私人医生两张入口卡。</li>
 <li>通栏 banner、底部 TabBar（预约门诊 / 线上服务 / 消息 / 健康工具 / 我的）、AI 助手浮钮。</li>
 </ol>
 <h2 id="2-健康订阅区块-自上而下">2. 健康订阅区块（自上而下）</h2>
@@ -171,20 +171,16 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/">健康�
 <li><strong>专项标签行</strong>：横向排列 <code>减重</code> <code>痤疮</code> <code>过敏</code> <code>血脂</code> <code>痛风</code>。<ul>
 <li>当前选中 <code>减重</code>：青色底色高亮态。</li>
 <li>其他标签：灰底深灰文字。</li>
-<li>点其他专项标签跳各自原有页面（Demo 里因目标页缺失仅演示选中态切换，线上以本条为准）。</li>
+<li>Demo 里点其他专项标签只切换选中态；正式上线跳各自原有页面。</li>
 </ul>
 </li>
 <li><strong>减重卡</strong>：只有减重有卡片，卡片占满整行，位于标签行下方；卡片内部各阶段见 <code>REQ-WL-STATUS-01</code>、<code>REQ-WL-STATUS-04</code> ~ <code>REQ-WL-STATUS-08</code>。</li>
 </ol>
 <h2 id="3-两种用户状态">3. 两种用户状态</h2>
-<p>首页有两种用户状态，减重卡的起始阶段不同：</p>
-<ul>
-<li><strong>未开启减重的纯新用户</strong>：从阶段 ① 购前科普开始。</li>
-<li><strong>已开启减重的新用户</strong>：起始阶段由服务端按用户数据判定下发（Demo 中默认落在阶段 ④ 提醒 / 续费，仅为演示）。</li>
-</ul>
+<p>右上角「⋯」可切换新客 / 老客状态。Demo 里两种状态都从阶段 ① 开始，切换只改状态标记，不改卡片内容；用 <code>?stage=1~6</code> 可以直接看指定阶段（默认 ①）。正式上线时起始阶段由后台按用户数据判定。</p>
 <h2 id="4-排序规则">4. 排序规则</h2>
 <ol>
-<li>被灰度到减重卡的用户，减重卡固定在健康订阅区第一位。</li>
+<li>能看到减重卡的用户，减重卡固定在健康订阅区第一位。</li>
 <li>其他专项没有卡片，只有上面那排标签入口，点击直接跳各自原有页面。</li>
 </ol>
 <h2 id="5-验收">5. 验收</h2>
@@ -192,8 +188,8 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/">健康�
 <li><input disabled="" type="checkbox"> 健康订阅区块为一张连续白卡：艺术字标题 + 专项标签行 + 减重卡</li>
 <li><input disabled="" type="checkbox"> 五个专项标签顺序为 减重 / 痤疮 / 过敏 / 血脂 / 痛风；<code>减重</code> 为选中态</li>
 <li><input disabled="" type="checkbox"> 点其他专项标签跳各自原有页面</li>
-<li><input disabled="" type="checkbox"> 被灰度到减重卡的用户，减重卡排第一位</li>
-<li><input disabled="" type="checkbox"> 新客从阶段 ① 开始；老客起始阶段由服务端下发</li>
+<li><input disabled="" type="checkbox"> 能看到减重卡的用户，减重卡排第一位</li>
+<li><input disabled="" type="checkbox"> Demo 默认落在阶段 ①，<code>?stage=1~6</code> 可直达指定阶段；新客 / 老客切换只改状态标记</li>
 <li><input disabled="" type="checkbox"> App 与小程序一致</li>
 </ul>
 

@@ -142,53 +142,36 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
   <nav class="toc">
     <p class="toc__h">本单目录</p>
     <ol><li class="lv2"><a href="#1-规则">1. 规则</a></li>
-<li class="lv2"><a href="#2-出口">2. 出口</a></li>
-<li class="lv2"><a href="#3-验收">3. 验收</a></li>
-<li class="lv2"><a href="#4-埋点">4. 埋点</a></li></ol>
+<li class="lv2"><a href="#2-验收">2. 验收</a></li>
+<li class="lv2"><a href="#3-埋点">3. 埋点</a></li></ol>
   </nav>
   <main class="doc">
     <h1>选择就诊人</h1>
     <p class="subtitle">需求单 · 科学减重（WL） · 交付目标：可上线面向用户使用（H5 + 微信小程序）</p>
     <blockquote>
-<p>编号 <code>REQ-WL-PLAN-05</code> ｜ 项目：科学减重（WL）｜ 模块：方案·评估·随访 ｜ 优先级 P0 ｜ 状态：<strong>待评审</strong>（一期范围）</p>
+<p>编号 <code>REQ-WL-PLAN-05</code> ｜ 项目：科学减重（WL）｜ 模块：方案·评估·随访 ｜ 优先级 P0 ｜ 状态：待评审
+Demo：<a href="https://lipulin222.github.io/health-subscription-demo/weight-management/Patient-select/index.html">选择就诊人</a></p>
 </blockquote>
 <hr>
 <h2 id="1-规则">1. 规则</h2>
 <ul>
-<li>首次进入首诊评估前，先选择就诊人。</li>
-<li>页面不单独设计：直接用现网现成的半屏浮层组件承载（开发知道该组件），本单只定逻辑；不额外开发页面，主要工作是对这个组件的拉取和联调。</li>
-<li>浮层内<strong>只显示用户本人一个就诊人，不展示其他关系人</strong>（家人、亲属等都不能选，一期只能给自己做评估）。</li>
-<li>单选：点选自己后，在浮层内展示本人详情：姓名 / 性别 / 年龄 / 身高 / 体重 / BMI / 腰围 / 过敏史，只读，由健康档案接口带入。</li>
+<li>Demo 里首页 <code>快速评估</code> 直接进首诊问卷，不经过本页；本页目前没有上游入口，是一张独立页面。正式上线若要保留，需要补上入口。</li>
+<li>页面与顶栏标题 <code>选择就诊人</code>。列出 3 位就诊人（李蔓 / 邢骥 / 邢博衍）和一个 <code>添加</code> 占位，卡头右侧 <code>查看全部</code>。</li>
+<li>单选：点一位选中，再点一次取消。选中后展示本人详情：姓名、性别 · 年龄、身高、体重、BMI、腰围、过敏史，只读，来自健康档案。</li>
+<li>吸底按钮：没选中时为 <code>请选择就诊人</code>（置灰，点了提示 <code>请先选择就诊人</code>）；选中后变 <code>确认，开始评估</code>，进首诊问卷。</li>
+<li><code>添加</code>、<code>查看全部</code> 目前只提示 <code>示例 Demo：添加就诊人入口待接入</code> / <code>示例 Demo：全部就诊人列表待接入</code>；顶栏「更多」提示 <code>评估结果为初步建议，不构成诊断和处方</code>。</li>
+<li>返回回线上服务首页。</li>
 </ul>
-<h2 id="2-出口">2. 出口</h2>
-<table>
-<thead>
-<tr>
-<th>状态</th>
-<th>吸底按钮</th>
-<th>行为</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>未选中</td>
-<td><code>请选择就诊人</code></td>
-<td>置灰，无法进入评估</td>
-</tr>
-<tr>
-<td>已选中</td>
-<td><code>确认，开始评估</code></td>
-<td>所选就诊人带入首诊评估（PLAN-01）</td>
-</tr>
-</tbody></table>
-<h2 id="3-验收">3. 验收</h2>
+<h2 id="2-验收">2. 验收</h2>
 <ul>
-<li><input disabled="" type="checkbox"> 未选中无法进入评估</li>
-<li><input disabled="" type="checkbox"> 浮层内只显示本人，不出现其他关系人；选中可取消重选</li>
-<li><input disabled="" type="checkbox"> 详情随选中切换，内容与健康档案一致</li>
-<li><input disabled="" type="checkbox"> 浮层复用现网现成的半屏浮层组件，不新开发 UI</li>
+<li><input disabled="" type="checkbox"> 没选中无法进入评估；选中可取消重选</li>
+<li><input disabled="" type="checkbox"> 详情随选中切换，字段与健康档案一致</li>
+<li><input disabled="" type="checkbox"> 选中后按钮变 <code>确认，开始评估</code>，进首诊问卷</li>
+<li><input disabled="" type="checkbox"> <code>添加</code>、<code>查看全部</code> 与「更多」提示原文一致</li>
+<li><input disabled="" type="checkbox"> 正式上线前补上进入本页的入口</li>
 </ul>
-<h2 id="4-埋点">4. 埋点</h2>
-<p>本单前端<strong>不上报</strong>埋点：就诊人环节由服务端记录（口径见 <code>REQ-WL-BASE-01</code> 第 3.3 节末说明）。</p>
+<h2 id="3-埋点">3. 埋点</h2>
+<p>本单不上报，就诊人环节由后台记录（口径见 <code>REQ-WL-BASE-01</code> 第 3.3 节）。</p>
 
   </main>
 </div>

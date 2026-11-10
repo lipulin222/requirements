@@ -157,8 +157,7 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/Monthly-Re
 <hr>
 <h2 id="1-规则">1. 规则</h2>
 <h3 id="1-1-这份提示词用在哪">1.1 这份提示词用在哪</h3>
-<p>每期减重月报里的「01 减重数据分析」和「02 下个月的饮食与运动」都由下面这份提示词生成。把这一期的体重记录和快问快答答案交给它，它给出当月和次月的数据分析、下个月能做的 3 条饮食动作和 3 条运动动作。期头、概览卡、页脚声明由页面自己生成，不在这份提示词里。</p>
-<p>文案效果见 <a href="https://lipulin222.github.io/health-subscription-demo/Monthly-Report/patients-monthly.html">11 位样例患者月报</a>，可切换患者查看。</p>
+<p>每期减重月报里的「01 减重数据分析」和「02 {下一月}月的饮食与运动」都由下面这份提示词生成。把这一期的体重记录和快问快答答案交给它，它给出当月和次月的数据分析、下一月能做的 3 条饮食动作和 3 条运动动作。期头、概览卡、页脚声明由页面自己生成，不在这份提示词里。文案效果见页首的 11 位样例患者月报，可切换患者查看。</p>
 <h3 id="1-2-生成提示词-原文-整体作为-system-提示词-不做改动">1.2 生成提示词（原文，整体作为 system 提示词，不做改动）</h3>
 <p>下面整段原文一字不改地作为 system 提示词使用，用户消息是这一期的数据 JSON。</p>
 <pre><code class="language-text"># 核心字段数据 → 减重月报 生成提示词
@@ -200,7 +199,7 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/Monthly-Re
 
 ```json
 {
-  &quot;no&quot;: 4, &quot;month&quot;: 9, &quot;tag&quot;: &quot;遇到平台&quot;, &quot;title&quot;: &quot;第四个月：体重没动，但没白费&quot;,
+  &quot;no&quot;: 4, &quot;month&quot;: 9, &quot;tag&quot;: &quot;遇到平台&quot;, &quot;title&quot;: &quot;9月减重月报&quot;,
   &quot;range&quot;: &quot;2026年9月7日 – 10月4日&quot;, &quot;span&quot;: &quot;第 13–16 周 · 28 天&quot;,
   &quot;weeks&quot;: [65.1, 64.9, 64.6, 64.6, 64.5], &quot;weekLabels&quot;: [&quot;W12&quot;, &quot;W13&quot;, &quot;W14&quot;, &quot;W15&quot;, &quot;W16&quot;],
   &quot;end&quot;: 64.5, &quot;delta&quot;: -0.6, &quot;total&quot;: -7.1, &quot;bmi&quot;: 24.6, &quot;waist&quot;: 81,
@@ -210,10 +209,10 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/Monthly-Re
 ```
 
 - `end` 优先取 checkin.weight，否则取 `weekly_weights` 末点；`delta` = end − 上期末体重；`total` = prev_total + delta；`bmi` = end ÷ 身高²（米），1 位小数；`waist` 取 checkin.waist，未填沿用上期；`weeks` / `weekLabels` 原样回传（首点标签用上期末周次）；变化量用 −（U+2212）。
-- `month` = 该期起始月份。**全篇用具体月份**：报告月份写「9月」，下一月写「10月」（12月 → 1月，不带年份）；禁「本月／这个月／下个月／上个月／近期」；`title` 的「第N个月」是期次编号，不改；`range` / `span` 不改。
+- `month` = 该期起始月份。**全篇用具体月份**：报告月份写「9月」，下一月写「10月」（12月 → 1月，不带年份）；禁「本月／这个月／下个月／上个月／近期」；`title` 用 `{X}月减重月报`，不写「第N个月」或概括句；`range` / `span` 不改。
 - **时态与月份绑定**：`X月` 写已发生的事实与数据，可用完成态（减了／少了／做了）；`X+1月` 只写未然动作或安排（先…／可以…／继续观察…／如果…可以…），禁完成态与回顾式表述（少了／减了／已经／完成了），同一句不得先给未来动作再补报告月份的变化结果；未来句可引用 `X月` 记录作依据，但不写 `X月` 的变化量。写 `X月` 的原因和 `X+1月` 的安排时，拆成两段、各自带月份（当月一段、次月一段，见下一条）。例：不写「5月先收夜宵，腰围同期少了 1cm 也记进记录」，改写「4月腰围同期少了 1cm，这部分变化已记进记录；5月先把夜宵收一收，照现在的用药继续观察」。
 - `analysis` 单个字符串、段间用 `\n`，**段数 2–3；当月与次月必须分段**：`X月` 的数据结论、本期原因及作用机制、肯定或澄清、当月安全提示写在同一段，`X+1月` 的安排与转医生句另起一段，不把两个月份混在一段里；因果链固定（内容骨架见第 4 节），起笔、连接词、收尾可变；`diet` / `sport` 各 3 条；字段名与数量不改。
-- `tag` 按 delta／平台／流程开关取「用药启动期／稳步推进／速度放缓／遇到平台／需要拉回来」；`title` 格式 `第N个月：&lt;一句用户视角的概括&gt;`，第 1 期写「第一个月」；不判定速度是否达标、不用「反弹／失败」、流程开关不用「用药启动期」；全跳过照 `tag` 规则生成。
+- `tag` 按 delta／平台／流程开关取「用药启动期／稳步推进／速度放缓／遇到平台／需要拉回来」；`title` 格式 `{X}月减重月报`（如 `9月减重月报`），与页面期头一致；不判定速度是否达标、不用「反弹／失败」、流程开关不用「用药启动期」；全跳过照 `tag` 规则生成。
 
 ## 4 文案判断标准（本节是唯一措辞规范）
 
@@ -279,15 +278,16 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/Monthly-Re
 </code></pre>
 <h3 id="1-3-以后怎么改">1.3 以后怎么改</h3>
 <p>发现一句文案写得不对时，先判断它违反了提示词第 4 节五条判断标准里的哪一条。现有标准能解释，就只改文案和示例，不改提示词；五条都解释不了，才改判断标准本身。不把具体坏句子当成新的禁用条目追加进去，也不新增零散的检查项。改完以后用同一套标准把全部案例和示例再走一遍，不只改被点名的那一句。</p>
-<p>页面上「01 减重数据分析」按当月、次月分成两段显示，提示词里用换行分开；「02 下个月的饮食与运动」饮食、运动各 3 条。页面结构见 <a class="xref" href="REQ-WL-RECORD-01-%E5%87%8F%E9%87%8D%E6%9C%88%E6%8A%A5.html">REQ-WL-RECORD-01</a>。</p>
+<p>页面上「01 减重数据分析」按段落分行显示（当月在前、次月收尾，2–3 段），提示词里用换行分开；「02 {下一月}月的饮食与运动」饮食、运动各 3 条。页面结构见 <code>REQ-WL-RECORD-01</code>。</p>
 <h2 id="2-验收">2. 验收</h2>
 <ul>
-<li><input disabled="" type="checkbox"> 数据分析按当月、次月分两段展示，两段共 150–300 字，段内不混月份；下一月的句子不写「减了／少了／已经」这类已经发生的事</li>
+<li><input disabled="" type="checkbox"> 数据分析 2–3 段、共 150–300 字，当月与次月分段、段内不混月份；下一月的句子不写「减了／少了／已经」这类已经发生的事</li>
 <li><input disabled="" type="checkbox"> 数据分析每句都答得出「谁在做这件事」，不以症状或就医提示开头；读完能答出这一期做什么、留意什么、什么由医生判断</li>
 <li><input disabled="" type="checkbox"> 数据分析里写到的本期行为都能在体重记录或快问快答答案里找到，没有把「应该怎么吃」写成「已经这么吃了」</li>
 <li><input disabled="" type="checkbox"> 前后两句能连成「因为…所以…」；饭量和运动都没变时，不写「吃进去的比消耗掉的少」这类推不出的结论</li>
 <li><input disabled="" type="checkbox"> 饮食、运动各 3 条，都承接本期原因；不出现个体化千卡、蛋白克数、减重速度数值和「还差 2 次」式考核</li>
 <li><input disabled="" type="checkbox"> 全篇用具体月份（如「9月」「10月」），不写「本月／下个月」；不出现「稳着／收住／做满／接回去」这类缩略说法</li>
+<li><input disabled="" type="checkbox"> 每期标题为 <code>{X}月减重月报</code>，与页面期头一致</li>
 <li><input disabled="" type="checkbox"> 体重四周都在下降的期次，数据分析里有一句落在具体行为上的肯定</li>
 <li><input disabled="" type="checkbox"> 相邻两期不复用同一段开头、转折和收尾；同一批用户不出现整批同骨架的文案</li>
 <li><input disabled="" type="checkbox"> 提示词原文与 1.2 节一字不差，没有删节、改写，也没有追加零散的禁用条目</li>

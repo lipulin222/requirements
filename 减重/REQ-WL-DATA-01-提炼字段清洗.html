@@ -194,7 +194,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <td>患者与顾问 / 医生的聊天内容、消息时间（感受反馈与副作用线索的来源）</td>
 </tr>
 </tbody></table>
-<p><strong>输出的 9 个数据域</strong></p>
+<p><strong>输出的 10 个数据域</strong></p>
 <table>
 <thead>
 <tr>
@@ -613,6 +613,11 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <td>日期时间</td>
 <td>数据录入时间（不等于问卷提交时间：后台补录、修改后以最近一次录入时间为准）</td>
 </tr>
+<tr>
+<td>source</td>
+<td>枚举：<code>questionnaire</code> 问卷 / <code>manual</code> 后台补录</td>
+<td>来源</td>
+</tr>
 </tbody></table>
 <p><strong>心态相关 psychology（单对象）</strong></p>
 <table>
@@ -640,13 +645,18 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </tr>
 <tr>
 <td>feedback</td>
-<td>对象数组 <code>{text, recorded_at}</code></td>
-<td>感受反馈：从企业微信聊天记录里提取的患者主观感受（如「这周不容易饿了」「晚上睡得好了」），每条带消息时间；顾问回复不提取</td>
+<td>对象数组 <code>{text, recorded_at, source}</code></td>
+<td>感受反馈：从企业微信聊天记录里提取的患者主观感受（如「这周不容易饿了」「晚上睡得好了」），每条带消息时间与来源；顾问回复不提取</td>
 </tr>
 <tr>
 <td>recorded_at</td>
 <td>日期时间</td>
 <td>问卷提交时间（feedback 的各条时间在条目内）</td>
+</tr>
+<tr>
+<td>source</td>
+<td>枚举：<code>questionnaire</code> 问卷 / <code>wecom</code> 企业微信聊天记录</td>
+<td>来源</td>
 </tr>
 </tbody></table>
 <h3 id="2-2-时间戳约定-全字段">2.2 时间戳约定（全字段）</h3>
@@ -734,8 +744,8 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
   &quot;exams&quot;: [
     { &quot;exam_name&quot;: &quot;肝脏 B 超&quot;, &quot;body_part&quot;: &quot;肝胆&quot;, &quot;finding&quot;: &quot;轻度脂肪肝&quot;, &quot;abnormal&quot;: &quot;是&quot;, &quot;recorded_at&quot;: &quot;2026-05-18&quot;, &quot;source&quot;: &quot;院内体检&quot; }
   ],
-  &quot;safety_screening&quot;: { &quot;contraindication&quot;: &quot;无&quot;, &quot;contraindication_items&quot;: [], &quot;pregnancy_status&quot;: &quot;无&quot;, &quot;recorded_at&quot;: &quot;2026-11-04 10:30&quot; },
-  &quot;psychology&quot;: { &quot;weight_goal&quot;: &quot;减重 10kg&quot;, &quot;gain_causes&quot;: [&quot;饮食不规律&quot;], &quot;treatment_goals&quot;: [&quot;改善脂肪肝&quot;], &quot;feedback&quot;: [ { &quot;text&quot;: &quot;这周不容易饿了，晚上不再想吃东西&quot;, &quot;recorded_at&quot;: &quot;2026-11-05 20:38&quot; } ], &quot;recorded_at&quot;: &quot;2026-11-04 10:30&quot; }
+  &quot;safety_screening&quot;: { &quot;contraindication&quot;: &quot;无&quot;, &quot;contraindication_items&quot;: [], &quot;pregnancy_status&quot;: &quot;无&quot;, &quot;recorded_at&quot;: &quot;2026-11-04 10:30&quot;, &quot;source&quot;: &quot;questionnaire&quot; },
+  &quot;psychology&quot;: { &quot;weight_goal&quot;: &quot;减重 10kg&quot;, &quot;gain_causes&quot;: [&quot;饮食不规律&quot;], &quot;treatment_goals&quot;: [&quot;改善脂肪肝&quot;], &quot;feedback&quot;: [ { &quot;text&quot;: &quot;这周不容易饿了，晚上不再想吃东西&quot;, &quot;recorded_at&quot;: &quot;2026-11-05 20:38&quot;, &quot;source&quot;: &quot;wecom&quot; } ], &quot;recorded_at&quot;: &quot;2026-11-04 10:30&quot;, &quot;source&quot;: &quot;questionnaire&quot; }
 }
 </code></pre>
 <ul>

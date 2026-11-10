@@ -1,4 +1,4 @@
-﻿# 数据上报规范
+# 数据上报规范
 
 > 编号 `REQ-WL-BASE-01` ｜ 项目：科学减重（WL）｜ 模块：规范与基线 ｜ 状态：制定中
 > 本页是**减重项目埋点的唯一登记表**：各需求单末尾附本单相关的上报点（与本表口径一致），开发看单即知要报什么；新增或调整事件仍以本表为准。
@@ -36,18 +36,17 @@
 | --- | --- | --- | --- | --- |
 | `wcard_pin_view` | 健康订阅区置顶减重卡曝光 | `position` | 置顶触达 | STATUS-01 |
 | `wcard_state_view` | 卡片渲染（各阶段） | `stage`、`month_index` | 状态一致性 | STATUS-01 |
-| `wcard_cta_click` | 主按钮点击（`cta_id`：assess 快速评估 / report 查看评估报告 / more 查看更多 / consult 线上咨询 / book 预约面诊 / return 返回 / reorder 再次续订 / weight_edit 录体重 / rit_start 记录第一天） | `stage`、`cta_id` | 转化 | STATUS-01 |
+| `wcard_cta_click` | 主按钮点击（`cta_id`：assess 快速评估 / report 查看评估报告 / more 查看更多 / weight_edit 记录体重 / rit_start 记录第一天 / recap 打开回顾） | `stage`、`cta_id` | 转化 | STATUS-01 |
 | `wcard_ai_click` | 点「询问护士」按钮或页面级 AI 浮钮 | `stage`、`entry` | 助理入口转化 | STATUS-01 |
 | `wcard_category_click` | 阶段① 四分类科普入口点击 | `category_id` | 分类入口效果 | STATUS-04 |
 | `wcard_faq_view` | 猜你想问每条问题轮播曝光（自动换条逐次记） | `stage`、`article_id`、`seq` | 问题触达 | STATUS-04~07 |
-| `wcard_faq_click` | 点猜你想问问题进文章 | `stage`、`article_id` | 深链点击 | STATUS-04~07 |
+| `wcard_faq_click` | 点猜你想问问题进文章 | `stage`、`article_id` | 文章点击 | STATUS-04~07 |
 | `wcard_remind_view` | 提醒卡曝光（持续曝光逐次记） | `remind_id`、`expose_seq` | 曝光频次 | STATUS-07 |
 | `wcard_remind_click` | 点提醒卡 | `remind_id` | 提醒转化 | STATUS-07 |
-| `wcard_data_click` | 点体重数据块（进趋势页） | — | 数据关注行为 | STATUS-06 |
-| `wcard_red_dot_click` | 点查看更多红点 | `todo_type(生成月报/new)` | 红点联动有效性 | RECORD-01 |
+| `wcard_data_click` | 点体重数据块 | — | 数据关注行为 | STATUS-06 |
+| `wcard_red_dot_click` | 点查看更多红点 | `todo_type(生成月报/新月报)` | 红点联动有效性 | RECORD-01 |
 | `wcard_old_switch_click` | 点右上角「切换旧版」 | `stage` | 旧版切换意愿 | STATUS-01 |
-| `wcard_ai_click` | 点「AI减重助理」按钮 | `stage`、`entry` | 助理入口转化 | STATUS-01 |
-| `wcard_recap_click` | 点结营回顾入口 | `stage` | 回顾入口（二期） | STATUS-08 |
+| `wcard_recap_click` | 点 `打开回顾` | `stage` | 回顾入口 | STATUS-08 |
 
 ### 3.2 处方·健康订阅·订单（RX）
 
@@ -75,7 +74,7 @@
 | `report_reassess_click` | toast 后点引导重新评估 | `report_id` | 拦截→重评挽回率 |
 | `report_share_click` | 报告页点亲友分享类按钮（adapt「推荐给亲友做评估」/ normal「邀请亲友评估」） | `report_id`、`branch`、`share_type(native/copy)` | 亲友裂变 |
 
-就诊人浮层（PLAN-05）前端不上报，由服务端记录。
+选择就诊人页（PLAN-05）不上报，由后台记录。
 
 ### 3.4 科普·内容（EDU）
 
@@ -121,7 +120,7 @@
 
 | 漏斗 | 路径 | 回答的问题 |
 | --- | --- | --- |
-| **服务状态生效** | `wcard_pin_view` → `wcard_state_view`（进行中）→ `wcard_cta_click` | 置顶卡是否被看到并点击 |
+| **减重卡触达** | `wcard_pin_view` → `wcard_state_view`（进行中）→ `wcard_cta_click` | 置顶卡是否被看到并点击 |
 | **减重成交** | `wcard_cta_click` → `assess_complete` → `plan_view` → `invoice_view` → `consent_sign` → `addr_save` → `pay_result`(success) | 从门户到成交，哪步流失最大 |
 | **内容影响** | `edu_list_view` → `article_read` → `article_cta` | 科普对决策的影响 |
 

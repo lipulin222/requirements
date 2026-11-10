@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>减重管理知情同意书 · 需求单</title>
+<style>
+:root{
+  --ink:#1B2733; --ink-2:#48596A; --ink-3:#7A8A99; --line:#E4E9EE; --line-2:#EFF3F6;
+  --bg:#F6F8FA; --card:#FFFFFF; --brand:#0F7C86; --brand-2:#E7F4F5; --warn:#C2761C; --warn-bg:#FDF3E4;
+  --danger:#B4453C; --danger-bg:#FBEDEB;
+  --radius:14px; --shadow:0 1px 2px rgba(16,32,48,.05),0 8px 24px rgba(16,32,48,.05);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;}
+a{color:var(--brand);text-decoration:none}
+a:hover{text-decoration:underline}
+.topbar{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);}
+.topbar__in{max-width:1320px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.topbar__back{font-size:13px;color:var(--ink-2);border:1px solid var(--line);border-radius:999px;padding:4px 12px;background:#fff;white-space:nowrap}
+.topbar__back:hover{text-decoration:none;border-color:var(--brand);color:var(--brand)}
+.badge{font-size:12px;line-height:1;padding:5px 10px;border-radius:999px;background:var(--brand-2);color:var(--brand);font-weight:600;white-space:nowrap}
+.badge--warn{background:var(--warn-bg);color:var(--warn)}
+.badge--p0{background:var(--danger-bg);color:var(--danger)}
+.topbar__title{font-size:14px;font-weight:600;color:var(--ink)}
+.wrap{max-width:1320px;margin:0 auto;padding:26px 24px 80px;display:grid;grid-template-columns:258px minmax(0,1fr);gap:34px;align-items:start}
+.toc{position:sticky;top:70px;max-height:calc(100vh - 96px);overflow:auto;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 14px;box-shadow:var(--shadow)}
+.toc__h{font-size:11px;letter-spacing:.12em;color:var(--ink-3);text-transform:uppercase;margin:0 0 10px}
+.toc ol{list-style:none;margin:0;padding:0}
+.toc li{margin:2px 0}
+.toc a{display:block;padding:5px 8px;border-radius:8px;font-size:13px;color:var(--ink-2);line-height:1.45}
+.toc a:hover{background:var(--line-2);text-decoration:none;color:var(--brand)}
+.toc .lv3 a{padding-left:20px;font-size:12.5px;color:var(--ink-3)}
+.doc{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:34px 40px 46px;box-shadow:var(--shadow);min-width:0}
+.doc h1{font-size:26px;line-height:1.35;margin:0 0 6px;letter-spacing:-.01em}
+.doc .subtitle{color:var(--ink-3);font-size:13px;margin:0 0 22px}
+.doc h2{font-size:19px;margin:44px 0 14px;padding-bottom:10px;border-bottom:1px solid var(--line);scroll-margin-top:78px}
+.doc h3{font-size:15.5px;margin:26px 0 10px;scroll-margin-top:78px}
+.doc p{margin:10px 0;color:var(--ink-2)}
+.doc strong{color:var(--ink)}
+.doc ul,.doc ol{padding-left:1.35em;color:var(--ink-2)}
+.doc li{margin:5px 0}
+.doc li:has(> input[type=checkbox]){list-style:none;margin-left:-1.35em;display:flex;gap:9px;align-items:flex-start;color:var(--ink)}
+.doc input[type=checkbox]{flex:none;width:16px;height:16px;margin:5px 0 0;border-radius:4px;accent-color:var(--brand)}
+.doc code{background:#F1F5F8;border:1px solid var(--line-2);border-radius:5px;padding:1px 5px;font-size:12.5px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#20465A}
+.doc pre{background:#F7FAFB;border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow:auto}
+.doc pre code{background:none;border:0;padding:0;font-size:12.5px;color:var(--ink-2)}
+.doc blockquote{margin:14px 0;padding:10px 16px;background:#FFFBF0;border-left:3px solid #E9C683;border-radius:0 10px 10px 0}
+.doc blockquote p{margin:4px 0;color:#7A5C1E}
+.doc hr{border:0;border-top:1px dashed var(--line);margin:26px 0}
+.doc table{width:100%;border-collapse:separate;border-spacing:0;margin:16px 0;font-size:13.5px;display:block;overflow-x:auto}
+.doc thead th{background:#F3F7F9;color:var(--ink);font-weight:600;text-align:left;white-space:nowrap}
+.doc th,.doc td{border-bottom:1px solid var(--line-2);padding:9px 12px;vertical-align:top;color:var(--ink-2)}
+.doc tbody tr:last-child td{border-bottom:0}
+.doc tbody tr:hover td{background:#FAFCFD}
+/* 关联需求单 chip */
+.doc a.xref{display:inline-block;padding:1px 8px;margin:1px 0;border-radius:7px;background:var(--brand-2);color:var(--brand);
+  font-weight:600;font-size:12.5px;border:1px solid #CFE7E9;white-space:nowrap}
+.doc a.xref:hover{background:#D6EDEF;text-decoration:none;border-color:var(--brand)}
+.doc .xref--self{display:inline-block;padding:1px 8px;border-radius:7px;background:#F1F5F8;color:var(--ink-3);
+  font-weight:600;font-size:12.5px;border:1px solid var(--line);white-space:nowrap}
+.figs{margin:22px 0 6px;display:grid;gap:18px}
+.figs__h{font-size:12px;letter-spacing:.1em;color:var(--ink-3);text-transform:uppercase;margin:0}
+.fig{margin:0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:#fff}
+.fig__shot{max-height:520px;overflow:auto;background:#F1F5F7}
+.fig__shot img{display:block;width:100%;height:auto;cursor:zoom-in}
+.fig figcaption{padding:10px 14px;font-size:12.5px;color:var(--ink-2);border-top:1px solid var(--line-2);background:#FBFDFE;display:flex;gap:10px;align-items:baseline}
+.fig figcaption b{color:var(--brand);font-weight:600;flex:none}
+.fig figcaption em{margin-left:auto;font-style:normal;color:var(--ink-3);font-size:11.5px;white-space:nowrap;flex:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:14px}
+.grid .fig__shot{max-height:none;overflow:visible}
+.grid figcaption{display:block;font-size:12px;padding:8px 11px}
+.grid figcaption em{display:none}
+.lb{position:fixed;inset:0;z-index:99;background:rgba(12,22,30,.92);display:flex;align-items:center;justify-content:center;padding:28px}
+.lb[hidden]{display:none}
+.lb img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,.5);background:#fff;cursor:zoom-out}
+.lb__x{position:absolute;top:16px;right:20px;width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.14);
+  color:#fff;font-size:22px;line-height:1;cursor:pointer}
+.lb__x:hover{background:rgba(255,255,255,.26)}
+.lb__tip{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);color:#CBD6DE;font-size:12px}
+/* 索引页 */
+.hero{max-width:1320px;margin:0 auto;padding:38px 24px 6px}
+.hero h1{margin:0 0 10px;font-size:30px;letter-spacing:-.02em}
+.hero p{margin:0 0 8px;color:var(--ink-2);max-width:900px}
+.stats{display:flex;gap:28px;margin:20px 0 0;flex-wrap:wrap}
+.stat b{display:block;font-size:24px;color:var(--brand);line-height:1.2}
+.stat span{font-size:12.5px;color:var(--ink-3)}
+.callout{max-width:1320px;margin:22px auto 0;padding:0 24px}
+.callout__in{background:linear-gradient(135deg,#FFF7EC,#FDF1E3);border:1px solid #F0D9B4;border-radius:var(--radius);padding:16px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.callout__in b{color:#8A5A15}
+.callout__in a{margin-left:auto;font-weight:600}
+.sec{max-width:1320px;margin:0 auto;padding:8px 24px}
+.sec__h{display:flex;align-items:baseline;gap:12px;margin:32px 0 16px}
+.sec__h h2{margin:0;font-size:19px}
+.sec__h span{font-size:12.5px;color:var(--ink-3)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:18px}
+.rcard{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden;box-shadow:var(--shadow);transition:transform .16s ease,box-shadow .16s ease}
+.rcard:hover{transform:translateY(-2px);box-shadow:0 2px 4px rgba(16,32,48,.06),0 14px 32px rgba(16,32,48,.09);text-decoration:none}
+.rcard__cover{height:132px;background:#EFF4F6;overflow:hidden;border-bottom:1px solid var(--line-2);position:relative}
+.rcard__cover img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+.rcard__cover--ph{display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#0F7C86,#14A0A8);color:#fff;font-weight:700;font-size:15px;letter-spacing:.04em}
+.rcard__b{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
+.rcard__t{font-size:14.5px;font-weight:600;color:var(--ink);line-height:1.45}
+.rcard__d{font-size:12.5px;color:var(--ink-3);line-height:1.6}
+.rcard__f{margin-top:auto;padding-top:10px;display:flex;gap:8px;align-items:center;font-size:11.5px;color:var(--ink-3)}
+.note{max-width:1320px;margin:32px auto 0;padding:0 24px 70px}
+.note__in{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px 22px;color:var(--ink-2);font-size:13px;box-shadow:var(--shadow)}
+.note__in b{color:var(--ink)}
+footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);font-size:12px}
+@media (max-width:1080px){
+  .wrap{grid-template-columns:1fr;gap:20px;padding-top:20px}
+  .toc{position:static;max-height:none}
+  .doc{padding:26px 20px 34px}
+  .fig__shot{max-height:400px}
+}
+@media print{
+  .topbar,.toc,.lb{display:none}
+  .wrap{display:block;padding:0;max-width:none}
+  .doc{border:0;box-shadow:none;padding:0}
+  .fig__shot{max-height:none;overflow:visible}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar__in">
+    <a class="topbar__back" href="../index.html">← 需求单索引</a>
+    <span class="badge">科学减重（WL）</span>
+    <span class="badge badge--p0">优先级 P0</span>
+    <span class="topbar__title">减重管理知情同意书</span>
+  </div>
+</header>
+<div class="wrap">
+  <nav class="toc">
+    <p class="toc__h">本单目录</p>
+    <ol><li class="lv2"><a href="#1-规则">1. 规则</a></li>
+<li class="lv2"><a href="#2-定稿全文-一字不改">2. 定稿全文（一字不改）</a></li>
+<li class="lv3"><a href="#一-服务模式与首诊-复诊规则">一、服务模式与首诊/复诊规则</a></li>
+<li class="lv3"><a href="#二-信息真实性声明">二、信息真实性声明</a></li>
+<li class="lv3"><a href="#三-医生独立诊疗与处方授权">三、医生独立诊疗与处方授权</a></li>
+<li class="lv3"><a href="#四-减重治疗的效果与风险告知">四、减重治疗的效果与风险告知</a></li>
+<li class="lv3"><a href="#五-本人的配合义务">五、本人的配合义务</a></li>
+<li class="lv3"><a href="#六-责任承担与免责">六、责任承担与免责</a></li>
+<li class="lv3"><a href="#七-个人信息处理同意">七、个人信息处理同意</a></li>
+<li class="lv3"><a href="#八-确认与签署">八、确认与签署</a></li>
+<li class="lv2"><a href="#3-验收">3. 验收</a></li>
+<li class="lv2"><a href="#4-埋点-汇总见-req-wl-base-01-第-3-2-节">4. 埋点（汇总见 REQ-WL-BASE-01 第 3.2 节）</a></li></ol>
+  </nav>
+  <main class="doc">
+    <h1>减重管理知情同意书</h1>
+    <p class="subtitle">需求单 · 科学减重（WL） · 交付目标：可上线面向用户使用（H5 + 微信小程序）</p>
+    <blockquote>
+<p>编号 <code>REQ-WL-RX-07</code> ｜ 项目：科学减重（WL）｜ 模块：处方·健康订阅·订单 ｜ 优先级 P0 ｜ 状态：待评审
+定稿文档：<a href="https://alidocs.dingtalk.com/i/nodes/a9E05BDRVQ6AZEMZfZYAlnXdJ63zgkYA">减重管理知情同意书（钉钉）</a> ｜ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/weight-management/Treatment-package/index.html">首诊套餐页</a> ｜ 埋点：<code>REQ-WL-BASE-01</code></p>
+</blockquote>
+<hr>
+<h2 id="1-规则">1. 规则</h2>
+<ul>
+<li>定稿文档标题为《减重管理知情同意书》；首诊套餐页吸底勾选处按 demo 写《减重管理服务知情同意书》，两者指同一份文件。</li>
+<li>勾选文案原文：<code>我已阅读并同意《减重管理服务知情同意书》，确认提供的问卷信息真实，知悉医生将据此判断并开具处方</code>。点书名打开同意书全文；Demo 里书名只是文字、不跳转，正式上线要接通。</li>
+<li>全文照定稿文档一字不改地展示，不做摘要、不删节、不改写标点，能完整滚动阅读。</li>
+<li>没勾选点 <code>购买套餐</code> 时提示 <code>请先勾选同意《减重管理服务知情同意书》</code>，停在本页；勾选后点 <code>购买套餐</code> 进支付页。</li>
+<li>勾选即视为签署，记录签署时间与版本号 <code>consent_version</code>，合规留痕，已签署的版本不覆盖。内容一改就换版本号，用户按新版本重新签署。</li>
+</ul>
+<h2 id="2-定稿全文-一字不改">2. 定稿全文（一字不改）</h2>
+<p>本同意书适用于【平台/机构全称（广州卓祥医疗门诊部有限公司）】（以下简称“平台”）提供的科学减重管理服务。请在填写问卷、接受诊疗前完整阅读全部内容；如有疑问，请在签署前向客服咨询。</p>
+<h3 id="一-服务模式与首诊-复诊规则">一、服务模式与首诊/复诊规则</h3>
+<ol>
+<li>本人知悉并确认：本平台减重管理服务<strong>仅针对复诊患者提供互联网诊疗</strong>。根据《互联网诊疗管理办法（试行）》《互联网诊疗监管细则（试行）》等规定，互联网诊疗不得对首诊患者开展诊疗活动。首次就该减重相关事项寻求诊疗的，或平台根据问卷信息判断属于首诊情形的，本人在获得实体医疗机构明确诊断后，方可凭有效病历资料申请线上复诊服务。</li>
+<li>本人理解，线上复诊的前提是本人能够提供实体医疗机构出具的明确诊断的病历资料（如门诊病历、诊断证明、检查报告等）。无法提供上述资料，或平台/医生判断不符合复诊条件的，平台有权拒绝提供线上诊疗服务，并建议本人线下就医。因本人未能提供合格复诊资料或首诊导流安排所产生的诊疗延迟，不视为平台或医生的过错。</li>
+<li>本人确认：健康智能体在问卷阶段生成的任何分层、提示或建议，仅用于信息收集、分诊引导和医生参考，不构成诊断结论或用药建议，本人不会将其作为自行用药或自我治疗的依据。</li>
+</ol>
+<h3 id="二-信息真实性声明">二、信息真实性声明</h3>
+<ol>
+<li>本人已如实、完整填写健康问卷及相关资料，包括但不限于身高、体重、BMI、既往病史、用药史、过敏史、家族史、妊娠及哺乳情况、目前正在使用的药物与保健品等。</li>
+<li><strong>本人特别确认：身高、体重等由本人自述或自行测量的数据，其真实性、准确性由本人负责。</strong> 本人理解线上场景下医生无法直接进行体格测量，BMI等关键指标的计算完全依赖本人提供的数据。<strong>本人不会虚报、少报体重或瞒报身高，不会以“目标体重”替代“当前实际体重”填写。</strong> 因自述数据不实导致医生评估偏差、处方不当或减重效果未达预期的，相应后果由本人承担。</li>
+<li>本人确认所填信息真实、准确，不存在虚假、隐瞒或遗漏。医生基于本人所提供信息作出的评估、诊断、处方及用药方案，<strong>其合理性与安全性以信息真实为前提</strong>。信息不实可能直接影响诊疗的安全性与有效性，本人已知悉并自愿承担由此产生的风险。</li>
+<li>在服务期间，如本人的体重、健康状况、用药情况等发生变化，将及时如实告知医生。<strong>本人不会依据过时或未更新的自述数据继续接受线上诊疗服务。</strong></li>
+</ol>
+<h3 id="三-医生独立诊疗与处方授权">三、医生独立诊疗与处方授权</h3>
+<ol>
+<li>本人同意，平台执业医生在符合法律法规及互联网诊疗相关规范的前提下，结合本人提交的问卷、资料、问诊沟通内容及必要的检查检验结果，独立作出专业判断，评估本人是否适合接受减重治疗。经评估适合的，医生可以开具处方（可能包括减重药物，含注射类药物），并提供饮食、运动及行为管理指导。</li>
+<li><strong>本人知悉并确认：平台使用的健康智能体及任何人工智能工具，其功能限于问卷信息收集、结构化呈现、分诊提示和随访提醒等辅助性用途。人工智能工具的输出不具有诊断结论或处方建议的效力，不得替代执业医生的专业判断，亦不得冒用、替代医师本人提供诊疗服务</strong>。任何减重药物的处方，均须由接诊医师本人基于对本人情况的独立评估后开具。</li>
+<li>本人理解处方是否开具由医生依法独立决定，并非本人必然获得。医生有权要求本人补充信息、检查检验或既往诊断、病历资料，有权调整或拒绝开具药物、建议线下就医，或终止本服务。<strong>医生依据平台智能体提示或问卷结果所作出的“建议线下就医”“暂不适宜线上诊疗”等判断，属于依法履行诊疗义务的行为，不构成对本人服务请求的无正当理由拒绝。</strong></li>
+<li>本人理解线上问诊无法替代线下面对面的体格检查，医生的判断在很大程度上依赖本人提供信息的真实性（如身高、体重），并同意按医生要求提供真实的测量数据、检查报告及既往诊疗资料。</li>
+</ol>
+<h3 id="四-减重治疗的效果与风险告知">四、减重治疗的效果与风险告知</h3>
+<ol>
+<li>**需要长期管理。**肥胖可能是一种需要终身管理的慢性状态，往往需要长期调整饮食习惯并做出持久的行为改变，才能取得并维持理想的治疗效果。部分患者在减量或停药后体重可能反弹。</li>
+<li>**效果因人而异，无法保证。**减重效果受体质、合并疾病、饮食运动依从性、用药反应等多种因素影响。本人理解治疗过程可能达不到本人或他人的预期，平台和医生无法承诺特定的减重幅度或时间。</li>
+<li>**可能出现不良反应。**任何药物治疗均可能带来风险。常见不良反应包括恶心、呕吐、腹泻、便秘、腹胀、食欲下降、头晕乏力、注射部位反应等；少数情况下可能出现严重不良反应，如急性胰腺炎、胆囊相关疾病、严重过敏反应、低血糖（尤其在合并使用降糖药物时）等，极少数情况下可能危及生命。具体以所用药品说明书为准。</li>
+<li>**方案可能调整。**医生可能根据本人的反应和检查结果调整剂量、更换药物或停药。</li>
+<li>**不治疗也有风险。**超重或肥胖会增加高血压、糖尿病、心血管疾病、睡眠呼吸暂停综合征、关节疾病等风险，本人已权衡治疗获益与风险。</li>
+<li>本人已充分阅读并理解上述内容，知悉相关风险；如有疑问，已有机会在签署前向医生或客服咨询。</li>
+</ol>
+<h3 id="五-本人的配合义务">五、本人的配合义务</h3>
+<ol>
+<li>按医嘱规范用药，不自行增减剂量、变更用法或与其他药物、保健品叠加使用；按要求保存药品，不将药品转让、转售或赠予他人。</li>
+<li>按要求进行随访、记录体重等指标，并配合完成所需的检查检验。<strong>本人理解，体重等指标的规范记录是医生评估疗效和调整方案的基础，无正当理由拒绝配合随访或检查，可能导致医生无法继续安全有效地提供线上服务。</strong></li>
+<li>如出现严重或持续不适（如剧烈腹痛、持续呕吐、过敏、心慌心悸、明显低血糖症状等），立即停止用药，并及时就医、联系医生。</li>
+<li>如计划怀孕、已怀孕或正在哺乳，必须在第一时间告知医生。</li>
+</ol>
+<h3 id="六-责任承担与免责">六、责任承担与免责</h3>
+<ol>
+<li><strong>自述数据不实的责任。</strong> 如因本人提供虚假、不完整或有意隐瞒的信息（包括但不限于虚报身高、体重、BMI，隐瞒病史、过敏史、禁忌症、用药史或妊娠哺乳状态），导致诊断、处方或用药建议与本人实际情况不符，由此产生的不良后果及相关责任，由本人自行承担，平台及医生在法律允许的范围内不承担责任。</li>
+<li><strong>首诊导流与拒绝线上诊疗的责任。</strong> 本人理解并同意：平台依据法律法规及问卷评估结果将首诊患者引导至线下医疗机构，或在本人不符合复诊条件时拒绝提供线上诊疗服务，系履行合规义务的行为。<strong>因首诊导流、复诊条件审核或线上服务终止所造成的诊疗时间延迟或不便，不构成平台或医生的违约或过错</strong>，但平台应在合理范围内提供必要的指引和说明。</li>
+<li><strong>AI辅助工具使用相关的责任。</strong> 本人确认不会将平台健康智能体、问卷结果或任何AI生成内容作为自我诊断、自行购药或自行调整用药的依据。<strong>如本人未经执业医生确认，自行依据智能体输出或问卷提示采取用药、停药或其他干预措施，由此产生的后果由本人自行承担</strong>，平台及医生不承担责任。</li>
+<li>**未遵医嘱的责任。**如因本人未按医嘱用药、擅自调整剂量、与其他药物叠加使用或未及时就医造成的后果，由本人自行承担相应责任。</li>
+<li>**效果未达预期的责任。**本人理解减重效果未达预期本身，不构成平台或医生的过错，不作为要求退款、赔偿的当然理由（退款规则以服务协议约定为准）。</li>
+<li>本条款不免除平台、医生因故意或重大过失、诊疗过错等依法应承担的责任。</li>
+</ol>
+<h3 id="七-个人信息处理同意">七、个人信息处理同意</h3>
+<p>本人同意平台为提供减重管理服务、完成问诊与处方、随访及安全监测的目的，收集和处理本人的个人信息，包括身份信息、联系方式以及身高体重、病史、用药史等敏感个人信息（健康信息）。本人知悉，平台健康智能体在问卷收集和分析环节会接触上述信息，但相关信息的使用限于本同意书载明的目的和《隐私政策》约定的范围。平台将依法保护上述信息，具体规则见《隐私政策》。</p>
+<h3 id="八-确认与签署">八、确认与签署</h3>
+<ul>
+<li><input disabled="" type="checkbox"> 本人确认已年满 18 周岁，具有完全民事行为能力。本人已认真阅读并充分理解本同意书的全部内容，并自愿签署。</li>
+</ul>
+<h2 id="3-验收">3. 验收</h2>
+<ul>
+<li><input disabled="" type="checkbox"> 勾选文案、书名与单内一致；点书名能打开同意书全文</li>
+<li><input disabled="" type="checkbox"> 全文与钉钉定稿文档逐字一致，八节齐全、不删节、不摘要，可完整滚动阅读</li>
+<li><input disabled="" type="checkbox"> 未勾选点 <code>购买套餐</code> 被拦住并提示 <code>请先勾选同意《减重管理服务知情同意书》</code>；勾选后进支付页</li>
+<li><input disabled="" type="checkbox"> 签署记录含签署时间与 <code>consent_version</code>；内容变更后版本号变化并要求重新签署，旧记录不被覆盖</li>
+</ul>
+<h2 id="4-埋点-汇总见-req-wl-base-01-第-3-2-节">4. 埋点（汇总见 <code>REQ-WL-BASE-01</code> 第 3.2 节）</h2>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>触发时机</th>
+<th>关键参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>consent_sign</code></td>
+<td>勾选同意《减重管理服务知情同意书》</td>
+<td><code>order_id</code>、<code>consent_version</code>、<code>success</code></td>
+</tr>
+<tr>
+<td><code>pay_todo_block</code></td>
+<td>未勾选协议点 <code>购买套餐</code> 被拦截</td>
+<td><code>missing(signed)</code></td>
+</tr>
+</tbody></table>
+
+  </main>
+</div>
+<div class="lb" id="lb" hidden><button class="lb__x" aria-label="关闭">×</button><img id="lbImg" alt=""><p class="lb__tip">原图 · 点击图片或按 Esc 关闭</p></div>
+<script>
+(function(){
+  var lb=document.getElementById('lb'),lbImg=document.getElementById('lbImg');
+  if(!lb) return;
+  function close(){lb.hidden=true;lbImg.src='';document.body.style.overflow='';}
+  document.addEventListener('click',function(e){
+    var img=e.target.closest && e.target.closest('.fig__shot img');
+    if(img){lbImg.src=img.src;lb.hidden=false;document.body.style.overflow='hidden';return;}
+    if(e.target===lb||e.target===lbImg||(e.target.classList&&e.target.classList.contains('lb__x'))) close();
+  });
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!lb.hidden) close();});
+})();
+</script>
+</body>
+</html>

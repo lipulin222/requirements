@@ -231,7 +231,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </tr>
 <tr>
 <td><code>wcard_cta_click</code></td>
-<td>主按钮点击（<code>cta_id</code>：assess 快速评估 / report 查看评估报告 / more 查看更多 / consult 线上咨询 / book 预约面诊 / return 返回 / reorder 再次续订 / weight_edit 录体重 / rit_start 记录第一天）</td>
+<td>主按钮点击（<code>cta_id</code>：assess 快速评估 / report 查看评估报告 / more 查看更多 / weight_edit 记录体重 / rit_start 记录第一天 / recap 打开回顾）</td>
 <td><code>stage</code>、<code>cta_id</code></td>
 <td>转化</td>
 <td>STATUS-01</td>
@@ -261,7 +261,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <td><code>wcard_faq_click</code></td>
 <td>点猜你想问问题进文章</td>
 <td><code>stage</code>、<code>article_id</code></td>
-<td>深链点击</td>
+<td>文章点击</td>
 <td>STATUS-04~07</td>
 </tr>
 <tr>
@@ -280,7 +280,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </tr>
 <tr>
 <td><code>wcard_data_click</code></td>
-<td>点体重数据块（进趋势页）</td>
+<td>点体重数据块</td>
 <td>—</td>
 <td>数据关注行为</td>
 <td>STATUS-06</td>
@@ -288,7 +288,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <tr>
 <td><code>wcard_red_dot_click</code></td>
 <td>点查看更多红点</td>
-<td><code>todo_type(生成月报/new)</code></td>
+<td><code>todo_type(生成月报/新月报)</code></td>
 <td>红点联动有效性</td>
 <td>RECORD-01</td>
 </tr>
@@ -300,17 +300,10 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <td>STATUS-01</td>
 </tr>
 <tr>
-<td><code>wcard_ai_click</code></td>
-<td>点「AI减重助理」按钮</td>
-<td><code>stage</code>、<code>entry</code></td>
-<td>助理入口转化</td>
-<td>STATUS-01</td>
-</tr>
-<tr>
 <td><code>wcard_recap_click</code></td>
-<td>点结营回顾入口</td>
+<td>点 <code>打开回顾</code></td>
 <td><code>stage</code></td>
-<td>回顾入口（二期）</td>
+<td>回顾入口</td>
 <td>STATUS-08</td>
 </tr>
 </tbody></table>
@@ -432,7 +425,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <td>亲友裂变</td>
 </tr>
 </tbody></table>
-<p>就诊人浮层（PLAN-05）前端不上报，由服务端记录。</p>
+<p>选择就诊人页（PLAN-05）不上报，由后台记录。</p>
 <h3 id="3-4-科普-内容-edu">3.4 科普·内容（EDU）</h3>
 <table>
 <thead>
@@ -608,7 +601,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </tr>
 </thead>
 <tbody><tr>
-<td><strong>服务状态生效</strong></td>
+<td><strong>减重卡触达</strong></td>
 <td><code>wcard_pin_view</code> → <code>wcard_state_view</code>（进行中）→ <code>wcard_cta_click</code></td>
 <td>置顶卡是否被看到并点击</td>
 </tr>

@@ -21,7 +21,7 @@
 | 问卷（记录 + 答案，同一张表） | 提交时间、填写渠道、初筛结果、10 道题的逐题回答 |
 | 企业微信沟通记录 | 患者与顾问 / 医生的聊天内容、消息时间（感受反馈与副作用线索的来源） |
 
-**输出的 9 个数据域**
+**输出的 10 个数据域**
 
 | 数据域 | 内容 |
 | --- | --- |
@@ -151,6 +151,7 @@
 | contraindication_items | 文本数组 | 答「有」时的具体命中项 |
 | pregnancy_status | 枚举：备孕 / 怀孕 / 哺乳 / 无 / 未作答 | 孕产阶段；男性记「未作答」 |
 | recorded_at | 日期时间 | 数据录入时间（不等于问卷提交时间：后台补录、修改后以最近一次录入时间为准） |
+| source | 枚举：`questionnaire` 问卷 / `manual` 后台补录 | 来源 |
 
 **心态相关 psychology（单对象）**
 
@@ -159,8 +160,9 @@
 | weight_goal | 文本 | 减重目标 |
 | gain_causes | 文本数组 | 体重增加原因自评（多选原文） |
 | treatment_goals | 文本数组 | 除体重数字外的治疗目标（问卷第⑩题） |
-| feedback | 对象数组 `{text, recorded_at}` | 感受反馈：从企业微信聊天记录里提取的患者主观感受（如「这周不容易饿了」「晚上睡得好了」），每条带消息时间；顾问回复不提取 |
+| feedback | 对象数组 `{text, recorded_at, source}` | 感受反馈：从企业微信聊天记录里提取的患者主观感受（如「这周不容易饿了」「晚上睡得好了」），每条带消息时间与来源；顾问回复不提取 |
 | recorded_at | 日期时间 | 问卷提交时间（feedback 的各条时间在条目内） |
+| source | 枚举：`questionnaire` 问卷 / `wecom` 企业微信聊天记录 | 来源 |
 
 ### 2.2 时间戳约定（全字段）
 
@@ -219,8 +221,8 @@
   "exams": [
     { "exam_name": "肝脏 B 超", "body_part": "肝胆", "finding": "轻度脂肪肝", "abnormal": "是", "recorded_at": "2026-05-18", "source": "院内体检" }
   ],
-  "safety_screening": { "contraindication": "无", "contraindication_items": [], "pregnancy_status": "无", "recorded_at": "2026-11-04 10:30" },
-  "psychology": { "weight_goal": "减重 10kg", "gain_causes": ["饮食不规律"], "treatment_goals": ["改善脂肪肝"], "feedback": [ { "text": "这周不容易饿了，晚上不再想吃东西", "recorded_at": "2026-11-05 20:38" } ], "recorded_at": "2026-11-04 10:30" }
+  "safety_screening": { "contraindication": "无", "contraindication_items": [], "pregnancy_status": "无", "recorded_at": "2026-11-04 10:30", "source": "questionnaire" },
+  "psychology": { "weight_goal": "减重 10kg", "gain_causes": ["饮食不规律"], "treatment_goals": ["改善脂肪肝"], "feedback": [ { "text": "这周不容易饿了，晚上不再想吃东西", "recorded_at": "2026-11-05 20:38", "source": "wecom" } ], "recorded_at": "2026-11-04 10:30", "source": "questionnaire" }
 }
 ```
 

@@ -141,132 +141,68 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <div class="wrap">
   <nav class="toc">
     <p class="toc__h">本单目录</p>
-    <ol><li class="lv2"><a href="#1-页面定位">1. 页面定位</a></li>
-<li class="lv2"><a href="#2-页面结构-自上而下">2. 页面结构（自上而下）</a></li>
-<li class="lv2"><a href="#3-正文卡片内的元素类型">3. 正文卡片内的元素类型</a></li>
-<li class="lv2"><a href="#4-文内引用跳转">4. 文内引用跳转</a></li>
-<li class="lv2"><a href="#5-关键值">5. 关键值</a></li>
-<li class="lv2"><a href="#6-验收">6. 验收</a></li>
-<li class="lv2"><a href="#7-埋点-汇总见-req-wl-base-01-第-3-4-节">7. 埋点（汇总见 REQ-WL-BASE-01 第 3.4 节）</a></li></ol>
+    <ol><li class="lv2"><a href="#1-规则">1. 规则</a></li>
+<li class="lv3"><a href="#页面结构-自上而下">页面结构（自上而下）</a></li>
+<li class="lv2"><a href="#2-验收">2. 验收</a></li>
+<li class="lv2"><a href="#3-埋点-汇总见-req-wl-base-01-第-3-4-节">3. 埋点（汇总见 REQ-WL-BASE-01 第 3.4 节）</a></li></ol>
   </nav>
   <main class="doc">
     <h1>科普文详情页</h1>
     <p class="subtitle">需求单 · 科学减重（WL） · 交付目标：可上线面向用户使用（H5 + 微信小程序）</p>
     <blockquote>
 <p>编号 <code>REQ-WL-EDU-02</code> ｜ 项目：科学减重（WL）｜ 模块：科普·内容 ｜ 优先级 P1 ｜ 状态：待评审
-样式参考样张：<code>D:\团队管理\知识库文件\减重服务-科普内容\06-购前\K01-GLP-1是怎么帮你减重的.html</code>（知识库内每篇文章一页，结构与样式一致）｜ 埋点：<code>REQ-WL-BASE-01</code></p>
+Demo：<a href="https://lipulin222.github.io/health-subscription-demo/edu-article/index.html">科普文详情页</a> ｜ 埋点：<code>REQ-WL-BASE-01</code></p>
 </blockquote>
 <hr>
-<h2 id="1-页面定位">1. 页面定位</h2>
+<h2 id="1-规则">1. 规则</h2>
 <ul>
-<li>一篇科普文章对应一个详情页，从科普知识库首页（EDU-01）等入口点进。</li>
-<li>页面内容由知识库统一维护，按固定内容模板渲染；运营改稿后页面随之更新，前台不需要逐页开发文案。</li>
+<li>一篇科普文章一个详情页，从科普知识库首页、减重卡「猜你想问」、文内「相关阅读」进入。文章正文由知识库统一维护，页面只负责排版；运营改稿后页面跟着变，不用逐篇改前端。</li>
+<li>Demo 里只有一篇静态示例 <code>GLP-1 是怎么帮你减重的</code>：地址上的 <code>?a=</code> 参数目前不影响显示，知识库里 15 篇文章都会落到这一页。正式上线要按文章标识取对应内容。</li>
 </ul>
-<h2 id="2-页面结构-自上而下">2. 页面结构（自上而下）</h2>
+<h3 id="页面结构-自上而下">页面结构（自上而下）</h3>
 <table>
 <thead>
 <tr>
 <th>区块</th>
-<th>规则</th>
+<th>内容</th>
 </tr>
 </thead>
 <tbody><tr>
 <td>顶栏</td>
-<td>左侧返回按钮；右侧目录图标，点击回科普知识库首页；顶栏中间不显示标题文字</td>
+<td>左返回（回上一页）；右分享（调系统分享，不支持时复制链接）；中间不显示标题</td>
 </tr>
 <tr>
 <td>版头</td>
-<td>眉标 <code>科学减重服务</code>（青色小字）+ 文章大标题（24px 深墨色）+ 导语（13px 灰字，≤30 字，不写阅读指引）+ 底部 1px 分隔细线</td>
+<td>文章大标题 + 一句导语；无副标题、无阅读时长、无形态标签</td>
 </tr>
 <tr>
 <td>正文</td>
-<td>每个章节一张白色圆角卡片，卡片间留缝；章节头为青色编号徽标（01 / 02 …）+ 青色章节标题，标题下有细分割线</td>
+<td>5 张白色卡片，编号 <code>01</code>–<code>05</code> 配青色章节标题，卡内是带小标题的清单条目</td>
 </tr>
 <tr>
-<td>审核与说明卡</td>
-<td>独立一张卡：青色「审核」徽标 + 医生姓名 · 科室 · 职称 · 更新日期；下方一行免责声明 <code>本篇内容仅供参考，具体情况以你的处方、药品说明书和医生指导为准。</code></td>
+<td>相关阅读</td>
+<td>一张卡片，3 条同主题文章，点击进对应文章</td>
+</tr>
+<tr>
+<td>审核说明</td>
+<td>一张卡片：<code>审核</code> 徽标 + <code>李医生 · 内分泌科 · 主治医师 · 更新 2026.10.15</code></td>
 </tr>
 </tbody></table>
-<p>吸底「问 AI 减重助理」按钮一期不做，一期详情页底部不放吸底按钮。</p>
-<h2 id="3-正文卡片内的元素类型">3. 正文卡片内的元素类型</h2>
-<p>内容模板支持以下元素，按文章实际内容组合：</p>
-<table>
-<thead>
-<tr>
-<th>元素</th>
-<th>规则</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>清单条目</td>
-<td>青色小菱形点 + 条目文字；条目内引导词加粗、破折号后接说明</td>
-</tr>
-<tr>
-<td>名称 + 说明</td>
-<td>名称行加粗，下方灰字说明；多条之间虚线分隔</td>
-</tr>
-<tr>
-<td>步骤</td>
-<td>青色圆形序号 + 步骤标题 + 说明，步骤间细分割线</td>
-</tr>
-<tr>
-<td>浅蓝提示块</td>
-<td>圆角浅蓝底、青色小字的补充提示</td>
-</tr>
-<tr>
-<td>插图</td>
-<td>图上方左侧「示意图」小标注，图位 16:9，图下方图注（≤30 字，左对齐）；每篇文章最多 1 张，只给有空间关系、顺序、节奏形状的内容配图</td>
-</tr>
-<tr>
-<td>表格</td>
-<td>至少 3 行且不超过 3 列才使用；表头浅蓝底，手机上不横向滚动</td>
-</tr>
-</tbody></table>
-<h2 id="4-文内引用跳转">4. 文内引用跳转</h2>
 <ul>
-<li>正文里提到其他篇目时，写明篇目名（如「见《用药后的反应怎么应对》」），篇目名可点击，跳到对应详情页。</li>
-<li>被引用的篇目下架后，点击提示 <code>内容不存在或已下架</code>，不跳转。</li>
+<li>页面底部不放吸底按钮（一期不做「问 AI 减重助理」）。</li>
+<li>正文里提到其他篇目时写全篇名并可点击；被引用的篇目下架后提示 <code>内容不存在或已下架</code>，不跳转。</li>
+<li>手机外壳 375px，页面底 #F2F5F6；卡片白底、圆角 8px；主色 #009BBF；正文 14px、行高 1.7。插图每篇最多 1 张，图上方标「示意图」、图下方左对齐图注（≤30 字）；表格至少 3 行且不超过 3 列才用。</li>
 </ul>
-<h2 id="5-关键值">5. 关键值</h2>
-<table>
-<thead>
-<tr>
-<th>项</th>
-<th>值</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>手机外壳</td>
-<td>420px，页面底 #F6F6F6</td>
-</tr>
-<tr>
-<td>卡片</td>
-<td>白底、圆角 22px、边 1px #EBEBEB、阴影 0 4px 16px rgba(0,111,138,.06)</td>
-</tr>
-<tr>
-<td>主色 / 章节青色</td>
-<td>#006F8A / #009BBF</td>
-</tr>
-<tr>
-<td>正文</td>
-<td>14px，行高 1.85</td>
-</tr>
-<tr>
-<td>导语</td>
-<td>≤30 字，不写阅读指引</td>
-</tr>
-</tbody></table>
-<h2 id="6-验收">6. 验收</h2>
+<h2 id="2-验收">2. 验收</h2>
 <ul>
-<li><input disabled="" type="checkbox"> 从首页入门卡 / 文章卡点进，标题、导语与列表一致</li>
-<li><input disabled="" type="checkbox"> 顶栏返回正常；目录图标回科普知识库首页</li>
-<li><input disabled="" type="checkbox"> 版头为眉标 + 大标题 + 导语 + 分隔线，无副标题、无阅读时长、无形态标签</li>
-<li><input disabled="" type="checkbox"> 章节卡片编号、标题、条目样式与样张一致；插图带「示意图」标注与图注</li>
-<li><input disabled="" type="checkbox"> 审核卡医生信息与更新日期正确，免责声明原文一致</li>
-<li><input disabled="" type="checkbox"> 页面底部无吸底按钮（AI 减重助理一期不做）</li>
-<li><input disabled="" type="checkbox"> 文内篇目引用可跳转；引用已下架篇目时提示原文一致</li>
+<li><input disabled="" type="checkbox"> 从首页入门卡、文章卡点进来，标题与导语和列表一致</li>
+<li><input disabled="" type="checkbox"> 顶栏只有返回和分享，中间无标题；分享不成功时复制链接</li>
+<li><input disabled="" type="checkbox"> 版头只有大标题和导语；正文 5 张编号卡片；相关阅读 3 条；审核说明原文一致</li>
+<li><input disabled="" type="checkbox"> 页面底部无吸底按钮</li>
+<li><input disabled="" type="checkbox"> 按文章标识取内容，不再所有文章都显示同一篇</li>
+<li><input disabled="" type="checkbox"> 文内篇目引用可跳转；已下架篇目提示 <code>内容不存在或已下架</code></li>
 </ul>
-<h2 id="7-埋点-汇总见-req-wl-base-01-第-3-4-节">7. 埋点（汇总见 <code>REQ-WL-BASE-01</code> 第 3.4 节）</h2>
+<h2 id="3-埋点-汇总见-req-wl-base-01-第-3-4-节">3. 埋点（汇总见 <code>REQ-WL-BASE-01</code> 第 3.4 节）</h2>
 <table>
 <thead>
 <tr>
@@ -277,7 +213,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 </thead>
 <tbody><tr>
 <td><code>article_read</code></td>
-<td>进入文章页（及退出时补时长）</td>
+<td>进入文章页（退出时补时长）</td>
 <td><code>article_id</code>、<code>duration</code>、<code>progress</code>、<code>finished</code></td>
 </tr>
 <tr>
@@ -288,7 +224,7 @@ footer.pg{max-width:1320px;margin:0 auto;padding:0 24px 60px;color:var(--ink-3);
 <tr>
 <td><code>content_share_click</code></td>
 <td>点顶栏分享</td>
-<td><code>content_type=article</code>、<code>content_id</code>、<code>method(system/copy)</code></td>
+<td><code>content_type=article</code>、<code>content_id</code>、<code>method(native/copy)</code></td>
 </tr>
 </tbody></table>
 

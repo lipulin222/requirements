@@ -208,17 +208,16 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/">健康�
 <tr>
 <td>6</td>
 <td>① 购前科普</td>
-<td>四分类入口 + 快速评估（STATUS-04，兜底）</td>
+<td>四分类入口 + 快速评估（STATUS-04，默认）</td>
 <td>以上均不满足</td>
 </tr>
 </tbody></table>
 <ul>
-<li><strong style="color:#D5493A">处方药程、发货时间、发货地点字段需 DMS 后台新增，并与门诊等其他团队对齐口径。</strong></li>
-<li>阶段由服务端判定并下发，端上不自行推断。</li>
+<li>阶段由后台按用户数据判定，页面不自己推断。</li>
 <li>维持期卡片含结营回顾入口，见 <code>REQ-WL-STATUS-08</code>。</li>
-<li>各阶段按钮组为「左 <code>询问护士</code>（浅色次按钮，跳 AI 减重助理对话页）+ 右主按钮」；另有页面级 AI 浮钮常驻（TabBar 上方）。</li>
-<li>卡头右上角的阶段状态标签（未开始 / 第 N 天 / 维持期）为演示辅助，一期不上线。</li>
-<li><strong>所有阶段的减重卡右上角固定显示一个「切换旧版」文字链，灰色字体</strong>；点击后切回旧版减重卡展示形态，切换的口径与能否再切回新版待产品确认。</li>
+<li>① ~ ④ 的底部是左 <code>询问护士</code>、右主按钮两个；⑤ <code>打开回顾</code>、⑥ <code>记录第一天</code> 各只有一个通栏按钮。页面级 AI 浮钮一直都在。</li>
+<li>卡头右上角的阶段状态标签（未开始 / 第 N 天 / 维持期）是演示辅助，一期不上线。</li>
+<li><strong>所有阶段的减重卡右上角固定显示一个灰色的「切换旧版」文字链</strong>，点击回旧版减重卡。</li>
 </ul>
 <h2 id="3-埋点-汇总见-req-wl-base-01-第-3-1-节">3. 埋点（汇总见 <code>REQ-WL-BASE-01</code> 第 3.1 节）</h2>
 <table>
@@ -242,7 +241,7 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/">健康�
 <tr>
 <td><code>wcard_cta_click</code></td>
 <td>各阶段主按钮点击</td>
-<td><code>stage</code>、<code>cta_id(assess/report/more/consult/book/return/reorder/weight_edit)</code></td>
+<td><code>stage</code>、<code>cta_id(assess/report/more/weight_edit/rit_start/recap)</code></td>
 </tr>
 <tr>
 <td><code>wcard_old_switch_click</code></td>
@@ -251,7 +250,7 @@ Demo：<a href="https://lipulin222.github.io/health-subscription-demo/">健康�
 </tr>
 <tr>
 <td><code>wcard_ai_click</code></td>
-<td>点「AI减重助理」按钮（功能上线后）</td>
+<td>点「询问护士」或页面级 AI 浮钮</td>
 <td><code>stage</code>、<code>entry</code></td>
 </tr>
 <tr>
