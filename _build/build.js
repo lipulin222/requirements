@@ -345,6 +345,12 @@ const WL_DOCS = [
     demos: [['11 位样例患者月报', 'https://lipulin222.github.io/health-subscription-demo/Monthly-Report/patients-monthly.html']],
   },
   {
+    md: '减重/REQ-WL-DATA-03-旅程回顾提示词.md',
+    module: 'DATA', code: 'REQ-WL-DATA-03', pri: 'P1', status: '待评审',
+    desc: '结营回顾 8 屏内容与减重人格的生成提示词原文：数据口径、写死句、缺数据整屏不展示与分享卡',
+    demos: [['结营回顾（11 位样例患者）', 'https://lipulin222.github.io/online-health-care/Journey-Recap/index.html']],
+  },
+  {
     md: '减重/REQ-WL-PLAN-05-选择就诊人.md',
     module: 'PLAN', code: 'REQ-WL-PLAN-05', pri: 'P0', status: '待评审',
     desc: '选择就诊人独立页：3 位就诊人单选 + 详情只读 + 确认后开始评估；目前没有上游入口',
