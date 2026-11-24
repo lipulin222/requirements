@@ -371,7 +371,7 @@ const WL_DOCS = [
   {
     md: '减重/REQ-WL-PLAN-02-评估报告框架与判定.md',
     module: 'PLAN', code: 'REQ-WL-PLAN-02', pri: 'P0', status: '待评审',
-    desc: '三档结论与五类用户情况、结论刻度、按情况吸底分流与亲友评估',
+    desc: '三档结论、结论刻度、按结论吸底分流与亲友评估',
     demos: [
       ['减重评估报告', 'https://lipulin222.github.io/health-subscription-demo/weight-management/Assessment-report/index.html'],
       ['首诊评估问卷', 'https://lipulin222.github.io/health-subscription-demo/weight-management/Medication-eligibility-assessment/index.html'],
