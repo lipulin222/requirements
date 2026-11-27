@@ -466,17 +466,17 @@ const WL_DOCS = [
   {
     md: '减重/REQ-WL-EDU-01-科普知识库首页.md',
     module: 'EDU', code: 'REQ-WL-EDU-01', pri: 'P1', status: '待评审',
-    desc: '科普知识库首页：入门卡 + 按阶段取「你现在可能想看」+ 四组主题入口 + 全部内容列表 + 按阶段切换的吸底按钮',
+    desc: '科普知识库首页：入门卡 + 文章分类 + 健康减重选择卓正 + 阶段分流吸底按钮',
     demos: [
-      ['科普知识库', 'https://lipulin222.github.io/health-subscription-demo/patient-education/index.html'],
+      ['科普知识库首页', 'https://lipulin222.github.io/health-subscription-demo/patient-education/index.html?stage=4&verify=20261127c#/'],
       ['线上服务页', 'https://lipulin222.github.io/health-subscription-demo/online-service.html'],
     ],
   },
   {
     md: '减重/REQ-WL-EDU-02-科普文详情页.md',
     module: 'EDU', code: 'REQ-WL-EDU-02', pri: 'P1', status: '待评审',
-    desc: '一篇文章一页：版头 + 5 张编号章节卡 + 相关阅读 + 审核说明；顶栏返回与分享，无吸底按钮',
-    demos: [['科普文详情页', 'https://lipulin222.github.io/health-subscription-demo/edu-article/index.html']],
+    desc: '科普文详情页 v2：分类角签与导语版头 + 无编号章节卡 + 继续了解 + 阶段分流吸底按钮',
+    demos: [['科普文详情页 v2', 'https://lipulin222.github.io/health-subscription-demo/edu-article-v2/index.html?v2remove=20261127d']],
   },
   {
     md: '减重/REQ-WL-BASE-02-上线基线.md',
