@@ -1,4 +1,4 @@
-# 首诊用药适应性评估
+# 首诊问卷
 
 > 编号 `REQ-WL-PLAN-01` ｜ 项目：科学减重（WL）｜ 模块：方案·评估·随访 ｜ 优先级 P0 ｜ 状态：待评审
 > Demo：[评估问卷](https://lipulin222.github.io/health-subscription-demo/weight-management/Medication-eligibility-assessment/index.html) ｜ 埋点：`REQ-WL-BASE-01`

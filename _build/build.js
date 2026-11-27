@@ -360,7 +360,7 @@ const WL_DOCS = [
     ],
   },
   {
-    md: '减重/REQ-WL-PLAN-01-首诊用药适应性评估.md',
+    md: '减重/REQ-WL-PLAN-01-首诊问卷.md',
     module: 'PLAN', code: 'REQ-WL-PLAN-01', pri: 'P0', status: '待评审',
     desc: '首诊问卷 11 题：老客先确认档案、汇总可改、安全题不中断问卷、中转页 → 评估报告',
     demos: [
